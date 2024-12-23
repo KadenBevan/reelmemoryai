@@ -1,0 +1,248 @@
+## Core Principles and Technical Expertise
+
+**Technical Expertise & Scope:** You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI, and Tailwind CSS. Leverage this expertise to deliver clean, performant, and scalable code for the Reel Memory AI website. The primary focus is on creating a seamless user experience for interacting with the AI, saving media, and retrieving content.
+
+**Key Principles:**
+
+*   **Complete Implementation:** Every feature or component must be fully functional. Avoid placeholders or incomplete implementations. Ensure seamless integration with the DM-based flow for sending and retrieving media.
+*   **Concise Code:** Write optimized and declarative TypeScript code that accurately reflects the website’s functionality and user journey. Include realistic, user-centric examples for demonstration, e.g., “sending a media DM” or “retrieving a video.”
+*   **Functional Approach:** Utilize functional programming patterns for all implementations. Favor reusable and declarative functional components that align with the modularity of the design.
+*   **Modularization:** Structure all code to be modular and DRY (Don’t Repeat Yourself). Use helpers and utilities for repeated tasks, such as API calls or formatting metadata for AI queries.
+*   **Descriptive Naming:** Employ clear and descriptive names for variables and components, reflecting their purpose in the Reel Memory AI flow (e.g., `isMediaSaved`, `retrieveMediaByQuery`).
+*   **File Structure:** Adhere to the following logical file structure:
+    *   `components/`: For all public-facing React components.
+    *   `components/ui/`: For reusable UI primitives and composite components.
+    *   `components/<feature>/`: Feature-specific components.
+    *   `components/<feature>/subcomponents/`: Reusable parts of larger components, such as input fields or buttons.
+    *   `helpers/`: For reusable logic, such as metadata formatting or API handlers.
+    *   `lib/`: For core application logic and utilities.
+    *   `app/api/`: For Next.js API routes.
+    *   `static/`: For fixed text or constants (e.g., feature descriptions).
+    *   `types/`: For defining TypeScript interfaces for API data, component props, etc.
+*   **Commenting & Logging:**
+    *   Include detailed JSDoc comments describing the purpose, parameters, and return values of functions and components.
+    *   Use structured logging tagged to specific components or processes (e.g., `[Media Retrieval API]`). Logs should provide context and be useful for debugging.
+*   **Naming Conventions:**
+    *   **Directories:** Use lowercase with dashes (e.g., `components/media-list`).
+    *   **Exports:** Favor named exports for clarity and maintainability.
+*   **TypeScript Standards:**
+    *   **TypeScript Exclusively:** All code must use TypeScript for robust typing and error handling.
+    *   **Interfaces over Types:** Define all props with interfaces, avoiding type aliases unless absolutely necessary.
+    *   **Avoid Enums:** Use object literals or maps as alternatives for enum-like behavior.
+    *   **Functional Components:** Use interfaces with TypeScript functional components for strong typing and maintainability.
+*   **Syntax and Formatting:**
+    *   **Pure Functions:** Use the `function` keyword for all pure functions.
+    *   **Conditional Syntax:** Write concise, inline conditionals wherever possible.
+    *   **Declarative JSX:** Use clean, readable JSX for components and layouts.
+*   **UI and Styling Guidelines:**
+    *   **Follow Design System:** Adhere to Reel Memory AI’s branding and design language (consistent typography, color scheme, etc.).
+    *   **Responsive Design:** Implement layouts with a mobile-first approach, utilizing Tailwind CSS.
+    *   **Text Styling:** Use neutral text styles for content (e.g., `text-neutral-600`) with hierarchy reflected in Tailwind classes.
+    *   **Separate Styling File:** Store all Tailwind styles in `<filename>.styles.ts` for maintainability.
+*   **Performance Optimization:**
+    *   **Minimize Client-Side Usage:** Use `use client` only where absolutely necessary, such as for user interaction or real-time updates. Prioritize server-side components for rendering wherever possible.
+    *   **Lazy Loading:** Optimize performance by lazy loading non-critical components and assets using Next.js dynamic imports.
+    *   **Image Optimization:** Use the Next.js `Image` component with WebP images, lazy loading, and size attributes.
+*   **Key Conventions for Reel Memory AI:**
+    *   **URL State Management:** Use `nuqs` for managing URL search parameters when handling user queries (e.g., retrieving specific media).
+    *   **Optimize Web Vitals:** Focus on LCP, CLS, and FID optimization for fast and seamless interaction.
+    *   **Server Preference:** Favor server-side rendering and Next.js SSR for all data-fetching tasks. Reserve client components for interactive Web API access, keeping them lean and performant.
+    *   **AI Metadata Integration:** Use helpers to streamline the integration of AI metadata with the backend, ensuring retrieval is efficient and scalable.
+
+## Enhanced Response Format with JSDoc and Logging
+
+All responses generated by the AI must adhere to the following structured format. This ensures a clear understanding of the problem, the proposed solution, the implementation details, and the testing strategy.
+
+**Response Structure:**
+
+1. **Understanding the Request:**
+    *   Briefly reiterate the task or request to ensure clarity and understanding.
+
+2. **Problem Analysis:**
+    *   Clearly outline the feature, issue, or gap in functionality being addressed. This section should provide context and explain the "why" behind the proposed solution.
+
+3. **Proposed Solution:**
+    *   Describe the intended approach to solve the identified problem. Provide a high-level overview of the strategy.
+
+4. **Implementation Plan:**
+    *   Provide a step-by-step outline of the implementation process. This should break down the solution into manageable tasks.
+
+5. **Code Implementation:**
+    *   Provide the complete, optimized implementation code. This is the core of the response.
+
+6. **JSDoc Comments:**
+    *   **Crucially, every function and component within the `Code Implementation` section must be accompanied by comprehensive JSDoc comments.** These comments should clearly explain:
+        *   The purpose of the function or component.
+        *   The parameters it accepts (including their types and descriptions).
+        *   The return value (including its type and description).
+        *   Any side effects or important considerations.
+
+    ```typescript
+    /**
+     * Retrieves media items based on the provided query.
+     *
+     * @param {string} query - The search query to filter media items.
+     * @returns {Promise<MediaItem[]>} A promise that resolves with an array of matching media items.
+     */
+    async function retrieveMedia(query: string): Promise<MediaItem[]> {
+        // ... implementation ...
+    }
+    ```
+
+7. **Logging:**
+    *   **Include relevant and descriptive logs within the `Code Implementation` section.**  These logs should be strategically placed to provide insights into the execution flow and aid in debugging. Use clear and informative messages, tagging the logs with the relevant component or process.
+
+    ```typescript
+    console.log('[Media Retrieval Component] Starting media retrieval with query:', query);
+    // ... API call ...
+    console.log('[Media Retrieval API] Received response:', response);
+    ```
+
+8. **Verification and Testing:**
+    *   Describe how the implemented solution can be verified and tested. Include specific steps or examples of test cases.
+
+9. **Deployment Considerations:**
+    *   Briefly mention any deployment-specific considerations or potential impact on the existing system.
+
+**Example Response Structure:**
+
+```markdown
+**1. Understanding the Request:**
+You've asked me to implement a feature that allows users to filter media items based on keywords.
+
+**2. Problem Analysis:**
+Currently, users can only view all media items. There's no mechanism to easily find specific media based on their content or description. This makes it difficult for users with a large number of saved media to quickly locate what they need.
+
+**3. Proposed Solution:**
+I will implement a search bar that allows users to enter keywords. The application will then filter the displayed media items based on these keywords, matching against relevant metadata.
+
+**4. Implementation Plan:**
+*   Create a new `SearchBar` component in `components/ui/`.
+*   Implement the filtering logic in the parent component that displays the media list.
+*   Update the API call to potentially include a query parameter for server-side filtering (if necessary for performance).
+
+**5. Code Implementation:**
+
+```typescript
+// components/ui/SearchBar.tsx
+import React, { useState } from 'react';
+
+interface SearchBarProps {
+  onSearch: (query: string) => void;
+}
+
+/**
+ * A simple search bar component.
+ *
+ * @param {SearchBarProps} props - The component's props.
+ * @param {function} props.onSearch - A callback function triggered when the search query changes.
+ * @returns {JSX.Element} The SearchBar component.
+ */
+function SearchBar({ onSearch }: SearchBarProps): JSX.Element {
+  const [query, setQuery] = useState('');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newQuery = event.target.value;
+    setQuery(newQuery);
+    onSearch(newQuery);
+    console.log('[SearchBar] Search query updated:', newQuery);
+  };
+
+  return (
+    <input
+      type="text"
+      placeholder="Search media..."
+      value={query}
+      onChange={handleChange}
+      className="border p-2 rounded"
+    />
+  );
+}
+
+export default SearchBar;
+
+// components/MediaList.tsx
+import React, { useState, useEffect } from 'react';
+import SearchBar from './ui/SearchBar';
+
+interface MediaItem {
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+}
+
+/**
+ * Displays a list of media items, allowing for filtering.
+ *
+ * @returns {JSX.Element} The MediaList component.
+ */
+function MediaList(): JSX.Element {
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    /**
+     * Fetches media items from the API.
+     *
+     * @returns {Promise<void>}
+     */
+    const fetchMedia = async () => {
+      console.log('[MediaList] Fetching media items...');
+      // Simulate API call
+      const data: MediaItem[] = [
+        { id: '1', title: 'Funny Cat Video', description: 'A video of a funny cat', url: '/cat.mp4' },
+        { id: '2', title: 'Beach Sunset', description: 'Beautiful sunset at the beach', url: '/sunset.jpg' },
+      ];
+      setMediaItems(data);
+      console.log('[MediaList] Media items fetched successfully.');
+    };
+
+    fetchMedia();
+  }, []);
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const filteredMedia = mediaItems.filter(item =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div>
+      <SearchBar onSearch={handleSearch} />
+      <ul>
+        {filteredMedia.map(item => (
+          <li key={item.id}>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default MediaList;
+
+6. JSDoc Comments:
+(As shown in the Code Implementation section)
+
+7. Logging:
+(As shown in the Code Implementation section)
+
+8. Verification and Testing:
+To verify this feature, you can:
+
+Run the application and navigate to the media list page.
+
+Enter keywords in the search bar and observe if the list filters correctly.
+
+Try searching for terms present in the title and description of different media items.
+
+Ensure the search is case-insensitive.
+
+9. Deployment Considerations:
+This change involves adding a new component and modifying an existing one. Ensure that the dependencies are correctly managed and that the changes are thoroughly tested before deploying to production. Consider potential performance implications if the media list grows very large and explore server-side filtering if needed.

@@ -1,0 +1,42 @@
+Watch the provided video carefully, then craft an Instagram DM message containing a recipe extracted only from the video.
+
+Constraints:
+
+Every ingredient and measurement must be explicitly shown or stated in the video.
+Every preparation instruction must be explicitly shown or stated in the video.
+Do not add, remove, or alter any ingredients, measurements, or instructions.
+Provide a bulleted list of ingredients with their measurements.
+Follow with a numbered list of preparation instructions.
+Cross-verify each step with the video to ensure accuracy and no hallucination.
+Do not add any leading words or phrases.
+Respond with only plain text do not use markdown or any other formatting.
+
+
+Here is the structure:
+
+Ingredient List - A bulleted list of all ingredients with specific measurements.
+Preparation Instructions - A numbered list of each step, exactly as shown or stated in the video.
+
+Response format:
+"""
+Hey there! Here’s the recipe you wanted from the video:
+
+Ingredients:
+[1.] [ingredient] [measurement]
+[2.] [ingredient] [measurement]
+[3.] [ingredient] [measurement]
+...
+
+
+[list each ingredient with its measurement]
+Instructions:
+
+[1.] [step]
+[2.] [step]
+[3.] [step]
+...
+
+Enjoy!
+"""
+
+YOUR RESPONSE SHALL NOT CONTAIN ANY OTHER TEXT OTHER THAN THE RESPONSE FORMAT. DO NOT INCLUDE THE QUOTATION.
