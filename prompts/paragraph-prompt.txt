@@ -1,42 +1,47 @@
-Watch the provided video carefully, then craft an Instagram DM message containing a recipe extracted only from the video.
 
-Constraints:
+Your task is to perform a detailed and comprehensive analysis of the video, producing an extensive, information-rich response. Follow these enhanced guidelines to ensure your output is thorough, accurate, and engaging:
 
-Every ingredient and measurement must be explicitly shown or stated in the video.
-Every preparation instruction must be explicitly shown or stated in the video.
-Do not add, remove, or alter any ingredients, measurements, or instructions.
-Provide a bulleted list of ingredients with their measurements.
-Follow with a numbered list of preparation instructions.
-Cross-verify each step with the video to ensure accuracy and no hallucination.
-Do not add any leading words or phrases.
-Respond with only plain text do not use markdown or any other formatting.
+Title and Description:
 
+Begin by identifying the title of the video and providing a concise yet comprehensive overview of its content. Your description should touch on the central theme, purpose, and scope of the video while hinting at what viewers might expect to gain or learn from watching.
+Key Points and Themes:
 
-Here is the structure:
+Highlight the core topics addressed in the video, breaking them down into distinct, clear themes. Provide a deep dive into each theme, explaining its relevance and significance.
+Reflect on the central messages or objectives of the video. How do these tie into larger societal, educational, or creative contexts?
+Discuss supporting evidence, examples, or anecdotes shared in the video that enhance the key points.
+Scenes and Visuals:
 
-Ingredient List - A bulleted list of all ingredients with specific measurements.
-Preparation Instructions - A numbered list of each step, exactly as shown or stated in the video.
+Describe in detail the most impactful scenes or visuals, including their composition, setting, and emotional tone. Use vivid language to capture what makes these moments stand out.
+Consider elements like lighting, color palette, cinematography, and how they enhance the viewer's experience or convey deeper meaning.
+Audio and Dialogue:
 
-Response format:
-"""
-Hey there! Here’s the recipe you wanted from the video:
+Analyze the audio landscape of the video. Discuss the role of background music, sound effects, and silence in shaping the video’s atmosphere.
+Highlight key pieces of dialogue or narration, exploring their meaning, emotional weight, or contribution to the overall message.
+Comment on the tone, pacing, and delivery of audio elements. How do they align with or enhance the video’s visuals and themes?
+Characters and Personalities:
 
-Ingredients:
-[1.] [ingredient] [measurement]
-[2.] [ingredient] [measurement]
-[3.] [ingredient] [measurement]
-...
+Identify and describe the main individuals featured in the video.
+Detail their roles, motivations, and contributions to the narrative or message.
+Explore how these characters are portrayed visually, emotionally, and through dialogue or action. Consider the viewer’s potential connection to them.
+Technical Elements:
 
+Provide a technical analysis of the video, covering aspects like camera angles, shot transitions, editing choices, and special effects.
+Evaluate the overall production quality and its influence on the viewer’s engagement.
+Discuss any innovative or notable techniques used, such as time-lapse, slow motion, or unique framing.
+Context and Background Information:
 
-[list each ingredient with its measurement]
-Instructions:
+Research and present relevant background details about the video, including its creator(s), production team, and intended audience.
+Discuss the cultural, historical, or social context that informs the video.
+Examine the video’s purpose or message—why was it made, and what is its intended impact?
+Personal Insights and Critical Analysis:
 
-[1.] [step]
-[2.] [step]
-[3.] [step]
-...
+Share a well-rounded, thoughtful critique of the video. What works well, and why?
+Identify potential areas for improvement, offering constructive suggestions.
+Reflect on how the video resonates with you or its audience—was it effective, inspiring, or thought-provoking?
+Summary and Conclusion:
 
-Enjoy!
-"""
+Wrap up your analysis with a comprehensive summary of the video’s content and key takeaways.
+Reiterate its most impactful aspects and conclude with your final thoughts on the video’s overall significance or value.
 
-YOUR RESPONSE SHALL NOT CONTAIN ANY OTHER TEXT OTHER THAN THE RESPONSE FORMAT. DO NOT INCLUDE THE QUOTATION.
+Your response should be long and thorough.
+Your response should not contain any other text other than the response format. Do not include the quotation.

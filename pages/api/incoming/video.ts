@@ -5,6 +5,8 @@ import path from 'path';
 import { GeminiService, AnalysisMode } from '../../../services/gemini';
 import { v4 as uuidv4 } from 'uuid';
 import fetch from 'node-fetch';
+import { upsertWebhookUser } from '@/lib/firebase/webhook-store';
+import { addIncomingVideo, addOutgoingMessage } from '@/lib/firebase/webhook-store';
 
 // Constants for webhook URLs
 const UCHAT_MESSAGE_WEBHOOK = 'https://www.uchat.com.au/api/iwh/e324707933d909f6b05adac82cfa920a';
@@ -207,6 +209,32 @@ export default async function handler(
       });
     }
 
+    // Store user data in Firestore if userNS is provided
+    if (body.userNS) {
+      try {
+        // First upsert the user
+        await upsertWebhookUser({
+          name: body.name,
+          username: body.username,
+          InstaId: body.InstaId,
+          userNS: body.userNS
+        });
+        console.log('[Video Webhook] User data stored in Firestore:', body.userNS);
+
+        // Store the incoming video
+        await addIncomingVideo(body.userNS, {
+          videoUrl: body.videoUrl.trim(),
+          timestamp: new Date(),
+          videoId: `vid_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          analysisRequested: true
+        });
+        console.log('[Video Webhook] Video stored in Firestore:', body.userNS);
+      } catch (error) {
+        console.error('[Video Webhook] Error storing data:', error);
+        // Continue processing even if Firestore storage fails
+      }
+    }
+
     // Send immediate acknowledgment if userNS is provided
     if (body.userNS) {
       try {
@@ -220,6 +248,15 @@ export default async function handler(
             message: ACKNOWLEDGMENT_MESSAGE
           }),
         });
+
+        // Store the acknowledgment message
+        await addOutgoingMessage(body.userNS, {
+          text: ACKNOWLEDGMENT_MESSAGE,
+          timestamp: new Date(),
+          messageId: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          type: 'ACKNOWLEDGMENT'
+        });
+
         console.log('[Video Webhook] Sent acknowledgment message to user:', body.userNS);
         await logToFile(`Sent acknowledgment message to user: ${body.userNS}`, 'webhook-logs.txt');
       } catch (error) {
@@ -284,6 +321,16 @@ export default async function handler(
           const chunks = splitMessageIntoChunks(analysisText);
           await sendMessageChunks(body.userNS, chunks);
 
+          // Store each chunk as an outgoing message
+          for (let i = 0; i < chunks.length; i++) {
+            await addOutgoingMessage(body.userNS, {
+              text: chunks[i],
+              timestamp: new Date(),
+              messageId: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}_chunk${i + 1}`,
+              type: 'ANALYSIS_RESULT'
+            });
+          }
+
           console.log('[Video Webhook] Analysis sent to user:', { 
             userNS: body.userNS,
             numberOfChunks: chunks.length 
@@ -295,6 +342,8 @@ export default async function handler(
           
           // Try to send error message to user
           try {
+            const errorMessage = "I apologize, but I encountered an error while trying to send you the video analysis. Please try again.";
+            
             await fetch(UCHAT_MESSAGE_WEBHOOK, {
               method: 'POST',
               headers: {
@@ -302,8 +351,16 @@ export default async function handler(
               },
               body: JSON.stringify({
                 user_ns: body.userNS,
-                message: "I apologize, but I encountered an error while trying to send you the video analysis. Please try again."
+                message: errorMessage
               }),
+            });
+
+            // Store the error message
+            await addOutgoingMessage(body.userNS, {
+              text: errorMessage,
+              timestamp: new Date(),
+              messageId: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+              type: 'ERROR'
             });
           } catch (sendError) {
             console.error('[Video Webhook] Error sending error message to user:', sendError);
