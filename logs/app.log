@@ -1,0 +1,694 @@
+
+> app@0.1.0 dev
+> next dev
+
+   ▲ Next.js 14.1.0
+   - Local:        http://localhost:3000
+   - Environments: .env.local
+
+ ✓ Ready in 1652ms
+ ○ Compiling / ...
+ ✓ Compiled / in 3.2s (849 modules)
+[Firebase] Successfully initialized Firebase app
+[AuthService] Initialized
+[LandingPage] Rendering the LandingPage component.
+[Step 1] Rendering with alignment: left
+[Step 2] Rendering with alignment: right
+[Step 3] Rendering with alignment: left
+[AuthModal] Rendering with active tab: signin
+ ✓ Compiled in 664ms (371 modules)
+[LandingPage] Rendering the LandingPage component.
+[Step 1] Rendering with alignment: left
+[Step 2] Rendering with alignment: right
+[Step 3] Rendering with alignment: left
+[AuthModal] Rendering with active tab: signin
+[LandingPage] Rendering the LandingPage component.
+[Step 1] Rendering with alignment: left
+[Step 2] Rendering with alignment: right
+[Step 3] Rendering with alignment: left
+[AuthModal] Rendering with active tab: signin
+[LandingPage] Rendering the LandingPage component.
+[Step 1] Rendering with alignment: left
+[Step 2] Rendering with alignment: right
+[Step 3] Rendering with alignment: left
+[AuthModal] Rendering with active tab: signin
+ ✓ Compiled /not-found in 328ms (840 modules)
+ ○ Compiling /api/incoming/message ...
+ ✓ Compiled /api/incoming/message in 1098ms (557 modules)
+[Pinecone] Verifying index configuration...
+[Pinecone] Initializing Pinecone client
+[Firebase] Successfully initialized Firebase app
+[Message Webhook] Request received: {
+  method: 'POST',
+  url: '/api/incoming/message',
+  headers: {
+    host: 'cf26aac0-53e1-4b06-a096-4634a173f212-00-34fxmlyy08xzk.sisko.replit.dev',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36',
+    'content-length': '213',
+    'accept-encoding': 'gzip',
+    'content-type': 'application/json',
+    'x-forwarded-for': '207.148.84.7, 10.84.4.24',
+    'x-forwarded-proto': 'https',
+    'x-replit-user-bio': '',
+    'x-replit-user-id': '',
+    'x-replit-user-name': '',
+    'x-replit-user-profile-image': '',
+    'x-replit-user-roles': '',
+    'x-replit-user-teams': '',
+    'x-replit-user-url': '',
+    'x-middleware-invoke': '',
+    'x-invoke-path': '/api/incoming/message',
+    'x-invoke-query': '%7B%7D',
+    'x-invoke-output': '/api/incoming/message',
+    'x-forwarded-host': 'cf26aac0-53e1-4b06-a096-4634a173f212-00-34fxmlyy08xzk.sisko.replit.dev',
+    'x-forwarded-port': '3000'
+  }
+}
+[Message Webhook] Request body: {
+  userNS: 'f131667u184732093',
+  InstaMsgTxt: 'Send me that video about Franklin sensors about the level',
+  MediaType: 'Text',
+  InstaId: '17841470348429979',
+  username: 'kaden.t.bevan',
+  name: 'KadenBevan'
+}
+[Pinecone] Index configuration verified successfully: {
+  name: 'data-index',
+  dimension: 3072,
+  model: 'text-embedding-3-large'
+}
+[Message Webhook] Message stored in Firestore: f131667u184732093
+[Message Webhook] Sending search acknowledgment to user: f131667u184732093
+[Message Service] Sending message: {
+  user_ns: 'f131667u184732093',
+  type: 'ACKNOWLEDGMENT',
+  messageLength: 53,
+  messagePreview: "I'm looking for videos that match your description..."
+}
+[Message Service] Webhook response: {
+  status: 200,
+  statusText: 'OK',
+  headers: {
+    'access-control-allow-origin': '*',
+    'alt-svc': 'h3=":443"; ma=86400',
+    'cache-control': 'no-cache, private',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '8f9c0a50d9ff3fc1-BOM',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Sun, 29 Dec 2024 19:01:43 GMT',
+    nel: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}',
+    'report-to': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=6NkBy5kMMLrm4ssw4HPyx8xc%2F%2FcIM19oYjKvw1rEbYbs7mFJ6JSDxowuN2Qh5ysLLyqgDbT8HYYjG4wELsTflVHez%2BfpnMMU%2BbFsW0OvKVppY3%2FWSYwB6dTCMpWXIz2gDVAd"}],"group":"cf-nel","max_age":604800}',
+    server: 'cloudflare',
+    'server-timing': 'cfL4;desc="?proto=TCP&rtt=1422&min_rtt=1387&rtt_var=545&sent=5&recv=5&lost=0&retrans=0&sent_bytes=2827&recv_bytes=863&delivery_rate=3045421&cwnd=252&unsent_bytes=0&cid=6ef7e0cffba85c2f&ts=501&x=0"',
+    'transfer-encoding': 'chunked',
+    vary: 'Accept-Encoding',
+    'x-content-type-options': 'nosniff',
+    'x-frame-options': 'SAMEORIGIN',
+    'x-ratelimit-limit': '500',
+    'x-ratelimit-remaining': '491',
+    'x-xss-protection': '1; mode=block'
+  },
+  body: '{"status":"ok"}'
+}
+[Message Webhook] Successfully sent search acknowledgment: { status: 'SENT', response: { status: 'ok' } }
+[Message Webhook] Generating embedding for query: Send me that video about Franklin sensors about the level
+[Embedding Service] Starting embedding generation for text length: 57
+[Embedding Service] Checking token limit. Count: 10 Max: 8191
+[Embedding Service] Generating embedding, attempt 1
+[Embedding Service] Rate limit check - Current requests: 0 Time window: 1823
+[Embedding Service] Updated request count: 1
+[Embedding Service] Making API request to OpenAI
+[Embedding Service] Successfully generated embedding of length: 3072
+[Message Webhook] Querying vector database for user: f131667u184732093
+[Message Webhook] Search terms: [
+  'send',     'that',
+  'video',    'about',
+  'franklin', 'sensors',
+  'about',    'level'
+]
+[Pinecone] Querying data for user: f131667u184732093
+[Pinecone] Query options: {
+  topK: 5,
+  filter: { '$or': [ [Object], [Object] ] },
+  sparse: undefined,
+  alpha: undefined
+}
+[Message Webhook] Error: PineconeArgumentError: Object contained invalid properties: sparse, alpha. Valid properties include id, vector, sparseVector, includeValues, includeMetadata, filter, topK.
+    at ValidateProperties (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/utils/validateProperties.js:10:15)
+    at QueryCommand.validator (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:67:61)
+    at QueryCommand.<anonymous> (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:111:30)
+    at step (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:44:23)
+    at Object.next (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:25:53)
+    at /home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:19:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:15:12)
+    at QueryCommand.run (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:106:16)
+    at Index.<anonymous> (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/index.js:438:69)
+    at step (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/index.js:33:23)
+    at Object.next (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/index.js:14:53)
+    at /home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/index.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/index.js:4:12) {
+  cause: undefined
+}
+[Message Service] Sending message: {
+  user_ns: 'f131667u184732093',
+  type: 'ERROR',
+  messageLength: 77,
+  messagePreview: 'I encountered an error while processing your reque...'
+}
+[Message Service] Webhook response: {
+  status: 200,
+  statusText: 'OK',
+  headers: {
+    'access-control-allow-origin': '*',
+    'alt-svc': 'h3=":443"; ma=86400',
+    'cache-control': 'no-cache, private',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '8f9c0a5b1efc3fc1-BOM',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Sun, 29 Dec 2024 19:01:44 GMT',
+    nel: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}',
+    'report-to': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=KHtgt0qioq%2FBRllHcXugn56kSIEfkVWfIAeFppD5Z2arTy79NnT%2Fg5bnZyH%2BDnQFBn%2Fw5Hq3MnWy1UafnhGDhmMjRYjiaZFQlv0JCAkE9RRcTf6Av5%2BzPkEG7DK69L3fuUEl"}],"group":"cf-nel","max_age":604800}',
+    server: 'cloudflare',
+    'server-timing': 'cfL4;desc="?proto=TCP&rtt=6494&min_rtt=1387&rtt_var=10448&sent=9&recv=8&lost=0&retrans=0&sent_bytes=4413&recv_bytes=1293&delivery_rate=3045421&cwnd=255&unsent_bytes=0&cid=6ef7e0cffba85c2f&ts=1829&x=0"',
+    'transfer-encoding': 'chunked',
+    vary: 'Accept-Encoding',
+    'x-content-type-options': 'nosniff',
+    'x-ratelimit-limit': '500',
+    'x-ratelimit-remaining': '490',
+    'x-xss-protection': '1; mode=block'
+  },
+  body: '{"status":"ok"}'
+}
+ ✓ Compiled in 223ms (554 modules)
+ ✓ Compiled in 512ms (1047 modules)
+[Pinecone] Verifying index configuration...
+[Pinecone] Initializing Pinecone client
+[Firebase] Successfully initialized Firebase app
+[Message Webhook] Request received: {
+  method: 'POST',
+  url: '/api/incoming/message',
+  headers: {
+    host: 'cf26aac0-53e1-4b06-a096-4634a173f212-00-34fxmlyy08xzk.sisko.replit.dev',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36',
+    'content-length': '226',
+    'accept-encoding': 'gzip',
+    'content-type': 'application/json',
+    'x-forwarded-for': '45.76.116.253, 10.84.3.6',
+    'x-forwarded-proto': 'https',
+    'x-replit-user-bio': '',
+    'x-replit-user-id': '',
+    'x-replit-user-name': '',
+    'x-replit-user-profile-image': '',
+    'x-replit-user-roles': '',
+    'x-replit-user-teams': '',
+    'x-replit-user-url': '',
+    'x-middleware-invoke': '',
+    'x-invoke-path': '/api/incoming/message',
+    'x-invoke-query': '%7B%7D',
+    'x-invoke-output': '/api/incoming/message',
+    'x-forwarded-host': 'cf26aac0-53e1-4b06-a096-4634a173f212-00-34fxmlyy08xzk.sisko.replit.dev',
+    'x-forwarded-port': '3000'
+  }
+}
+[Message Webhook] Request body: {
+  userNS: 'f131667u184732093',
+  InstaMsgTxt: 'Send me that video about Franklin sensors that has the light up level.',
+  MediaType: 'Text',
+  InstaId: '17841470348429979',
+  username: 'kaden.t.bevan',
+  name: 'KadenBevan'
+}
+[Message Webhook] Message stored in Firestore: f131667u184732093
+[Message Webhook] Sending search acknowledgment to user: f131667u184732093
+[Message Service] Sending message: {
+  user_ns: 'f131667u184732093',
+  type: 'ACKNOWLEDGMENT',
+  messageLength: 53,
+  messagePreview: "I'm looking for videos that match your description..."
+}
+[Pinecone] Index configuration verified successfully: {
+  name: 'data-index',
+  dimension: 3072,
+  model: 'text-embedding-3-large'
+}
+[Message Service] Webhook response: {
+  status: 200,
+  statusText: 'OK',
+  headers: {
+    'access-control-allow-origin': '*',
+    'alt-svc': 'h3=":443"; ma=86400',
+    'cache-control': 'no-cache, private',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '8f9c0d860df24454-BOM',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Sun, 29 Dec 2024 19:03:55 GMT',
+    nel: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}',
+    'report-to': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=07oq0EK4tUIr08cSGt5ha3DXasNju11w%2FPrLoDpo00uuCd4gxmlI5w7MIWq3PObEjqYjJBvkZv%2Ff%2F7YRzn12vFTbXykfgDaQIFTjr7uZfDZWapddqA%2Bf4g8IFb9gvMi%2FTBOP"}],"group":"cf-nel","max_age":604800}',
+    server: 'cloudflare',
+    'server-timing': 'cfL4;desc="?proto=TCP&rtt=1051&min_rtt=1048&rtt_var=395&sent=3&recv=5&lost=0&retrans=0&sent_bytes=219&recv_bytes=1118&delivery_rate=1343511&cwnd=250&unsent_bytes=0&cid=99c4797202a28c99&ts=489&x=0"',
+    'transfer-encoding': 'chunked',
+    vary: 'Accept-Encoding',
+    'x-content-type-options': 'nosniff',
+    'x-ratelimit-limit': '500',
+    'x-ratelimit-remaining': '489',
+    'x-xss-protection': '1; mode=block'
+  },
+  body: '{"status":"ok"}'
+}
+[Message Webhook] Successfully sent search acknowledgment: { status: 'SENT', response: { status: 'ok' } }
+[Message Webhook] Generating embedding for query: Send me that video about Franklin sensors that has the light up level.
+[Embedding Service] Starting embedding generation for text length: 70
+[Embedding Service] Checking token limit. Count: 14 Max: 8191
+[Embedding Service] Generating embedding, attempt 1
+[Embedding Service] Rate limit check - Current requests: 0 Time window: 1453
+[Embedding Service] Updated request count: 1
+[Embedding Service] Making API request to OpenAI
+[Embedding Service] Successfully generated embedding of length: 3072
+[Message Webhook] Querying vector database for user: f131667u184732093
+[Message Webhook] Search terms: [
+  'send',     'that',
+  'video',    'about',
+  'franklin', 'sensors',
+  'that',     'light',
+  'level'
+]
+[Pinecone] Querying data for user: f131667u184732093
+[Pinecone] Query options: { topK: 5, filter: { '$or': [ [Object], [Object] ] } }
+[Pinecone] Query returned 5 matches
+[Pinecone] Top match: {
+  score: 0.615180612,
+  metadata: {
+    contentType: 'video_analysis',
+    instaId: '17841470348429979',
+    keywords: [
+      'Franklin Sensors',
+      'precision level',
+      'digital level',
+      'bubble level',
+      'tool comparison',
+      'home renovation',
+      'tiling',
+      'accuracy',
+      'LED display',
+      'DIY tools'
+    ],
+    mediaType: 'Post',
+    name: 'KadenBevan',
+    processedAt: '2024-12-29T18:57:15.104Z',
+    sectionTitle: 'Overview',
+    sequenceNumber: 1,
+    timestamp: '2024-12-29T18:57:15.104Z',
+    topicsJson: `[{"name":"Tool Comparison","relevance":1,"context":"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."},{"name":"Home Renovation","relevance":0.8,"context":"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."},{"name":"Accuracy and Ease of Use","relevance":0.95,"context":"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."}]`,
+    totalChunks: 13,
+    username: 'kaden.t.bevan',
+    videoId: 'f131667u184732093_video_1735498635104',
+    videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg'
+  }
+}
+[Message Webhook] Found 5 matches: [
+  {
+    "id": "f131667u184732093_video_1735498635104_overview",
+    "score": 0.615180612,
+    "metadata": {
+      "contentType": "video_analysis",
+      "instaId": "17841470348429979",
+      "keywords": [
+        "Franklin Sensors",
+        "precision level",
+        "digital level",
+        "bubble level",
+        "tool comparison",
+        "home renovation",
+        "tiling",
+        "accuracy",
+        "LED display",
+        "DIY tools"
+      ],
+      "mediaType": "Post",
+      "name": "KadenBevan",
+      "processedAt": "2024-12-29T18:57:15.104Z",
+      "sectionTitle": "Overview",
+      "sequenceNumber": 1,
+      "timestamp": "2024-12-29T18:57:15.104Z",
+      "topicsJson": "[{\"name\":\"Tool Comparison\",\"relevance\":1,\"context\":\"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages.\"},{\"name\":\"Home Renovation\",\"relevance\":0.8,\"context\":\"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.\"},{\"name\":\"Accuracy and Ease of Use\",\"relevance\":0.95,\"context\":\"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.\"}]",
+      "totalChunks": 13,
+      "username": "kaden.t.bevan",
+      "videoId": "f131667u184732093_video_1735498635104",
+      "videoUrl": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg",
+      "topics": [
+        {
+          "name": "Tool Comparison",
+          "relevance": 1,
+          "context": "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
+        },
+        {
+          "name": "Home Renovation",
+          "relevance": 0.8,
+          "context": "The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."
+        },
+        {
+          "name": "Accuracy and Ease of Use",
+          "relevance": 0.95,
+          "context": "The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."
+        }
+      ]
+    }
+  },
+  {
+    "id": "f131667u184732093_video_1735498635104_scene_1",
+    "score": 0.576288044,
+    "metadata": {
+      "contentType": "video_analysis",
+      "instaId": "17841470348429979",
+      "keywords": [
+        "Franklin Sensors",
+        "precision level",
+        "digital level",
+        "bubble level",
+        "tool comparison",
+        "home renovation",
+        "tiling",
+        "accuracy",
+        "LED display",
+        "DIY tools",
+        "Franklin Sensors Precision Level",
+        "red LED lights"
+      ],
+      "mediaType": "Post",
+      "name": "KadenBevan",
+      "processedAt": "2024-12-29T18:57:15.104Z",
+      "sectionTitle": "Visual Content",
+      "sequenceNumber": 2,
+      "timestamp": "2024-12-29T18:57:15.104Z",
+      "topicsJson": "[{\"name\":\"Tool Comparison\",\"relevance\":1,\"context\":\"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages.\"},{\"name\":\"Home Renovation\",\"relevance\":0.8,\"context\":\"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.\"},{\"name\":\"Accuracy and Ease of Use\",\"relevance\":0.95,\"context\":\"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.\"}]",
+      "totalChunks": 13,
+      "username": "kaden.t.bevan",
+      "videoId": "f131667u184732093_video_1735498635104",
+      "videoUrl": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg",
+      "topics": [
+        {
+          "name": "Tool Comparison",
+          "relevance": 1,
+          "context": "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
+        },
+        {
+          "name": "Home Renovation",
+          "relevance": 0.8,
+          "context": "The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."
+        },
+        {
+          "name": "Accuracy and Ease of Use",
+          "relevance": 0.95,
+          "context": "The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."
+        }
+      ]
+    }
+  },
+  {
+    "id": "f131667u184732093_video_1735498635104_scene_2",
+    "score": 0.55632937,
+    "metadata": {
+      "contentType": "video_analysis",
+      "instaId": "17841470348429979",
+      "keywords": [
+        "Franklin Sensors",
+        "precision level",
+        "digital level",
+        "bubble level",
+        "tool comparison",
+        "home renovation",
+        "tiling",
+        "accuracy",
+        "LED display",
+        "DIY tools",
+        "Franklin Sensors Precision Level",
+        "green LED light"
+      ],
+      "mediaType": "Post",
+      "name": "KadenBevan",
+      "processedAt": "2024-12-29T18:57:15.104Z",
+      "sectionTitle": "Visual Content",
+      "sequenceNumber": 3,
+      "timestamp": "2024-12-29T18:57:15.104Z",
+      "topicsJson": "[{\"name\":\"Tool Comparison\",\"relevance\":1,\"context\":\"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages.\"},{\"name\":\"Home Renovation\",\"relevance\":0.8,\"context\":\"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.\"},{\"name\":\"Accuracy and Ease of Use\",\"relevance\":0.95,\"context\":\"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.\"}]",
+      "totalChunks": 13,
+      "username": "kaden.t.bevan",
+      "videoId": "f131667u184732093_video_1735498635104",
+      "videoUrl": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg",
+      "topics": [
+        {
+          "name": "Tool Comparison",
+          "relevance": 1,
+          "context": "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
+        },
+        {
+          "name": "Home Renovation",
+          "relevance": 0.8,
+          "context": "The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."
+        },
+        {
+          "name": "Accuracy and Ease of Use",
+          "relevance": 0.95,
+          "context": "The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."
+        }
+      ]
+    }
+  },
+  {
+    "id": "f131667u184732093_video_1735498635104_scene_6",
+    "score": 0.488832951,
+    "metadata": {
+      "contentType": "video_analysis",
+      "instaId": "17841470348429979",
+      "keywords": [
+        "Franklin Sensors",
+        "precision level",
+        "digital level",
+        "bubble level",
+        "tool comparison",
+        "home renovation",
+        "tiling",
+        "accuracy",
+        "LED display",
+        "DIY tools",
+        "Franklin Sensors Precision Level",
+        "green LED lights",
+        "tiled floor"
+      ],
+      "mediaType": "Post",
+      "name": "KadenBevan",
+      "processedAt": "2024-12-29T18:57:15.104Z",
+      "sectionTitle": "Visual Content",
+      "sequenceNumber": 7,
+      "timestamp": "2024-12-29T18:57:15.104Z",
+      "topicsJson": "[{\"name\":\"Tool Comparison\",\"relevance\":1,\"context\":\"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages.\"},{\"name\":\"Home Renovation\",\"relevance\":0.8,\"context\":\"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.\"},{\"name\":\"Accuracy and Ease of Use\",\"relevance\":0.95,\"context\":\"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.\"}]",
+      "totalChunks": 13,
+      "username": "kaden.t.bevan",
+      "videoId": "f131667u184732093_video_1735498635104",
+      "videoUrl": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg",
+      "topics": [
+        {
+          "name": "Tool Comparison",
+          "relevance": 1,
+          "context": "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
+        },
+        {
+          "name": "Home Renovation",
+          "relevance": 0.8,
+          "context": "The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."
+        },
+        {
+          "name": "Accuracy and Ease of Use",
+          "relevance": 0.95,
+          "context": "The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."
+        }
+      ]
+    }
+  },
+  {
+    "id": "f131667u184732093_video_1735498635104_scene_3",
+    "score": 0.467389107,
+    "metadata": {
+      "contentType": "video_analysis",
+      "instaId": "17841470348429979",
+      "keywords": [
+        "Franklin Sensors",
+        "precision level",
+        "digital level",
+        "bubble level",
+        "tool comparison",
+        "home renovation",
+        "tiling",
+        "accuracy",
+        "LED display",
+        "DIY tools",
+        "bathroom renovation",
+        "Franklin Sensors Precision Level",
+        "tiled floor"
+      ],
+      "mediaType": "Post",
+      "name": "KadenBevan",
+      "processedAt": "2024-12-29T18:57:15.104Z",
+      "sectionTitle": "Visual Content",
+      "sequenceNumber": 4,
+      "timestamp": "2024-12-29T18:57:15.104Z",
+      "topicsJson": "[{\"name\":\"Tool Comparison\",\"relevance\":1,\"context\":\"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages.\"},{\"name\":\"Home Renovation\",\"relevance\":0.8,\"context\":\"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.\"},{\"name\":\"Accuracy and Ease of Use\",\"relevance\":0.95,\"context\":\"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.\"}]",
+      "totalChunks": 13,
+      "username": "kaden.t.bevan",
+      "videoId": "f131667u184732093_video_1735498635104",
+      "videoUrl": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg",
+      "topics": [
+        {
+          "name": "Tool Comparison",
+          "relevance": 1,
+          "context": "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
+        },
+        {
+          "name": "Home Renovation",
+          "relevance": 0.8,
+          "context": "The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."
+        },
+        {
+          "name": "Accuracy and Ease of Use",
+          "relevance": 0.95,
+          "context": "The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."
+        }
+      ]
+    }
+  }
+]
+[Message Webhook] Evaluating match: {
+  score: 0.615180612,
+  title: undefined,
+  keywords: [
+    'Franklin Sensors',
+    'precision level',
+    'digital level',
+    'bubble level',
+    'tool comparison',
+    'home renovation',
+    'tiling',
+    'accuracy',
+    'LED display',
+    'DIY tools'
+  ],
+  topics: [
+    {
+      name: 'Tool Comparison',
+      relevance: 1,
+      context: "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
+    },
+    {
+      name: 'Home Renovation',
+      relevance: 0.8,
+      context: 'The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.'
+    },
+    {
+      name: 'Accuracy and Ease of Use',
+      relevance: 0.95,
+      context: 'The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.'
+    }
+  ]
+}
+[Message Webhook] 1 matches above threshold: [
+  {
+    score: 0.615180612,
+    videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg',
+    videoId: 'f131667u184732093_video_1735498635104',
+    keywords: [
+      'Franklin Sensors',
+      'precision level',
+      'digital level',
+      'bubble level',
+      'tool comparison',
+      'home renovation',
+      'tiling',
+      'accuracy',
+      'LED display',
+      'DIY tools'
+    ],
+    sectionTitle: 'Overview'
+  }
+]
+[Message Webhook] Preparing to send video: https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg
+[Message Webhook] Sending video found notification
+[Message Service] Sending message: {
+  user_ns: 'f131667u184732093',
+  type: 'RESPONSE',
+  messageLength: 69,
+  messagePreview: 'I found a video that matches your description. Let...'
+}
+[Message Service] Webhook response: {
+  status: 200,
+  statusText: 'OK',
+  headers: {
+    'access-control-allow-origin': '*',
+    'alt-svc': 'h3=":443"; ma=86400',
+    'cache-control': 'no-cache, private',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '8f9c0d90eb054454-BOM',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Sun, 29 Dec 2024 19:03:56 GMT',
+    nel: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}',
+    'report-to': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=FIT7THyLcy%2F%2BaCBbFTEnv4pXQiMZUwAgiloXaijMw9DfSf3tHawdg%2BUCf%2BIPcIeGJxNUugO5PiD%2BJNhAbD2s9FxsLf64305aFPqqnsVOIk%2FiXNk2sCcnBkj6PJkxyGCibYoS"}],"group":"cf-nel","max_age":604800}',
+    server: 'cloudflare',
+    'server-timing': 'cfL4;desc="?proto=TCP&rtt=6071&min_rtt=1048&rtt_var=10259&sent=8&recv=8&lost=0&retrans=0&sent_bytes=1798&recv_bytes=1543&delivery_rate=3798561&cwnd=254&unsent_bytes=0&cid=99c4797202a28c99&ts=1937&x=0"',
+    'transfer-encoding': 'chunked',
+    vary: 'Accept-Encoding',
+    'x-content-type-options': 'nosniff',
+    'x-ratelimit-limit': '500',
+    'x-ratelimit-remaining': '488',
+    'x-xss-protection': '1; mode=block'
+  },
+  body: '{"status":"ok"}'
+}
+[Message Webhook] Successfully sent video found notification
+[Message Webhook] Attempting to send video (attempt 1/3): https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg
+[Message Service] Sending video: {
+  user_ns: 'f131667u184732093',
+  type: 'ANALYSIS_RESULT',
+  url: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg',
+  urlLength: 306
+}
+[Message Service] Video webhook response: {
+  status: 200,
+  statusText: 'OK',
+  headers: {
+    'access-control-allow-origin': '*',
+    'alt-svc': 'h3=":443"; ma=86400',
+    'cache-control': 'no-cache, private',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '8f9c0d953d564454-BOM',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Sun, 29 Dec 2024 19:03:57 GMT',
+    nel: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}',
+    'report-to': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=m74yOEYf712CknZlYBd%2FjIOmrS3%2F483L2O%2FJi3hPu5C%2BGGUusL14gt9gEdXj6FyZRzBeu%2FJdEgitMMFAHM35bVh5OlW9pkg8lmiSwGBfXQ7O3wP1MeA%2B7E4B3Drysy5eIW%2BI"}],"group":"cf-nel","max_age":604800}',
+    server: 'cloudflare',
+    'server-timing': 'cfL4;desc="?proto=TCP&rtt=4898&min_rtt=1048&rtt_var=7805&sent=11&recv=11&lost=0&retrans=0&sent_bytes=2911&recv_bytes=2208&delivery_rate=3798561&cwnd=256&unsent_bytes=0&cid=99c4797202a28c99&ts=2619&x=0"',
+    'transfer-encoding': 'chunked',
+    vary: 'Accept-Encoding',
+    'x-content-type-options': 'nosniff',
+    'x-ratelimit-limit': '500',
+    'x-ratelimit-remaining': '487',
+    'x-xss-protection': '1; mode=block'
+  },
+  body: '{"status":"ok"}'
+}
+[Message Webhook] Successfully sent video: { status: 'SENT', response: { status: 'ok' } }
+ ✓ Compiled in 736ms (1009 modules)
+ ✓ Compiled in 346ms (493 modules)
+ ✓ Compiled in 287ms (493 modules)
+ ✓ Compiled in 163ms (493 modules)
+ ✓ Compiled in 798ms (995 modules)

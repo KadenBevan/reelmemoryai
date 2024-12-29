@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Pinecone } from '@pinecone-database/pinecone';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || '');
+import { EmbeddingService } from '@/services/embeddings';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   console.log('[Query] Starting similarity search...');
@@ -14,22 +12,25 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: 'Search query is required' }, { status: 400 });
     }
 
-    // Initialize Pinecone
+    // Initialize services
     const pinecone = new Pinecone({
       apiKey: process.env.PINECONE_API_KEY || ''
     });
+    const embeddingService = new EmbeddingService();
     
     // Get index and namespace
     const index = pinecone.index('data-index');
-    const namespace = 'test-namespace';
+    const namespace = request.nextUrl.searchParams.get('namespace') || 'f131667u184732093';
     
-    // Create query vector
-    const model = genAI.getGenerativeModel({ model: "embedding-001" });
-    const queryEmbedding = await model.embedContent(searchQuery);
+    // Create query vector using OpenAI embeddings
+    console.log('[Query] Generating query embedding...');
+    const queryVector = await embeddingService.generateEmbedding(searchQuery);
+    console.log('[Query] Generated vector of length:', queryVector.length);
     
     // Perform the query
+    console.log('[Query] Querying namespace:', namespace);
     const queryResponse = await index.namespace(namespace).query({
-      vector: queryEmbedding.embedding.values,
+      vector: queryVector,
       topK: 2,
       includeMetadata: true
     });
@@ -38,7 +39,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: 'Query completed successfully',
       searchQuery,
       matches: queryResponse.matches,
-      namespace
+      namespace,
+      vectorDimension: queryVector.length
     }, { status: 200 });
   } catch (error) {
     console.error('[Query] Error:', error);

@@ -1,26 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || '');
+import { EmbeddingService } from '@/services/embeddings';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   console.log('[Embeddings] Creating test embeddings...');
   
   try {
-    const model = genAI.getGenerativeModel({ model: "embedding-001" });
+    const embeddingService = new EmbeddingService();
     
     const testText = "A comprehensive guide to summer recipes and outdoor cooking";
-    const embeddingResult = await model.embedContent(testText);
+    console.log('[Embeddings] Generating embedding for test text...');
+    const vector = await embeddingService.generateEmbedding(testText);
     
-    // Extract the values array from the embedding
-    const vector = embeddingResult.embedding.values;
+    console.log('[Embeddings] Generated vector of length:', vector.length);
     
     return NextResponse.json({ 
       message: 'Embedding created successfully',
       text: testText,
       vectorDimension: vector.length,
       vectorPreview: vector.slice(0, 5),
-      isCorrectDimension: vector.length === 768,
+      isCorrectDimension: vector.length === 3072,
       readyForPinecone: true
     }, { status: 200 });
   } catch (error) {

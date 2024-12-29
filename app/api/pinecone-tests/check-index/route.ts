@@ -20,8 +20,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       message: 'Index verified',
       indexes: indexList,
       stats: indexStats,
-      host: 'data-index-dfp3t1f.svc.gcp-us-central1-4a9f.pinecone.io',
-      dimension: 3072,
+      host: 'data-index-dfp3t1f.svc.apw5-4e34-81fa.pinecone.io',
+      dimension: 1536,
       metric: 'cosine'
     }, { status: 200 });
   } catch (error) {

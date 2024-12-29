@@ -1,32 +1,55 @@
-import { GoogleGenerativeAI, GenerativeModel} from '@google/generative-ai';
+import { GoogleGenerativeAI, GenerativeModel } from '@google/generative-ai';
 import { GoogleAIFileManager } from '@google/generative-ai/server';
 import * as fs from 'node:fs/promises';
 
 export enum AnalysisMode {
-  PARAGRAPH = 'PARAGRAPH',
-  RECIPE = 'RECIPE'
+  STRUCTURED = 'STRUCTURED'
 }
-
-const ANALYSIS_PROMPTS = {
-  [AnalysisMode.PARAGRAPH]: await fs.readFile('prompts/paragraph-prompt.txt', 'utf8'), 
-  [AnalysisMode.RECIPE]: await fs.readFile('prompts/recipe-prompt.txt', 'utf8'),
-};
 
 const MODEL_NAME = "gemini-2.0-flash-exp";
 
 const GENERATION_CONFIG = {
-  temperature: 1,
+  temperature: 0.7,
+  topP: 0.8,
+  topK: 40,
   maxOutputTokens: 8192,
-  responseMimeType: "text/plain",
 };
 
+export interface VideoAnalysis {
+  title: string;
+  summary: string;
+  visualContent: Array<{
+    timestamp: string;
+    scene: string;
+    keyElements: string[];
+  }>;
+  audioContent: {
+    speech: string;
+    music: string;
+    soundEffects: string[];
+  };
+  topics: Array<{
+    name: string;
+    relevance: number;
+    context: string;
+  }>;
+  technicalDetails: {
+    quality: string;
+    effects: string[];
+    editing: string;
+  };
+  searchableKeywords: string[];
+}
+
+// Analysis prompt for structured output
+const STRUCTURED_ANALYSIS_PROMPT = await fs.readFile('./prompts/paragraph-prompt.txt', 'utf8');
 
 export class GeminiService {
   private genAI: GoogleGenerativeAI;
   private model: GenerativeModel;
   private fileManager: GoogleAIFileManager;
   private apiKey: string;
-  private readonly MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB in bytes
+  private readonly MAX_FILE_SIZE = 2 * 1024 * 1024 * 1024; // 2GB in bytes (Gemini File API limit)
 
   constructor() {
     this.apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY || '';
@@ -36,7 +59,6 @@ export class GeminiService {
 
     this.genAI = new GoogleGenerativeAI(this.apiKey);
     this.fileManager = new GoogleAIFileManager(this.apiKey);
-
     this.model = this.genAI.getGenerativeModel({
       model: MODEL_NAME,
       generationConfig: GENERATION_CONFIG,
@@ -44,23 +66,25 @@ export class GeminiService {
   }
 
   /**
-   * Analyzes a video using the chat session approach with file upload
+   * Analyzes a video using structured output
    */
-  public async analyzeVideoWithUpload(localFilePath: string, mimeType: string, mode: AnalysisMode): Promise<string> {
+  public async analyzeVideoWithStructuredOutput(localFilePath: string, mimeType: string): Promise<VideoAnalysis> {
     try {
-      // Check if file exists and size
+      console.log('[Gemini Service] Starting structured video analysis');
+
+      // Check file size
       const stats = await fs.stat(localFilePath);
       if (stats.size > this.MAX_FILE_SIZE) {
         throw new Error(`File size (${stats.size} bytes) exceeds maximum allowed size (${this.MAX_FILE_SIZE} bytes)`);
       }
 
-      // 1. Upload the file to Gemini
+      // Upload file to Gemini
+      console.log('[Gemini Service] Uploading file to Gemini');
       const uploadedFile = await this.uploadToGemini(localFilePath, mimeType);
-
-      // 2. Wait for file to be active
       await this.waitForFilesActive([uploadedFile]);
+      console.log('[Gemini Service] File uploaded and active');
 
-      // 3. Start a chat session with the uploaded file
+      // Start chat session with the uploaded file
       const chatSession = this.model.startChat({
         history: [
           {
@@ -77,15 +101,32 @@ export class GeminiService {
         ],
       });
 
-      // 4. Send the analysis prompt
-      const result = await chatSession.sendMessage([
-        "Analyze the video and generate a response based on the mode specified.",
-        ANALYSIS_PROMPTS[mode]
-      ]);
+      // Send analysis prompt
+      console.log('[Gemini Service] Sending analysis prompt');
+      const result = await chatSession.sendMessage(STRUCTURED_ANALYSIS_PROMPT);
+      const response = await result.response;
+      
+      try {
+        // Extract JSON from markdown code block if present
+        const text = response.text();
+        const jsonMatch = text.match(/```json\s*(\{[\s\S]*\})\s*```/) || text.match(/\{[\s\S]*\}/);
+        
+        if (!jsonMatch) {
+          console.error('[Gemini Service] No JSON found in response:', text);
+          throw new Error('No JSON found in Gemini response');
+        }
 
-      return result.response.text();
+        const jsonStr = jsonMatch[1] || jsonMatch[0];
+        const structuredResponse = JSON.parse(jsonStr) as VideoAnalysis;
+        console.log('[Gemini Service] Analysis output:', JSON.stringify(structuredResponse, null, 2));
+        console.log('[Gemini Service] Successfully generated structured analysis');
+        return structuredResponse;
+      } catch (error) {
+        console.error('[Gemini Service] Error parsing JSON response:', error);
+        throw new Error('Failed to parse structured response from Gemini');
+      }
     } catch (error: any) {
-      console.error('Error analyzing video:', error);
+      console.error('[Gemini Service] Error in video analysis:', error);
       throw new Error(`Gemini API error: ${error.message}`);
     }
   }
@@ -99,7 +140,7 @@ export class GeminiService {
       displayName: path,
     });
     const file = uploadResult.file;
-    console.log(`Uploaded file ${file.displayName} as: ${file.name}`);
+    console.log(`[Gemini Service] Uploaded file ${file.displayName} as: ${file.name}`);
     return file;
   }
 
@@ -107,11 +148,11 @@ export class GeminiService {
    * Waits for all files to become active
    */
   private async waitForFilesActive(files: any[]) {
-    console.log("Waiting for file processing...");
+    console.log("[Gemini Service] Waiting for file processing...");
     for (const name of files.map((file) => file.name)) {
       let file = await this.fileManager.getFile(name);
       let attempts = 0;
-      const maxAttempts = 30; // Maximum 5 minutes of waiting (30 attempts * 10 seconds)
+      const maxAttempts = 30;
 
       while (file.state === "PROCESSING" && attempts < maxAttempts) {
         process.stdout.write(".");
@@ -124,6 +165,25 @@ export class GeminiService {
         throw Error(`File ${file.name} failed to process (state=${file.state})`);
       }
     }
-    console.log("...all files ready\n");
+    console.log("[Gemini Service] All files ready");
+  }
+
+  /**
+   * Generates a text response using the Gemini model
+   */
+  public async generateResponse(prompt: string): Promise<string> {
+    try {
+      console.log('[Gemini Service] Generating response for prompt length:', prompt.length);
+
+      const result = await this.model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+
+      console.log('[Gemini Service] Successfully generated response of length:', text.length);
+      return text;
+    } catch (error: any) {
+      console.error('[Gemini Service] Error generating response:', error);
+      throw new Error(`Gemini API error: ${error.message}`);
+    }
   }
 } 

@@ -46,7 +46,8 @@ export class AuthService {
         userId: result.user.uid,
         email: result.user.email!,
         displayName: result.user.displayName || undefined,
-        createdAt: new Date()
+        createdAt: new Date(),
+        instagramUsername: result.user.displayName || ''
       })
 
       console.log('[AuthService] Google sign in successful:', result.user.uid)

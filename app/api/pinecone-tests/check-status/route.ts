@@ -9,24 +9,24 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       apiKey: process.env.PINECONE_API_KEY || ''
     });
 
-    const indexList = await pinecone.listIndexes();
-    const dataIndex = indexList.indexes?.find(index => index.name === 'data-index');
+    // Get direct index description
+    const indexDescription = await pinecone.describeIndex('data-index');
+    console.log('[CheckStatus] Raw index description:', JSON.stringify(indexDescription, null, 2));
 
-    if (!dataIndex) {
-      return NextResponse.json({ 
-        error: 'Index not found',
-        status: 'missing'
-      }, { status: 404 });
-    }
-
+    // Get index stats
+    const index = pinecone.index('data-index');
+    const indexStats = await index.describeIndexStats();
+    
     return NextResponse.json({ 
       message: 'Index status retrieved',
-      name: dataIndex.name,
-      status: dataIndex.status,
-      host: dataIndex.host,
-      dimension: dataIndex.dimension,
-      metric: dataIndex.metric,
-      spec: dataIndex.spec
+      name: 'data-index',
+      status: indexDescription.status,
+      host: indexDescription.host,
+      dimension: indexDescription.dimension,
+      metric: indexDescription.metric,
+      spec: indexDescription.spec,
+      stats: indexStats,
+      rawDescription: indexDescription // Include raw description for debugging
     }, { status: 200 });
   } catch (error) {
     console.error('[CheckStatus] Error:', error);

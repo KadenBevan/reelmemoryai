@@ -1,47 +1,77 @@
+Your task is to perform a meticulous transcription and comprehensive analysis of the video. Follow these detailed guidelines to produce a thorough, engaging, and information-rich response:
 
-Your task is to perform a detailed and comprehensive analysis of the video, producing an extensive, information-rich response. Follow these enhanced guidelines to ensure your output is thorough, accurate, and engaging:
+1. Transcription
+Transcribe the spoken words from the video as accurately as possible, maintaining the original tone and context. Ensure that every dialogue, narration, and key phrase is captured.
+Include timestamps for major segments or changes in dialogue to aid reference and navigation.
+2. Title and Description
+Identify the title of the video.
+Write a detailed summary of the video’s content, covering its central theme, purpose, and scope. Highlight what viewers can expect to gain or learn from the video.
+3. Key Points and Themes
+Break down the core topics into distinct themes.
+Provide an in-depth explanation of each theme, discussing its relevance and significance.
+Analyze the central messages or objectives and connect them to broader societal, educational, or creative contexts.
+Cite any supporting evidence, examples, or anecdotes presented in the video.
+4. Scenes and Visuals
+Describe the most impactful scenes in vivid detail, focusing on their composition, setting, and emotional tone.
+Discuss elements like lighting, color palette, cinematography, and visual storytelling techniques and how they enhance the viewer’s experience or deepen the video’s message.
+5. Audio and Dialogue
+Analyze the audio elements of the video, including background music, sound effects, and the use of silence.
+Highlight and interpret significant pieces of dialogue or narration, considering their emotional weight, delivery, and contribution to the video’s themes.
+Comment on the overall tone, pacing, and delivery of audio components and their alignment with the visuals.
+6. Characters and Personalities
+Identify and describe the main individuals or characters featured in the video.
+Discuss their roles, motivations, and contributions to the video’s narrative or message.
+Reflect on how these characters are portrayed visually and emotionally, and their potential connection to the audience.
+7. Technical Elements
+Provide an analysis of the video’s technical aspects, such as camera angles, shot transitions, editing choices, and special effects.
+Evaluate the production quality and its influence on viewer engagement.
+Discuss any innovative techniques, such as time-lapse, slow motion, or experimental framing, and their impact on storytelling.
+8. Context and Background Information
+Research and include relevant background details about the video’s creator(s), production team, and intended audience.
+Discuss the cultural, historical, or social context influencing the video.
+Analyze the video’s purpose or intended impact, exploring why it was made and its relevance.
+9. Personal Insights and Critical Analysis
+Offer a thoughtful critique of the video, identifying strengths and areas for improvement.
+Provide constructive suggestions for enhancing its effectiveness.
+Reflect on how the video resonates with its audience—whether it’s inspiring, thought-provoking, or impactful.
+10. Summary and Conclusion
+Summarize the video’s content, key takeaways, and most impactful aspects.
+Conclude with your final thoughts on the video’s overall significance and value.
+Ensure your response is thorough, detailed, and structured according to these sections. Avoid including extraneous information or deviating from this format.
 
-Title and Description:
+`Analyze this video comprehensively and provide a structured response.
+Focus on capturing all key visual and audio elements, main topics, and technical aspects.
+Be specific and detailed in your observations.
+Ensure timestamps are provided where relevant.
+Include searchable keywords that would help users find this content later.
 
-Begin by identifying the title of the video and providing a concise yet comprehensive overview of its content. Your description should touch on the central theme, purpose, and scope of the video while hinting at what viewers might expect to gain or learn from watching.
-Key Points and Themes:
-
-Highlight the core topics addressed in the video, breaking them down into distinct, clear themes. Provide a deep dive into each theme, explaining its relevance and significance.
-Reflect on the central messages or objectives of the video. How do these tie into larger societal, educational, or creative contexts?
-Discuss supporting evidence, examples, or anecdotes shared in the video that enhance the key points.
-Scenes and Visuals:
-
-Describe in detail the most impactful scenes or visuals, including their composition, setting, and emotional tone. Use vivid language to capture what makes these moments stand out.
-Consider elements like lighting, color palette, cinematography, and how they enhance the viewer's experience or convey deeper meaning.
-Audio and Dialogue:
-
-Analyze the audio landscape of the video. Discuss the role of background music, sound effects, and silence in shaping the video’s atmosphere.
-Highlight key pieces of dialogue or narration, exploring their meaning, emotional weight, or contribution to the overall message.
-Comment on the tone, pacing, and delivery of audio elements. How do they align with or enhance the video’s visuals and themes?
-Characters and Personalities:
-
-Identify and describe the main individuals featured in the video.
-Detail their roles, motivations, and contributions to the narrative or message.
-Explore how these characters are portrayed visually, emotionally, and through dialogue or action. Consider the viewer’s potential connection to them.
-Technical Elements:
-
-Provide a technical analysis of the video, covering aspects like camera angles, shot transitions, editing choices, and special effects.
-Evaluate the overall production quality and its influence on the viewer’s engagement.
-Discuss any innovative or notable techniques used, such as time-lapse, slow motion, or unique framing.
-Context and Background Information:
-
-Research and present relevant background details about the video, including its creator(s), production team, and intended audience.
-Discuss the cultural, historical, or social context that informs the video.
-Examine the video’s purpose or message—why was it made, and what is its intended impact?
-Personal Insights and Critical Analysis:
-
-Share a well-rounded, thoughtful critique of the video. What works well, and why?
-Identify potential areas for improvement, offering constructive suggestions.
-Reflect on how the video resonates with you or its audience—was it effective, inspiring, or thought-provoking?
-Summary and Conclusion:
-
-Wrap up your analysis with a comprehensive summary of the video’s content and key takeaways.
-Reiterate its most impactful aspects and conclude with your final thoughts on the video’s overall significance or value.
-
-Your response should be long and thorough.
-Your response should not contain any other text other than the response format. Do not include the quotation.
+Your response must be valid JSON matching this structure:
+{
+  "title": "Brief title of the video",
+  "summary": "Concise overview of the content",
+  "visualContent": [
+    {
+      "timestamp": "MM:SS",
+      "scene": "Description of the scene",
+      "keyElements": ["element1", "element2"]
+    }
+  ],
+  "audioContent": {
+    "speech": "Description of spoken content",
+    "music": "Description of background music",
+    "soundEffects": ["effect1", "effect2"]
+  },
+  "topics": [
+    {
+      "name": "Topic name",
+      "relevance": 0.9,
+      "context": "How this topic appears in the video"
+    }
+  ],
+  "technicalDetails": {
+    "quality": "Video quality description",
+    "effects": ["effect1", "effect2"],
+    "editing": "Description of editing style"
+  },
+  "searchableKeywords": ["keyword1", "keyword2"]
+}`
