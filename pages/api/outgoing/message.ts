@@ -1,9 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import fetch from 'node-fetch';
 import { addOutgoingMessage } from '@/lib/firebase/webhook-store';
+import { WEBHOOK_URLS } from '@/lib/messages/constants';
 
-// Constants for webhook URL
-const UCHAT_MESSAGE_WEBHOOK = 'https://www.uchat.com.au/api/iwh/e324707933d909f6b05adac82cfa920a';
+// Validate webhook URL
+if (!WEBHOOK_URLS.MESSAGE) {
+  console.error('[Outgoing Message Webhook] Missing webhook URL configuration');
+  throw new Error('Missing webhook URL configuration');
+}
 
 interface MessagePayload {
   user_ns: string;
@@ -36,7 +40,7 @@ export default async function handler(
     };
 
     // Send to uChat webhook
-    const response = await fetch(UCHAT_MESSAGE_WEBHOOK, {
+    const response = await fetch(WEBHOOK_URLS.MESSAGE, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

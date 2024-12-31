@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { upsertWebhookUser } from '@/lib/firebase/webhook-store';
 import { messageService } from '@/lib/messages';
+import { isVideoAlreadyProcessed } from '@/lib/pinecone';
 import { MESSAGES } from '@/lib/messages/constants';
-import { enqueueVideoProcessing } from '@/services/queue';
+import { QueueService } from '@/services/queue';
 
 interface VideoWebhookBody {
   videoUrl: string;
@@ -45,67 +46,55 @@ export default async function handler(
       });
     }
 
+    // Check if video is already processed
+    const isProcessed = await isVideoAlreadyProcessed(body.userNS, body.videoUrl);
+    if (isProcessed) {
+      console.log('[Video Webhook] Video already processed, skipping:', body.videoUrl);
+      return res.status(200).json({
+        success: true,
+        message: 'Video already processed'
+      });
+    }
+
     // Log MediaType details for debugging
     console.log('[Video Webhook] MediaType details:', {
-      rawMediaType: body.MediaType,
-      typeofMediaType: typeof body.MediaType,
-      bodyKeys: Object.keys(body)
+      mediaType: body.MediaType,
+      url: body.videoUrl
     });
 
-    // Upsert webhook user with namespace
-    console.log('[Firestore Webhook] Upserting webhook user:', body.userNS);
-    await upsertWebhookUser({
-      name: body.name,
-      username: body.username,
-      userNS: body.userNS,
-      InstaId: body.InstaId
-    });
+    // Initialize queue service
+    const queueService = await QueueService.getInstance();
 
-    // Generate job ID
-    const jobId = `job_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-    // Enqueue video processing job
-    await enqueueVideoProcessing({
-      jobId,
-      videoUrl: body.videoUrl,
-      userNS: body.userNS,
-      metadata: {
+    // Queue the video for processing
+    await queueService.enqueueVideoProcessing(
+      body.userNS,
+      body.videoUrl,
+      {
         mediaType: body.MediaType || 'unknown',
         instaId: body.InstaId,
         username: body.username,
         name: body.name
-      },
-      status: 'pending'
-    });
+      }
+    );
 
-    // Send acknowledgment message
-    await messageService.sendMessage({
-      user_ns: body.userNS,
-      message: MESSAGES.VIDEO_RECEIVED,
-      type: 'ACKNOWLEDGMENT'
+    // Store webhook user data
+    await upsertWebhookUser({
+      userNS: body.userNS,
+      name: body.name,
+      username: body.username,
+      InstaId: body.InstaId
     });
 
     return res.status(200).json({
       success: true,
-      message: 'Video processing queued',
-      jobId
+      message: 'Video queued for processing'
     });
 
   } catch (error) {
     console.error('[Video Webhook] Error processing video:', error);
-    
-    if (req.body.userNS) {
-      await messageService.sendMessage({
-        user_ns: req.body.userNS,
-        message: MESSAGES.VIDEO_PROCESSING_ERROR,
-        type: 'ERROR'
-      });
-    }
-    
     return res.status(500).json({
       success: false,
-      message: 'Error processing video',
-      error: error instanceof Error ? error.message : String(error)
+      message: 'Internal server error'
     });
   }
 } 

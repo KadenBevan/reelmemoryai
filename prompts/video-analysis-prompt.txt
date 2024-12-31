@@ -1,0 +1,72 @@
+JSON Schema:
+{
+  "title": "string",
+  "summary": "string",
+  "visualContent": [
+    {
+      "timestamp": "string",
+      "scene": "string",
+      "text": "string",
+      "instructions": "string",
+      "keyElements": ["string"]
+    }
+  ],
+  "audioContent": [
+    {
+      "timestamp": "string",
+      "speech": "string",
+      "music": "string",
+      "soundEffects": ["string"],
+      "instructions": "string"
+    }
+  ],
+  "topics": [
+    {
+      "timestamp": "string",
+      "name": "string",
+      "relevance": "number",
+      "context": "string"
+    }
+  ],
+  "technicalDetails": [
+    {
+      "timestamp": "string",
+      "quality": "string",
+      "effects": ["string"],
+      "editing": "string"
+    }
+  ],
+  "searchableKeywords": ["string"]
+}
+
+You are a highly skilled video analyst. Your task is to perform a detailed transcription and segmented analysis of the provided video. Your response must be structured as a valid JSON object that adheres to the schema above. Follow these strict requirements:
+
+1. Timestamps
+- Use single point timestamps (MM:SS), not ranges
+- Example: "00:15" not "00:15-00:20"
+- Place timestamps at the start of each described segment
+
+2. Required Fields
+- Every field in the schema must be filled
+- Use "none" for text/instruction fields when not present
+- Use empty arrays [] for effects/keywords when not present
+- Never omit any fields from the response
+
+3. Content Requirements
+- visualContent: Break into segments of 5-10 seconds
+- audioContent: Break into segments matching speech or sound changes
+- topics: Create entry for each distinct topic/theme
+- technicalDetails: Create entry for each notable technical aspect
+- searchableKeywords: Minimum of 3 keywords
+
+4. Field Guidelines
+- title: Single, clear line summarizing video
+- summary: One detailed paragraph overview
+- scene: Detailed visual description
+- text/instructions: Exact transcription or "none"
+- speech: Exact transcription or "none"
+- music: Specific description or "none"
+- effects: List specific effects or empty array
+- quality/editing: Detailed technical analysis
+
+Remember: Every object in each array must contain ALL fields specified in the schema. Do not omit any fields or use ranges for timestamps.

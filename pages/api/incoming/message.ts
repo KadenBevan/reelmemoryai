@@ -1,414 +1,248 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { EmbeddingService } from '@/services/embeddings';
+import { MessageService } from '@/services/message';
+import { RAGEnhancedSearch } from '@/services/search';
 import { GeminiService } from '@/services/gemini';
-import { queryUserData } from '@/lib/pinecone';
-import { VectorMetadata } from '@/lib/pinecone';
-import { addIncomingMessage } from '@/lib/firebase/webhook-store';
-import { messageService } from '@/lib/messages';
-import { MESSAGES } from '@/lib/messages/constants';
-import { MessagePayload, VideoPayload } from '@/lib/messages/types';
-import { ScoredPineconeRecord } from '@pinecone-database/pinecone';
+import { FirestoreService } from '@/services/firestore';
+import fs from 'fs';
 
-// Constants
-const TOP_K_MATCHES = 5;
-const SIMILARITY_THRESHOLD = 0.6;
+interface Chunk {
+  content: string;
+  timestamp: string;
+  type: string;
+  score: number;
+  sequenceNumber?: number;
+  sectionTitle?: string;
+}
 
-interface MessageWebhookBody {
-  InstaMsgTxt: string;
+interface VisualContent {
+  scene: string;
+  timestamp: string;
+  keyElements: string[];
+  score?: number;
+}
+
+interface Topic {
   name: string;
-  username: string;
-  InstaId: string;
-  userNS?: string;
-  MediaType?: string;
+  relevance: number;
+  context: string;
+  timestamp?: string;
 }
 
-/**
- * Formats retrieved content for RAG prompt
- */
-function formatRetrievedContent(matches: ScoredPineconeRecord<VectorMetadata>[]): string {
-  if (!matches.length) return '';
-
-  const sections = matches.reduce((acc: { [key: string]: ScoredPineconeRecord<VectorMetadata>[] }, match) => {
-    const section = match.metadata?.sectionTitle || 'Uncategorized';
-    if (!acc[section]) {
-      acc[section] = [];
-    }
-    acc[section].push(match);
-    return acc;
-  }, {});
-
-  let formattedContent = '\nRelevant Content:\n';
-  
-  for (const [section, matches] of Object.entries(sections)) {
-    formattedContent += `\n${section}:\n`;
-    matches.forEach(match => {
-      // Try to get description from topics if direct description is missing
-      let description = '';
-      if (match.metadata?.topicsJson) {
-        try {
-          const topics = JSON.parse(match.metadata.topicsJson);
-          description = topics.map((topic: any) => 
-            `${topic.name}: ${topic.context}`
-          ).join('\n');
-        } catch (e) {
-          console.error('[Message Webhook] Error parsing topics JSON:', e);
-        }
-      }
-      if (!description) {
-        description = match.metadata?.keywords?.join(', ') || 'No description available';
-      }
-      formattedContent += `- From video "${match.metadata?.videoId}":\n${description}\n`;
-    });
-  }
-
-  return formattedContent;
+interface VideoContext {
+  title: string;
+  summary: string;
+  description: string;
+  relevantContent: Chunk[];
+  audioTranscript: string;
+  visualDescriptions: VisualContent[];
+  topics: Topic[];
+  overallScore: number;
+  averageScore: number;
 }
 
-/**
- * Generates RAG prompt with retrieved content
- */
-function generateRagPrompt(query: string, retrievedContent: string): string {
-  return `You are a helpful AI assistant that helps users recall and understand content from their saved videos.
-Your task is to answer the user's question using only the information provided in the relevant content sections.
-If you cannot find a relevant answer in the provided content, say so clearly.
-Do not make up or infer information that is not explicitly present in the content.
-
-User Question: ${query}
-
-${retrievedContent}
-
-Please provide a natural, conversational response that directly answers the user's question using the relevant content.
-Include specific references to the videos where appropriate.
-Keep the response concise and focused on answering the question.`;
-}
-
-// Initialize services
-const embeddingService = new EmbeddingService();
-const geminiService = new GeminiService();
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  console.log('[Message Webhook] Request received:', {
-    method: req.method,
-    url: req.url,
-    headers: req.headers
-  });
-
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  let searchAckSent = false;
-  
   try {
-    const body = req.body as MessageWebhookBody;
-    console.log('[Message Webhook] Request body:', body);
+    // Initialize all services in parallel
+    const [
+      messageService,
+      searchService,
+      geminiService,
+      firestoreService
+    ] = await Promise.all([
+      MessageService.getInstance(),
+      RAGEnhancedSearch.getInstance(),
+      GeminiService.getInstance(),
+      FirestoreService.getInstance()
+    ]);
 
-    if (!body.InstaMsgTxt?.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: 'No message provided'
-      });
+    const { userNS, InstaMsgTxt, MediaType, InstaId, username, name } = req.body;
+    console.log('[Message Webhook] Request body:', req.body);
+
+    if (!userNS || !InstaMsgTxt) {
+      return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Store message in Firestore if userNS is provided
-    if (body.userNS) {
-      try {
-        await addIncomingMessage(body.userNS, {
-          text: body.InstaMsgTxt.trim(),
-          timestamp: new Date(),
-          messageId: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-        });
-        console.log('[Message Webhook] Message stored in Firestore:', body.userNS);
-      } catch (error) {
-        console.error('[Message Webhook] Error storing message:', error);
-      }
-    }
-
-    // Send immediate search acknowledgment
-    if (body.userNS) {
-      try {
-        console.log('[Message Webhook] Sending search acknowledgment to user:', body.userNS);
-        const ackResult = await messageService.sendSearchStartedAck(body.userNS);
-        searchAckSent = ackResult.success;
-        
-        if (!ackResult.success) {
-          console.error('[Message Webhook] Failed to send search acknowledgment:', {
-            error: ackResult.error,
-            status: ackResult.status,
-            response: ackResult.response
-          });
-        } else {
-          console.log('[Message Webhook] Successfully sent search acknowledgment:', {
-            status: ackResult.status,
-            response: ackResult.response
-          });
-        }
-      } catch (error) {
-        console.error('[Message Webhook] Error sending search acknowledgment:', error);
-      }
-    }
-
-    // Generate embedding for query
-    console.log('[Message Webhook] Generating embedding for query:', body.InstaMsgTxt.trim());
-    const queryVector = await embeddingService.generateEmbedding(body.InstaMsgTxt.trim());
-
-    // Query vector database
-    console.log('[Message Webhook] Querying vector database for user:', body.userNS);
-
-    // Extract key terms from the query
-    const searchTerms = body.InstaMsgTxt.toLowerCase()
-      .split(' ')
-      .filter(term => term.length > 3) // Filter out short words
-      .map(term => term.replace(/[^a-z0-9]/g, '')); // Clean terms
-
-    console.log('[Message Webhook] Search terms:', searchTerms);
-
-    const queryResponse = await queryUserData(body.userNS || '', queryVector, TOP_K_MATCHES, {
-      filter: {
-        $or: [
-          { keywords: { $in: searchTerms } },
-          { sectionTitle: { $in: ['Overview', 'Visual Content'] } }
-        ]
-      }
+    // Store message in Firestore
+    const messageId = await firestoreService.storeMessage(userNS, {
+      text: InstaMsgTxt,
+      mediaType: MediaType,
+      instaId: InstaId,
+      username,
+      name,
+      timestamp: new Date().toISOString()
     });
+    console.log('[Message Webhook] Message stored in Firestore:', messageId);
 
-    // Log full query results for debugging
-    console.log(`[Message Webhook] Found ${queryResponse.matches?.length || 0} matches:`, 
-      JSON.stringify(queryResponse.matches?.map(match => ({
-        id: match.id,
-        score: match.score,
-        metadata: {
-          ...match.metadata,
-          title: match.metadata?.title,
-          keywords: match.metadata?.keywords,
-          topics: match.metadata?.topicsJson ? JSON.parse(match.metadata.topicsJson) : []
-        }
-      })), null, 2)
-    );
+    try {
+      // Send acknowledgment
+      await messageService.sendSearchAcknowledgment(userNS);
+      console.log('[Message Webhook] Sent search acknowledgment to user:', userNS);
 
-    // Filter matches by similarity threshold
-    const relevantMatches = (queryResponse.matches || []).filter(match => {
-      // Check score threshold
-      if (!match.score || match.score < SIMILARITY_THRESHOLD) {
-        return false;
-      }
+      // Classify query intent
+      console.log('[Message Webhook] Starting query intent classification');
+      const queryIntent = await geminiService.classifyQueryIntent(InstaMsgTxt);
+      console.log('[Message Webhook] Query intent:', queryIntent);
 
-      // Check metadata exists
-      const metadata = match.metadata;
-      if (!metadata) return false;
-
-      // Log match details for debugging
-      console.log('[Message Webhook] Evaluating match:', {
-        score: match.score,
-        title: metadata.title,
-        keywords: metadata.keywords,
-        topics: metadata.topicsJson ? JSON.parse(metadata.topicsJson) : []
-      });
-
-      return true;  // If it passes score threshold and has metadata, consider it relevant
-    });
-    console.log(`[Message Webhook] ${relevantMatches.length} matches above threshold:`, 
-      relevantMatches.map(match => ({ 
-        score: match.score, 
-        videoUrl: match.metadata?.videoUrl,
-        videoId: match.metadata?.videoId,
-        keywords: match.metadata?.keywords,
-        sectionTitle: match.metadata?.sectionTitle
-      }))
-    );
-
-    if (relevantMatches.length === 0) {
-      console.log('[Message Webhook] No relevant matches found');
-      
-      if (body.userNS) {
-        let noMatchMessageSent = false;
-
-        try {
-          console.log('[Message Webhook] Sending no matches message');
-          const noMatchResult = await messageService.sendMessage({
-            user_ns: body.userNS,
-            message: MESSAGES.VIDEO_NOT_FOUND,
-            type: 'RESPONSE'
-          } as MessagePayload);
-          
-          noMatchMessageSent = noMatchResult.success;
-          if (!noMatchResult.success) {
-            console.error('[Message Webhook] Failed to send no matches message:', {
-              error: noMatchResult.error,
-              status: noMatchResult.status,
-              response: noMatchResult.response
-            });
-          } else {
-            console.log('[Message Webhook] Successfully sent no matches message');
-          }
-        } catch (error) {
-          console.error('[Message Webhook] Error sending no matches message:', error);
-        }
-
-        return res.status(200).json({
-          success: true,
-          message: 'No relevant matches found',
-          matches: [],
-          messageStatus: {
-            searchAckSent,
-            noMatchMessageSent
-          }
-        });
-      }
-
-      return res.status(200).json({
-        success: true,
-        message: 'No relevant matches found',
-        matches: [],
-        messageStatus: {
-          searchAckSent
-        }
-      });
-    }
-
-    // Send video to user with proper sequencing
-    let videoFoundSent = false;
-    let videoSent = false;
-    let videoSendAttempts = 0;
-
-    if (body.userNS && relevantMatches.length > 0 && relevantMatches[0].metadata?.videoUrl) {
-      const videoUrl = relevantMatches[0].metadata.videoUrl;
-      console.log('[Message Webhook] Preparing to send video:', videoUrl);
-      
-      // First send the "found video" message
-      try {
-        console.log('[Message Webhook] Sending video found notification');
-        const foundResult = await messageService.sendMessage({
-          user_ns: body.userNS,
-          message: MESSAGES.VIDEO_FOUND,
-          type: 'RESPONSE'
-        } as MessagePayload);
-        
-        videoFoundSent = foundResult.success;
-        if (!foundResult.success) {
-          console.error('[Message Webhook] Failed to send video found message:', {
-            error: foundResult.error,
-            status: foundResult.status,
-            response: foundResult.response
+      // Process based on intent
+      switch (queryIntent.intent) {
+        case 'RECALL_VIDEO': {
+          // Use existing direct video recall logic
+          console.log('[Message Webhook] Processing as video recall request');
+          const results = await searchService.search({
+            userId: userNS,
+            query: InstaMsgTxt,
+            topK: 5
           });
-        } else {
-          console.log('[Message Webhook] Successfully sent video found notification');
-          // Add small delay before sending video
-          await new Promise(resolve => setTimeout(resolve, 500));
-        }
-      } catch (error) {
-        console.error('[Message Webhook] Error sending video found notification:', error);
-      }
 
-      // Then send the actual video
-      const maxRetries = 3;
-      while (!videoSent && videoSendAttempts < maxRetries) {
-        videoSendAttempts++;
-        try {
-          console.log(`[Message Webhook] Attempting to send video (attempt ${videoSendAttempts}/${maxRetries}):`, videoUrl);
-          
-          const videoResult = await messageService.sendVideo({
-            user_ns: body.userNS,
-            Url: videoUrl,
-            type: 'ANALYSIS_RESULT'
-          } as VideoPayload);
-          
-          if (videoResult.success) {
-            videoSent = true;
-            console.log('[Message Webhook] Successfully sent video:', {
-              status: videoResult.status,
-              response: videoResult.response
-            });
-            break; // Exit retry loop on success
-          } else {
-            console.error(`[Message Webhook] Failed to send video (attempt ${videoSendAttempts}/${maxRetries}):`, {
-              error: videoResult.error,
-              status: videoResult.status,
-              response: videoResult.response
-            });
-            
-            if (videoSendAttempts < maxRetries) {
-              const delay = videoSendAttempts * 1000;
-              console.log(`[Message Webhook] Retrying video send in ${delay}ms`);
-              await new Promise(resolve => setTimeout(resolve, delay));
+          if (results && results.length > 0) {
+            const videoUrl = results[0].metadata?.videoUrl;
+            if (videoUrl) {
+              console.log('[Message Webhook] Preparing to send video:', videoUrl);
+              await messageService.sendVideoFoundNotification(userNS);
+              await messageService.sendVideo(userNS, videoUrl);
+              console.log('[Message Webhook] Successfully sent video');
+            } else {
+              await messageService.sendNoResultsMessage(userNS);
             }
-          }
-        } catch (error) {
-          console.error(`[Message Webhook] Error sending video (attempt ${videoSendAttempts}/${maxRetries}):`, error);
-          
-          if (videoSendAttempts < maxRetries) {
-            const delay = videoSendAttempts * 1000;
-            console.log(`[Message Webhook] Retrying video send in ${delay}ms`);
-            await new Promise(resolve => setTimeout(resolve, delay));
-          }
-        }
-      }
-
-      // Send error message if video sending failed after all retries
-      if (!videoSent) {
-        try {
-          console.log('[Message Webhook] Sending video retrieval error message');
-          const errorResult = await messageService.sendMessage({
-            user_ns: body.userNS,
-            message: MESSAGES.RETRIEVAL_ERROR,
-            type: 'ERROR'
-          } as MessagePayload);
-          
-          if (!errorResult.success) {
-            console.error('[Message Webhook] Failed to send retrieval error message:', {
-              error: errorResult.error,
-              status: errorResult.status,
-              response: errorResult.response
-            });
           } else {
-            console.log('[Message Webhook] Successfully sent retrieval error message');
+            await messageService.sendNoResultsMessage(userNS);
           }
-        } catch (error) {
-          console.error('[Message Webhook] Error sending retrieval error message:', error);
+          break;
+        }
+
+        case 'INFORMATION_QUERY': {
+          // Generate RAG-based informational response
+          console.log('[Message Webhook] Processing as information query');
+          const results = await searchService.search({
+            userId: userNS,
+            query: InstaMsgTxt,
+            topK: 5
+          });
+
+          if (results && results.length > 0) {
+            // Format video information for better context
+            const videoContexts = results.map(result => {
+              const metadata = result.metadata;
+              
+              // Extract all relevant content from chunks
+              const relevantContent = metadata.relevantChunks
+                .filter((chunk: Chunk) => chunk.score > 0.5) // Lower threshold to include more content
+                .map((chunk: Chunk) => ({
+                  content: chunk.content,
+                  timestamp: chunk.timestamp,
+                  type: chunk.type,
+                  score: chunk.score
+                }));
+
+              // Extract and format audio content
+              const audioContent = metadata.audioContent || {};
+              const audioTranscript = [
+                audioContent.speech,
+                ...(audioContent.music || []).map((m: string) => `[Music] ${m}`),
+                ...(audioContent.soundEffects || []).map((s: string) => `[SFX] ${s}`)
+              ].filter(Boolean).join('\n');
+              
+              // Get all visual descriptions
+              const visualDescriptions = (metadata.visualContent || [])
+                .map((content: VisualContent) => ({
+                  scene: content.scene,
+                  timestamp: content.timestamp,
+                  keyElements: content.keyElements
+                }))
+                .sort((a: VisualContent, b: VisualContent) => 
+                  (a.timestamp || '').localeCompare(b.timestamp || '')
+                );
+
+              // Get all topics with their context
+              const topics = (metadata.topics || [])
+                .map((topic: Topic) => ({
+                  name: topic.name,
+                  relevance: topic.relevance,
+                  context: topic.context,
+                  timestamp: topic.timestamp
+                }))
+                .sort((a: Topic, b: Topic) => b.relevance - a.relevance);
+
+              return {
+                title: metadata.title || '',
+                summary: metadata.summary || '',
+                description: metadata.description || '',
+                relevantContent,
+                audioTranscript,
+                visualDescriptions,
+                topics,
+                overallScore: result.score || 0,
+                averageScore: result.avgScore || 0
+              } as VideoContext;
+            });
+
+            // Sort videos by overall relevance
+            videoContexts.sort((a, b) => b.overallScore - a.overallScore);
+
+            // Read the response generation prompt template
+            const promptTemplate = await fs.readFileSync('prompts/response-generation-prompt.txt', 'utf-8');
+
+            // Construct the complete prompt with replacements
+            const completePrompt = promptTemplate
+              .replace('${query}', InstaMsgTxt)
+              .replace('${videoContexts}', videoContexts.map((ctx, i) => `
+                Video ${i + 1} (Relevance Score: ${(ctx.overallScore * 100).toFixed(1)}%):
+                
+                Title: ${ctx.title}
+                Summary: ${ctx.summary}
+                Description: ${ctx.description}
+                
+                Most Relevant Content:
+                ${ctx.relevantContent.map(content => `
+                  - [${content.timestamp}] ${content.content} (Relevance: ${(content.score * 100).toFixed(1)}%)
+                `).join('\n')}
+                
+                Key Visual Elements:
+                ${ctx.visualDescriptions.map(visual => `
+                  - [${visual.timestamp}] Scene: ${visual.scene}
+                    Elements: ${visual.keyElements.join(', ')}
+                `).join('\n')}
+                
+                Audio Transcript:
+                ${ctx.audioTranscript || 'No transcript available'}
+                
+                Relevant Topics:
+                ${ctx.topics.map(topic => `
+                  - ${topic.name} (Relevance: ${(topic.relevance * 100).toFixed(1)}%)
+                    Context: ${topic.context}
+                    ${topic.timestamp ? `Timestamp: ${topic.timestamp}` : ''}
+                `).join('\n')}
+              `).join('\n\n'));
+
+            // Log the complete prompt
+            console.log('[Message Webhook] Complete Prompt:', completePrompt);
+
+            // Generate informative response using Gemini
+            const response = await geminiService.generateResponse(completePrompt);
+
+            console.log('[Message Webhook] Gemini Response:', response);
+            // Send the response
+            await messageService.sendTextResponse(userNS, response);
+          } else {
+            await messageService.sendNoResultsMessage(userNS);
+          }
+          break;
         }
       }
-    }
 
-    return res.status(200).json({
-      success: true,
-      message: 'Message processed successfully',
-      messageStatus: {
-        searchAckSent,
-        videoFoundSent,
-        videoSent,
-        attempts: videoSendAttempts
-      }
-    });
+      return res.status(200).json({ success: true, messageId });
+    } catch (error) {
+      console.error('[Message Webhook] Error processing message:', error);
+      // Send error message to user
+      await messageService.sendMessage(userNS, "I'm sorry, I encountered an error processing your message. Please try again.");
+      return res.status(500).json({ error: 'Error processing message' });
+    }
   } catch (error) {
     console.error('[Message Webhook] Error:', error);
-    
-    // Send error message to user if userNS is provided
-    if (req.body.userNS) {
-      try {
-        const errorResult = await messageService.sendMessage({
-          user_ns: req.body.userNS,
-          message: MESSAGES.GENERAL_ERROR,
-          type: 'ERROR'
-        });
-        if (!errorResult.success) {
-          console.error('[Message Webhook] Failed to send error message:', errorResult.error);
-        }
-      } catch (msgError) {
-        console.error('[Message Webhook] Error sending error message:', msgError);
-      }
-    }
-
-    return res.status(500).json({
-      success: false,
-      message: 'Internal server error',
-      error: (error as Error).message,
-      messageStatus: {
-        searchAckSent,
-        errorSent: req.body.userNS ? true : false
-      }
-    });
+    return res.status(500).json({ error: 'Internal server error' });
   }
 } 

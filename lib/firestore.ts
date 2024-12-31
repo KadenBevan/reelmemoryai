@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin';
+import { db } from './firebase/admin';
 
 /**
  * Interface representing the User document structure in Firestore.
@@ -10,25 +11,6 @@ export interface FirestoreUser {
   createdAt?: Date;
   // Add other user-related fields as needed
 }
-
-/**
- * A singleton pattern to ensure Firebase Admin is only initialized once.
- */
-if (!admin.apps.length) {
-  console.log('[Firestore] Initializing Firebase Admin...');
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    }),
-  });
-}
-
-/**
- * The Firestore instance to use for all database operations.
- */
-const db = admin.firestore();
 
 /**
  * Creates a new user document in the "users" collection.

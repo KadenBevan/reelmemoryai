@@ -6,9 +6,9 @@
    - Local:        http://localhost:3000
    - Environments: .env.local
 
- ✓ Ready in 1652ms
+ ✓ Ready in 1644ms
  ○ Compiling / ...
- ✓ Compiled / in 3.2s (849 modules)
+ ✓ Compiled / in 2.6s (849 modules)
 [Firebase] Successfully initialized Firebase app
 [AuthService] Initialized
 [LandingPage] Rendering the LandingPage component.
@@ -16,7 +16,12 @@
 [Step 2] Rendering with alignment: right
 [Step 3] Rendering with alignment: left
 [AuthModal] Rendering with active tab: signin
- ✓ Compiled in 664ms (371 modules)
+[LandingPage] Rendering the LandingPage component.
+[Step 1] Rendering with alignment: left
+[Step 2] Rendering with alignment: right
+[Step 3] Rendering with alignment: left
+[AuthModal] Rendering with active tab: signin
+ ✓ Compiled in 706ms (371 modules)
 [LandingPage] Rendering the LandingPage component.
 [Step 1] Rendering with alignment: left
 [Step 2] Rendering with alignment: right
@@ -27,668 +32,1834 @@
 [Step 2] Rendering with alignment: right
 [Step 3] Rendering with alignment: left
 [AuthModal] Rendering with active tab: signin
-[LandingPage] Rendering the LandingPage component.
-[Step 1] Rendering with alignment: left
-[Step 2] Rendering with alignment: right
-[Step 3] Rendering with alignment: left
-[AuthModal] Rendering with active tab: signin
- ✓ Compiled /not-found in 328ms (840 modules)
+ ✓ Compiled /not-found in 304ms (840 modules)
  ○ Compiling /api/incoming/message ...
- ✓ Compiled /api/incoming/message in 1098ms (557 modules)
-[Pinecone] Verifying index configuration...
-[Pinecone] Initializing Pinecone client
+ ✓ Compiled /api/incoming/message in 571ms (555 modules)
+[Firebase Admin] Successfully initialized Firebase Admin SDK
 [Firebase] Successfully initialized Firebase app
-[Message Webhook] Request received: {
-  method: 'POST',
-  url: '/api/incoming/message',
-  headers: {
-    host: 'cf26aac0-53e1-4b06-a096-4634a173f212-00-34fxmlyy08xzk.sisko.replit.dev',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36',
-    'content-length': '213',
-    'accept-encoding': 'gzip',
-    'content-type': 'application/json',
-    'x-forwarded-for': '207.148.84.7, 10.84.4.24',
-    'x-forwarded-proto': 'https',
-    'x-replit-user-bio': '',
-    'x-replit-user-id': '',
-    'x-replit-user-name': '',
-    'x-replit-user-profile-image': '',
-    'x-replit-user-roles': '',
-    'x-replit-user-teams': '',
-    'x-replit-user-url': '',
-    'x-middleware-invoke': '',
-    'x-invoke-path': '/api/incoming/message',
-    'x-invoke-query': '%7B%7D',
-    'x-invoke-output': '/api/incoming/message',
-    'x-forwarded-host': 'cf26aac0-53e1-4b06-a096-4634a173f212-00-34fxmlyy08xzk.sisko.replit.dev',
-    'x-forwarded-port': '3000'
-  }
-}
+[Message Service] Initialized
+[Firestore Service] Successfully initialized
+[Embedding Service] Successfully initialized
+[Gemini Service] Successfully initialized
+[Pinecone] Initializing client...
+[Pinecone] Successfully initialized
 [Message Webhook] Request body: {
   userNS: 'f131667u184732093',
-  InstaMsgTxt: 'Send me that video about Franklin sensors about the level',
+  InstaMsgTxt: 'Can you give me a recipe for lime juice?',
   MediaType: 'Text',
   InstaId: '17841470348429979',
   username: 'kaden.t.bevan',
   name: 'KadenBevan'
 }
-[Pinecone] Index configuration verified successfully: {
-  name: 'data-index',
-  dimension: 3072,
-  model: 'text-embedding-3-large'
-}
-[Message Webhook] Message stored in Firestore: f131667u184732093
-[Message Webhook] Sending search acknowledgment to user: f131667u184732093
-[Message Service] Sending message: {
-  user_ns: 'f131667u184732093',
-  type: 'ACKNOWLEDGMENT',
-  messageLength: 53,
-  messagePreview: "I'm looking for videos that match your description..."
-}
-[Message Service] Webhook response: {
-  status: 200,
-  statusText: 'OK',
-  headers: {
-    'access-control-allow-origin': '*',
-    'alt-svc': 'h3=":443"; ma=86400',
-    'cache-control': 'no-cache, private',
-    'cf-cache-status': 'DYNAMIC',
-    'cf-ray': '8f9c0a50d9ff3fc1-BOM',
-    connection: 'keep-alive',
-    'content-encoding': 'gzip',
-    'content-type': 'application/json',
-    date: 'Sun, 29 Dec 2024 19:01:43 GMT',
-    nel: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}',
-    'report-to': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=6NkBy5kMMLrm4ssw4HPyx8xc%2F%2FcIM19oYjKvw1rEbYbs7mFJ6JSDxowuN2Qh5ysLLyqgDbT8HYYjG4wELsTflVHez%2BfpnMMU%2BbFsW0OvKVppY3%2FWSYwB6dTCMpWXIz2gDVAd"}],"group":"cf-nel","max_age":604800}',
-    server: 'cloudflare',
-    'server-timing': 'cfL4;desc="?proto=TCP&rtt=1422&min_rtt=1387&rtt_var=545&sent=5&recv=5&lost=0&retrans=0&sent_bytes=2827&recv_bytes=863&delivery_rate=3045421&cwnd=252&unsent_bytes=0&cid=6ef7e0cffba85c2f&ts=501&x=0"',
-    'transfer-encoding': 'chunked',
-    vary: 'Accept-Encoding',
-    'x-content-type-options': 'nosniff',
-    'x-frame-options': 'SAMEORIGIN',
-    'x-ratelimit-limit': '500',
-    'x-ratelimit-remaining': '491',
-    'x-xss-protection': '1; mode=block'
-  },
-  body: '{"status":"ok"}'
-}
-[Message Webhook] Successfully sent search acknowledgment: { status: 'SENT', response: { status: 'ok' } }
-[Message Webhook] Generating embedding for query: Send me that video about Franklin sensors about the level
-[Embedding Service] Starting embedding generation for text length: 57
-[Embedding Service] Checking token limit. Count: 10 Max: 8191
-[Embedding Service] Generating embedding, attempt 1
-[Embedding Service] Rate limit check - Current requests: 0 Time window: 1823
-[Embedding Service] Updated request count: 1
-[Embedding Service] Making API request to OpenAI
-[Embedding Service] Successfully generated embedding of length: 3072
-[Message Webhook] Querying vector database for user: f131667u184732093
-[Message Webhook] Search terms: [
-  'send',     'that',
-  'video',    'about',
-  'franklin', 'sensors',
-  'about',    'level'
-]
-[Pinecone] Querying data for user: f131667u184732093
-[Pinecone] Query options: {
-  topK: 5,
-  filter: { '$or': [ [Object], [Object] ] },
-  sparse: undefined,
-  alpha: undefined
-}
-[Message Webhook] Error: PineconeArgumentError: Object contained invalid properties: sparse, alpha. Valid properties include id, vector, sparseVector, includeValues, includeMetadata, filter, topK.
-    at ValidateProperties (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/utils/validateProperties.js:10:15)
-    at QueryCommand.validator (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:67:61)
-    at QueryCommand.<anonymous> (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:111:30)
-    at step (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:44:23)
-    at Object.next (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:25:53)
-    at /home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:19:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:15:12)
-    at QueryCommand.run (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/vectors/query.js:106:16)
-    at Index.<anonymous> (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/index.js:438:69)
-    at step (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/index.js:33:23)
-    at Object.next (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/index.js:14:53)
-    at /home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/index.js:8:71
-    at new Promise (<anonymous>)
-    at __awaiter (/home/runner/reelmemoryai/node_modules/@pinecone-database/pinecone/dist/data/index.js:4:12) {
-  cause: undefined
-}
-[Message Service] Sending message: {
-  user_ns: 'f131667u184732093',
-  type: 'ERROR',
-  messageLength: 77,
-  messagePreview: 'I encountered an error while processing your reque...'
-}
-[Message Service] Webhook response: {
-  status: 200,
-  statusText: 'OK',
-  headers: {
-    'access-control-allow-origin': '*',
-    'alt-svc': 'h3=":443"; ma=86400',
-    'cache-control': 'no-cache, private',
-    'cf-cache-status': 'DYNAMIC',
-    'cf-ray': '8f9c0a5b1efc3fc1-BOM',
-    connection: 'keep-alive',
-    'content-encoding': 'gzip',
-    'content-type': 'application/json',
-    date: 'Sun, 29 Dec 2024 19:01:44 GMT',
-    nel: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}',
-    'report-to': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=KHtgt0qioq%2FBRllHcXugn56kSIEfkVWfIAeFppD5Z2arTy79NnT%2Fg5bnZyH%2BDnQFBn%2Fw5Hq3MnWy1UafnhGDhmMjRYjiaZFQlv0JCAkE9RRcTf6Av5%2BzPkEG7DK69L3fuUEl"}],"group":"cf-nel","max_age":604800}',
-    server: 'cloudflare',
-    'server-timing': 'cfL4;desc="?proto=TCP&rtt=6494&min_rtt=1387&rtt_var=10448&sent=9&recv=8&lost=0&retrans=0&sent_bytes=4413&recv_bytes=1293&delivery_rate=3045421&cwnd=255&unsent_bytes=0&cid=6ef7e0cffba85c2f&ts=1829&x=0"',
-    'transfer-encoding': 'chunked',
-    vary: 'Accept-Encoding',
-    'x-content-type-options': 'nosniff',
-    'x-ratelimit-limit': '500',
-    'x-ratelimit-remaining': '490',
-    'x-xss-protection': '1; mode=block'
-  },
-  body: '{"status":"ok"}'
-}
- ✓ Compiled in 223ms (554 modules)
- ✓ Compiled in 512ms (1047 modules)
-[Pinecone] Verifying index configuration...
-[Pinecone] Initializing Pinecone client
-[Firebase] Successfully initialized Firebase app
-[Message Webhook] Request received: {
-  method: 'POST',
-  url: '/api/incoming/message',
-  headers: {
-    host: 'cf26aac0-53e1-4b06-a096-4634a173f212-00-34fxmlyy08xzk.sisko.replit.dev',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36',
-    'content-length': '226',
-    'accept-encoding': 'gzip',
-    'content-type': 'application/json',
-    'x-forwarded-for': '45.76.116.253, 10.84.3.6',
-    'x-forwarded-proto': 'https',
-    'x-replit-user-bio': '',
-    'x-replit-user-id': '',
-    'x-replit-user-name': '',
-    'x-replit-user-profile-image': '',
-    'x-replit-user-roles': '',
-    'x-replit-user-teams': '',
-    'x-replit-user-url': '',
-    'x-middleware-invoke': '',
-    'x-invoke-path': '/api/incoming/message',
-    'x-invoke-query': '%7B%7D',
-    'x-invoke-output': '/api/incoming/message',
-    'x-forwarded-host': 'cf26aac0-53e1-4b06-a096-4634a173f212-00-34fxmlyy08xzk.sisko.replit.dev',
-    'x-forwarded-port': '3000'
-  }
-}
-[Message Webhook] Request body: {
-  userNS: 'f131667u184732093',
-  InstaMsgTxt: 'Send me that video about Franklin sensors that has the light up level.',
-  MediaType: 'Text',
-  InstaId: '17841470348429979',
-  username: 'kaden.t.bevan',
-  name: 'KadenBevan'
-}
-[Message Webhook] Message stored in Firestore: f131667u184732093
-[Message Webhook] Sending search acknowledgment to user: f131667u184732093
-[Message Service] Sending message: {
-  user_ns: 'f131667u184732093',
-  type: 'ACKNOWLEDGMENT',
-  messageLength: 53,
-  messagePreview: "I'm looking for videos that match your description..."
-}
-[Pinecone] Index configuration verified successfully: {
-  name: 'data-index',
-  dimension: 3072,
-  model: 'text-embedding-3-large'
-}
-[Message Service] Webhook response: {
-  status: 200,
-  statusText: 'OK',
-  headers: {
-    'access-control-allow-origin': '*',
-    'alt-svc': 'h3=":443"; ma=86400',
-    'cache-control': 'no-cache, private',
-    'cf-cache-status': 'DYNAMIC',
-    'cf-ray': '8f9c0d860df24454-BOM',
-    connection: 'keep-alive',
-    'content-encoding': 'gzip',
-    'content-type': 'application/json',
-    date: 'Sun, 29 Dec 2024 19:03:55 GMT',
-    nel: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}',
-    'report-to': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=07oq0EK4tUIr08cSGt5ha3DXasNju11w%2FPrLoDpo00uuCd4gxmlI5w7MIWq3PObEjqYjJBvkZv%2Ff%2F7YRzn12vFTbXykfgDaQIFTjr7uZfDZWapddqA%2Bf4g8IFb9gvMi%2FTBOP"}],"group":"cf-nel","max_age":604800}',
-    server: 'cloudflare',
-    'server-timing': 'cfL4;desc="?proto=TCP&rtt=1051&min_rtt=1048&rtt_var=395&sent=3&recv=5&lost=0&retrans=0&sent_bytes=219&recv_bytes=1118&delivery_rate=1343511&cwnd=250&unsent_bytes=0&cid=99c4797202a28c99&ts=489&x=0"',
-    'transfer-encoding': 'chunked',
-    vary: 'Accept-Encoding',
-    'x-content-type-options': 'nosniff',
-    'x-ratelimit-limit': '500',
-    'x-ratelimit-remaining': '489',
-    'x-xss-protection': '1; mode=block'
-  },
-  body: '{"status":"ok"}'
-}
-[Message Webhook] Successfully sent search acknowledgment: { status: 'SENT', response: { status: 'ok' } }
-[Message Webhook] Generating embedding for query: Send me that video about Franklin sensors that has the light up level.
-[Embedding Service] Starting embedding generation for text length: 70
-[Embedding Service] Checking token limit. Count: 14 Max: 8191
-[Embedding Service] Generating embedding, attempt 1
-[Embedding Service] Rate limit check - Current requests: 0 Time window: 1453
-[Embedding Service] Updated request count: 1
-[Embedding Service] Making API request to OpenAI
-[Embedding Service] Successfully generated embedding of length: 3072
-[Message Webhook] Querying vector database for user: f131667u184732093
-[Message Webhook] Search terms: [
-  'send',     'that',
-  'video',    'about',
-  'franklin', 'sensors',
-  'that',     'light',
-  'level'
-]
-[Pinecone] Querying data for user: f131667u184732093
-[Pinecone] Query options: { topK: 5, filter: { '$or': [ [Object], [Object] ] } }
-[Pinecone] Query returned 5 matches
-[Pinecone] Top match: {
-  score: 0.615180612,
-  metadata: {
-    contentType: 'video_analysis',
-    instaId: '17841470348429979',
-    keywords: [
-      'Franklin Sensors',
-      'precision level',
-      'digital level',
-      'bubble level',
-      'tool comparison',
-      'home renovation',
-      'tiling',
-      'accuracy',
-      'LED display',
-      'DIY tools'
-    ],
-    mediaType: 'Post',
-    name: 'KadenBevan',
-    processedAt: '2024-12-29T18:57:15.104Z',
-    sectionTitle: 'Overview',
-    sequenceNumber: 1,
-    timestamp: '2024-12-29T18:57:15.104Z',
-    topicsJson: `[{"name":"Tool Comparison","relevance":1,"context":"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."},{"name":"Home Renovation","relevance":0.8,"context":"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."},{"name":"Accuracy and Ease of Use","relevance":0.95,"context":"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."}]`,
-    totalChunks: 13,
-    username: 'kaden.t.bevan',
-    videoId: 'f131667u184732093_video_1735498635104',
-    videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg'
-  }
-}
-[Message Webhook] Found 5 matches: [
-  {
-    "id": "f131667u184732093_video_1735498635104_overview",
-    "score": 0.615180612,
-    "metadata": {
-      "contentType": "video_analysis",
-      "instaId": "17841470348429979",
-      "keywords": [
-        "Franklin Sensors",
-        "precision level",
-        "digital level",
-        "bubble level",
-        "tool comparison",
-        "home renovation",
-        "tiling",
-        "accuracy",
-        "LED display",
-        "DIY tools"
-      ],
-      "mediaType": "Post",
-      "name": "KadenBevan",
-      "processedAt": "2024-12-29T18:57:15.104Z",
-      "sectionTitle": "Overview",
-      "sequenceNumber": 1,
-      "timestamp": "2024-12-29T18:57:15.104Z",
-      "topicsJson": "[{\"name\":\"Tool Comparison\",\"relevance\":1,\"context\":\"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages.\"},{\"name\":\"Home Renovation\",\"relevance\":0.8,\"context\":\"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.\"},{\"name\":\"Accuracy and Ease of Use\",\"relevance\":0.95,\"context\":\"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.\"}]",
-      "totalChunks": 13,
-      "username": "kaden.t.bevan",
-      "videoId": "f131667u184732093_video_1735498635104",
-      "videoUrl": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg",
-      "topics": [
-        {
-          "name": "Tool Comparison",
-          "relevance": 1,
-          "context": "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
-        },
-        {
-          "name": "Home Renovation",
-          "relevance": 0.8,
-          "context": "The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."
-        },
-        {
-          "name": "Accuracy and Ease of Use",
-          "relevance": 0.95,
-          "context": "The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."
-        }
-      ]
-    }
-  },
-  {
-    "id": "f131667u184732093_video_1735498635104_scene_1",
-    "score": 0.576288044,
-    "metadata": {
-      "contentType": "video_analysis",
-      "instaId": "17841470348429979",
-      "keywords": [
-        "Franklin Sensors",
-        "precision level",
-        "digital level",
-        "bubble level",
-        "tool comparison",
-        "home renovation",
-        "tiling",
-        "accuracy",
-        "LED display",
-        "DIY tools",
-        "Franklin Sensors Precision Level",
-        "red LED lights"
-      ],
-      "mediaType": "Post",
-      "name": "KadenBevan",
-      "processedAt": "2024-12-29T18:57:15.104Z",
-      "sectionTitle": "Visual Content",
-      "sequenceNumber": 2,
-      "timestamp": "2024-12-29T18:57:15.104Z",
-      "topicsJson": "[{\"name\":\"Tool Comparison\",\"relevance\":1,\"context\":\"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages.\"},{\"name\":\"Home Renovation\",\"relevance\":0.8,\"context\":\"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.\"},{\"name\":\"Accuracy and Ease of Use\",\"relevance\":0.95,\"context\":\"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.\"}]",
-      "totalChunks": 13,
-      "username": "kaden.t.bevan",
-      "videoId": "f131667u184732093_video_1735498635104",
-      "videoUrl": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg",
-      "topics": [
-        {
-          "name": "Tool Comparison",
-          "relevance": 1,
-          "context": "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
-        },
-        {
-          "name": "Home Renovation",
-          "relevance": 0.8,
-          "context": "The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."
-        },
-        {
-          "name": "Accuracy and Ease of Use",
-          "relevance": 0.95,
-          "context": "The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."
-        }
-      ]
-    }
-  },
-  {
-    "id": "f131667u184732093_video_1735498635104_scene_2",
-    "score": 0.55632937,
-    "metadata": {
-      "contentType": "video_analysis",
-      "instaId": "17841470348429979",
-      "keywords": [
-        "Franklin Sensors",
-        "precision level",
-        "digital level",
-        "bubble level",
-        "tool comparison",
-        "home renovation",
-        "tiling",
-        "accuracy",
-        "LED display",
-        "DIY tools",
-        "Franklin Sensors Precision Level",
-        "green LED light"
-      ],
-      "mediaType": "Post",
-      "name": "KadenBevan",
-      "processedAt": "2024-12-29T18:57:15.104Z",
-      "sectionTitle": "Visual Content",
-      "sequenceNumber": 3,
-      "timestamp": "2024-12-29T18:57:15.104Z",
-      "topicsJson": "[{\"name\":\"Tool Comparison\",\"relevance\":1,\"context\":\"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages.\"},{\"name\":\"Home Renovation\",\"relevance\":0.8,\"context\":\"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.\"},{\"name\":\"Accuracy and Ease of Use\",\"relevance\":0.95,\"context\":\"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.\"}]",
-      "totalChunks": 13,
-      "username": "kaden.t.bevan",
-      "videoId": "f131667u184732093_video_1735498635104",
-      "videoUrl": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg",
-      "topics": [
-        {
-          "name": "Tool Comparison",
-          "relevance": 1,
-          "context": "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
-        },
-        {
-          "name": "Home Renovation",
-          "relevance": 0.8,
-          "context": "The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."
-        },
-        {
-          "name": "Accuracy and Ease of Use",
-          "relevance": 0.95,
-          "context": "The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."
-        }
-      ]
-    }
-  },
-  {
-    "id": "f131667u184732093_video_1735498635104_scene_6",
-    "score": 0.488832951,
-    "metadata": {
-      "contentType": "video_analysis",
-      "instaId": "17841470348429979",
-      "keywords": [
-        "Franklin Sensors",
-        "precision level",
-        "digital level",
-        "bubble level",
-        "tool comparison",
-        "home renovation",
-        "tiling",
-        "accuracy",
-        "LED display",
-        "DIY tools",
-        "Franklin Sensors Precision Level",
-        "green LED lights",
-        "tiled floor"
-      ],
-      "mediaType": "Post",
-      "name": "KadenBevan",
-      "processedAt": "2024-12-29T18:57:15.104Z",
-      "sectionTitle": "Visual Content",
-      "sequenceNumber": 7,
-      "timestamp": "2024-12-29T18:57:15.104Z",
-      "topicsJson": "[{\"name\":\"Tool Comparison\",\"relevance\":1,\"context\":\"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages.\"},{\"name\":\"Home Renovation\",\"relevance\":0.8,\"context\":\"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.\"},{\"name\":\"Accuracy and Ease of Use\",\"relevance\":0.95,\"context\":\"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.\"}]",
-      "totalChunks": 13,
-      "username": "kaden.t.bevan",
-      "videoId": "f131667u184732093_video_1735498635104",
-      "videoUrl": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg",
-      "topics": [
-        {
-          "name": "Tool Comparison",
-          "relevance": 1,
-          "context": "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
-        },
-        {
-          "name": "Home Renovation",
-          "relevance": 0.8,
-          "context": "The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."
-        },
-        {
-          "name": "Accuracy and Ease of Use",
-          "relevance": 0.95,
-          "context": "The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."
-        }
-      ]
-    }
-  },
-  {
-    "id": "f131667u184732093_video_1735498635104_scene_3",
-    "score": 0.467389107,
-    "metadata": {
-      "contentType": "video_analysis",
-      "instaId": "17841470348429979",
-      "keywords": [
-        "Franklin Sensors",
-        "precision level",
-        "digital level",
-        "bubble level",
-        "tool comparison",
-        "home renovation",
-        "tiling",
-        "accuracy",
-        "LED display",
-        "DIY tools",
-        "bathroom renovation",
-        "Franklin Sensors Precision Level",
-        "tiled floor"
-      ],
-      "mediaType": "Post",
-      "name": "KadenBevan",
-      "processedAt": "2024-12-29T18:57:15.104Z",
-      "sectionTitle": "Visual Content",
-      "sequenceNumber": 4,
-      "timestamp": "2024-12-29T18:57:15.104Z",
-      "topicsJson": "[{\"name\":\"Tool Comparison\",\"relevance\":1,\"context\":\"The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages.\"},{\"name\":\"Home Renovation\",\"relevance\":0.8,\"context\":\"The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.\"},{\"name\":\"Accuracy and Ease of Use\",\"relevance\":0.95,\"context\":\"The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.\"}]",
-      "totalChunks": 13,
-      "username": "kaden.t.bevan",
-      "videoId": "f131667u184732093_video_1735498635104",
-      "videoUrl": "https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg",
-      "topics": [
-        {
-          "name": "Tool Comparison",
-          "relevance": 1,
-          "context": "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
-        },
-        {
-          "name": "Home Renovation",
-          "relevance": 0.8,
-          "context": "The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level."
-        },
-        {
-          "name": "Accuracy and Ease of Use",
-          "relevance": 0.95,
-          "context": "The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods."
-        }
-      ]
-    }
-  }
-]
-[Message Webhook] Evaluating match: {
-  score: 0.615180612,
-  title: undefined,
-  keywords: [
-    'Franklin Sensors',
-    'precision level',
-    'digital level',
-    'bubble level',
-    'tool comparison',
-    'home renovation',
-    'tiling',
-    'accuracy',
-    'LED display',
-    'DIY tools'
+[Firestore Service] Storing message for user: f131667u184732093
+[Firestore Service] Message stored successfully: 9kmJchY12Xyy7kyfrXSF
+[Message Webhook] Message stored in Firestore: 9kmJchY12Xyy7kyfrXSF
+[Message Service] Sending webhook message to user f131667u184732093: I'm searching through your videos...
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Webhook] Sent search acknowledgment to user: f131667u184732093
+[Message Webhook] Starting query intent classification
+[Gemini Service] Generating structured response with schema
+[Message Webhook] Query intent: { intent: 'INFORMATION_QUERY' }
+[Message Webhook] Processing as information query
+[RAG Search] Processing query: Can you give me a recipe for lime juice? for user: f131667u184732093
+[Gemini Service] Generating structured response with schema
+[RAG Search] Enhanced query: {
+  "originalQuery": "Can you give me a recipe for lime juice?",
+  "searchText": "recipe for lime juice, including how to make fresh lime juice",
+  "searchTerms": [
+    "lime juice recipe",
+    "recipe for lime juice",
+    "how to make lime juice",
+    "lime juice preparation",
+    "fresh lime juice"
   ],
-  topics: [
+  "visualElements": [
+    "limes",
+    "lime juice",
+    "citrus juicer",
+    "knife",
+    "cutting board",
+    "glass"
+  ],
+  "temporalContext": {},
+  "topics": []
+}
+[Embedding Service] Starting embedding generation for text length: 61
+[Embedding Service] Checking token limit. Count: 16 Max: 8191
+[Embedding Service] Generating embedding, attempt 1
+[Embedding Service] Rate limit check - Current requests: 0 Time window: 15110
+[Embedding Service] Updated request count: 1
+[Embedding Service] Making API request to OpenAI
+[Embedding Service] Successfully generated embedding of length: 3072
+[RAG Search] Generated embedding of length: 3072
+[RAG Search] Built search context: {
+  "filters": {
+    "$or": [
+      {
+        "$or": [
+          {
+            "metadata.visualContent.keyElements": {
+              "$in": [
+                "limes",
+                "lime juice",
+                "citrus juicer",
+                "knife",
+                "cutting board",
+                "glass"
+              ]
+            }
+          },
+          {
+            "metadata.searchableKeywords": {
+              "$in": [
+                "limes",
+                "lime juice",
+                "citrus juicer",
+                "knife",
+                "cutting board",
+                "glass"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "metadata.searchableKeywords": {
+          "$in": [
+            "lime juice recipe",
+            "recipe for lime juice",
+            "how to make lime juice",
+            "lime juice preparation",
+            "fresh lime juice"
+          ]
+        }
+      }
+    ]
+  },
+  "weights": {
+    "titleMatch": 1.5,
+    "topicMatch": 1.2,
+    "visualMatch": 1,
+    "temporalMatch": 0.8
+  }
+}
+[RAG Search] Querying namespace: f131667u184732093 with filters: {
+  "$or": [
     {
-      name: 'Tool Comparison',
-      relevance: 1,
-      context: "The video directly compares a traditional bubble level with the Franklin Sensors Precision Level, highlighting the digital level's advantages."
+      "$or": [
+        {
+          "metadata.visualContent.keyElements": {
+            "$in": [
+              "limes",
+              "lime juice",
+              "citrus juicer",
+              "knife",
+              "cutting board",
+              "glass"
+            ]
+          }
+        },
+        {
+          "metadata.searchableKeywords": {
+            "$in": [
+              "limes",
+              "lime juice",
+              "citrus juicer",
+              "knife",
+              "cutting board",
+              "glass"
+            ]
+          }
+        }
+      ]
     },
     {
-      name: 'Home Renovation',
-      relevance: 0.8,
-      context: 'The video uses a bathroom renovation project as the setting to demonstrate the practical use of the precision level.'
-    },
-    {
-      name: 'Accuracy and Ease of Use',
-      relevance: 0.95,
-      context: 'The core message of the video focuses on the improved accuracy and ease of use offered by the digital level compared to traditional methods.'
+      "metadata.searchableKeywords": {
+        "$in": [
+          "lime juice recipe",
+          "recipe for lime juice",
+          "how to make lime juice",
+          "lime juice preparation",
+          "fresh lime juice"
+        ]
+      }
     }
   ]
 }
-[Message Webhook] 1 matches above threshold: [
-  {
-    score: 0.615180612,
-    videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg',
-    videoId: 'f131667u184732093_video_1735498635104',
-    keywords: [
-      'Franklin Sensors',
-      'precision level',
-      'digital level',
-      'bubble level',
-      'tool comparison',
-      'home renovation',
-      'tiling',
-      'accuracy',
-      'LED display',
-      'DIY tools'
+[RAG Search] No matches found with filters, trying with metadata existence check
+[RAG Search] Found matches with metadata check: 4
+[RAG Search] Sample match metadata: {
+  audioContent: '{}',
+  contentType: 'topics',
+  instaId: '17841470348429979',
+  keywords: [
+    'lime juice',
+    'oleo citrate',
+    'citric acid',
+    'bottle',
+    'lime juice',
+    'man',
+    'lime juice',
+    'limes',
+    'container',
+    'lime',
+    'peeler',
+    'lime',
+    'peeler',
+    'lime peels',
+    'container',
+    'scale',
+    'malic acid',
+    'container',
+    'muddler',
+    'container',
+    'lime peels',
+    'lime',
+    'blender',
+    'blender',
+    'strainer',
+    'container',
+    'lime peels',
+    'container',
+    'lime juice',
+    'water',
+    'container',
+    'immersion blender',
+    'container',
+    'strainer',
+    'lime juice',
+    'bottle',
+    'lime juice',
+    'bottle',
+    'lime juice',
+    'bottle',
+    'man',
+    'man',
+    'lime juice',
+    'bottles',
+    'man',
+    'Oleo Citrate Lime Juice',
+    'Lime Juice Extraction',
+    'Acid Extraction of Oils'
+  ],
+  mediaType: 'unknown',
+  name: 'KadenBevan',
+  parentId: 'f131667u184732093_video_1735680804085',
+  processedAt: '2024-12-31T21:33:28.996Z',
+  searchableText: 'oleo citrate lime juice the process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes. lime juice extraction the steps involved in extracting lime juice and oils from limes. acid extraction of oils the use of citric and malic acids to extract oils from lime peels.',
+  sectionTitle: 'Topics Analysis',
+  sequenceNumber: 1,
+  summary: '',
+  timestamp: '2024-12-31T21:33:24.085Z',
+  title: 'How to Make Oleo Citrate Lime Juice',
+  topics: '[{"context":"The process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes.","name":"Oleo Citrate Lime Juice","relevance":0.9,"timestamp":"00:00"},{"context":"The steps involved in extracting lime juice and oils from limes.","name":"Lime Juice Extraction","relevance":0.8,"timestamp":"00:08"},{"context":"The use of citric and malic acids to extract oils from lime peels.","name":"Acid Extraction of Oils","relevance":0.7,"timestamp":"00:15"}]',
+  totalChunks: 1,
+  username: 'kaden.t.bevan',
+  videoId: 'f131667u184732093_video_1735680804085',
+  videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo',
+  visualContent: '[]'
+}
+[RAG Search] Retrieved results: 1
+[RAG Search] Top result: {
+  score: 0.600253105,
+  metadata: {
+    videoId: 'f131667u184732093_video_1735680804085',
+    videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo',
+    title: 'How to Make Oleo Citrate Lime Juice',
+    summary: '',
+    description: '',
+    visualContent: [
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object]
     ],
-    sectionTitle: 'Overview'
+    audioContent: { speech: '', music: [], soundEffects: [], timestamps: [Array] },
+    topics: [ [Object], [Object], [Object] ],
+    technicalDetails: {},
+    searchableKeywords: [],
+    relevantChunks: [ [Object] ]
   }
-]
-[Message Webhook] Preparing to send video: https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg
-[Message Webhook] Sending video found notification
-[Message Service] Sending message: {
-  user_ns: 'f131667u184732093',
-  type: 'RESPONSE',
-  messageLength: 69,
-  messagePreview: 'I found a video that matches your description. Let...'
 }
-[Message Service] Webhook response: {
-  status: 200,
-  statusText: 'OK',
-  headers: {
-    'access-control-allow-origin': '*',
-    'alt-svc': 'h3=":443"; ma=86400',
-    'cache-control': 'no-cache, private',
-    'cf-cache-status': 'DYNAMIC',
-    'cf-ray': '8f9c0d90eb054454-BOM',
-    connection: 'keep-alive',
-    'content-encoding': 'gzip',
-    'content-type': 'application/json',
-    date: 'Sun, 29 Dec 2024 19:03:56 GMT',
-    nel: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}',
-    'report-to': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=FIT7THyLcy%2F%2BaCBbFTEnv4pXQiMZUwAgiloXaijMw9DfSf3tHawdg%2BUCf%2BIPcIeGJxNUugO5PiD%2BJNhAbD2s9FxsLf64305aFPqqnsVOIk%2FiXNk2sCcnBkj6PJkxyGCibYoS"}],"group":"cf-nel","max_age":604800}',
-    server: 'cloudflare',
-    'server-timing': 'cfL4;desc="?proto=TCP&rtt=6071&min_rtt=1048&rtt_var=10259&sent=8&recv=8&lost=0&retrans=0&sent_bytes=1798&recv_bytes=1543&delivery_rate=3798561&cwnd=254&unsent_bytes=0&cid=99c4797202a28c99&ts=1937&x=0"',
-    'transfer-encoding': 'chunked',
-    vary: 'Accept-Encoding',
-    'x-content-type-options': 'nosniff',
-    'x-ratelimit-limit': '500',
-    'x-ratelimit-remaining': '488',
-    'x-xss-protection': '1; mode=block'
+[RAG Search] Re-ranked results: 1
+[Message Webhook] Complete Prompt: You are an AI assistant helping users understand and learn from their videos. Your goal is to provide helpful, accurate, and natural responses to their questions using information from the videos they've shared.
+
+User's Question: "Can you give me a recipe for lime juice?"
+
+Here is the relevant information from your videos:
+
+                Video 1 (Relevance Score: 60.0%):
+                
+                Title: How to Make Oleo Citrate Lime Juice
+                Summary: 
+                Description: 
+                
+                Most Relevant Content:
+                
+                
+                Key Visual Elements:
+                
+                  - [00:00] Scene: A hand holds a bottle of yellow-green liquid with the text SUPER superimposed on the screen. The background is a kitchen.
+                    Elements: bottle, lime juice
+                
+
+                  - [00:01] Scene: A man with dark hair and a silver chain necklace is holding a bottle of yellow-green liquid and speaking to the camera. The background is a kitchen.
+                    Elements: man, lime juice
+                
+
+                  - [00:08] Scene: The man is holding a lime and there are 7 more limes on the counter. There is a clear container on the counter.
+                    Elements: limes, container
+                
+
+                  - [00:10] Scene: A close up of a hand peeling a lime with a peeler.
+                    Elements: lime, peeler
+                
+
+                  - [00:11] Scene: A close-up of a peeler scraping the pulp from a lime peel.
+                    Elements: lime, peeler
+                
+
+                  - [00:15] Scene: The man drops lime peels into a clear container and adds a white powder from a shaker.
+                    Elements: lime peels, container
+                
+
+                  - [00:19] Scene: A close up of a scale measuring out a spoonful of white powder.
+                    Elements: scale, malic acid
+                
+
+                  - [00:22] Scene: The man muddles the lime peels and white powder together in a clear container.
+                    Elements: container, muddler
+                
+
+                  - [00:27] Scene: The man shakes the clear container with lime peels and white powder inside.
+                    Elements: container, lime peels
+                
+
+                  - [00:30] Scene: The man puts peeled limes into a blender.
+                    Elements: lime, blender
+                
+
+                  - [00:34] Scene: The man pours the blended lime mixture through a strainer.
+                    Elements: blender, strainer
+                
+
+                  - [00:36] Scene: The lime peels are in the clear container.
+                    Elements: container, lime peels
+                
+
+                  - [00:38] Scene: The man pours lime juice into the container with the lime peels and white powder.
+                    Elements: container, lime juice
+                
+
+                  - [00:40] Scene: The man pours water into the container.
+                    Elements: water, container
+                
+
+                  - [00:41] Scene: The man blends the mixture with an immersion blender.
+                    Elements: immersion blender, container
+                
+
+                  - [00:45] Scene: The man strains the blended mixture.
+                    Elements: strainer, lime juice
+                
+
+                  - [00:46] Scene: The man pours the lime juice into glass bottles.
+                    Elements: bottle, lime juice
+                
+
+                  - [00:48] Scene: The man holds two bottles of lime juice.
+                    Elements: bottle, lime juice
+                
+
+                  - [00:55] Scene: The man opens a bottle and drinks the lime juice.
+                    Elements: bottle, man
+                
+
+                  - [01:02] Scene: The man holds a bottle of lime juice and speaks to the camera.
+                    Elements: man, lime juice
+                
+
+                  - [01:07] Scene: The man holds two bottles of lime juice and speaks to the camera.
+                    Elements: bottles, man
+                
+                
+                Audio Transcript:
+                No transcript available
+                
+                Relevant Topics:
+                
+                  - Oleo Citrate Lime Juice (Relevance: 90.0%)
+                    Context: The process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes.
+                    Timestamp: 00:00
+                
+
+                  - Lime Juice Extraction (Relevance: 80.0%)
+                    Context: The steps involved in extracting lime juice and oils from limes.
+                    Timestamp: 00:08
+                
+
+                  - Acid Extraction of Oils (Relevance: 70.0%)
+                    Context: The use of citric and malic acids to extract oils from lime peels.
+                    Timestamp: 00:15
+                
+              
+
+Guidelines for your response:
+1. Be conversational and friendly, like you're having a natural discussion
+2. Focus on structuring the answer in a way that best suits the user's question
+3. Do not include any information that is not relevant to the user's question
+
+Remember:
+- Stay focused on the user's question
+- Be precise with numbers, measurements, and technical details
+- Keep your tone helpful and engaging
+
+Your response should feel like a knowledgeable friend explaining something, while being accurate and grounded in the video content. 
+[Gemini Service] Generating response for prompt You are an AI assistant helping users understand and learn from their videos. Your goal is to provid...
+[Gemini Service] Error generating response: GoogleGenerativeAIResponseError: [GoogleGenerativeAI Error]: Candidate was blocked due to SAFETY
+    at response.text (file:///home/runner/reelmemoryai/node_modules/@google/generative-ai/dist/index.mjs:465:23)
+    at GeminiService.generateResponse (webpack-internal:///(api)/./services/gemini.ts:102:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async handler (webpack-internal:///(api)/./pages/api/incoming/message.ts:173:46)
+    at async K (/home/runner/reelmemoryai/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:2946)
+    at async U.render (/home/runner/reelmemoryai/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:3827)
+    at async DevServer.runApi (/home/runner/reelmemoryai/node_modules/next/dist/server/next-server.js:556:9)
+    at async NextNodeServer.handleCatchallRenderRequest (/home/runner/reelmemoryai/node_modules/next/dist/server/next-server.js:268:37)
+    at async DevServer.handleRequestImpl (/home/runner/reelmemoryai/node_modules/next/dist/server/base-server.js:807:17)
+    at async /home/runner/reelmemoryai/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/home/runner/reelmemoryai/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/home/runner/reelmemoryai/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/home/runner/reelmemoryai/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/home/runner/reelmemoryai/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/home/runner/reelmemoryai/node_modules/next/dist/server/lib/router-server.js:366:13) {
+  response: {
+    candidates: [ [Object] ],
+    usageMetadata: { promptTokenCount: 1169, totalTokenCount: 1169 },
+    modelVersion: 'gemini-2.0-flash-exp',
+    text: [Function (anonymous)],
+    functionCall: [Function (anonymous)],
+    functionCalls: [Function (anonymous)]
+  }
+}
+[Message Webhook] Error processing message: GoogleGenerativeAIResponseError: [GoogleGenerativeAI Error]: Candidate was blocked due to SAFETY
+    at response.text (file:///home/runner/reelmemoryai/node_modules/@google/generative-ai/dist/index.mjs:465:23)
+    at GeminiService.generateResponse (webpack-internal:///(api)/./services/gemini.ts:102:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async handler (webpack-internal:///(api)/./pages/api/incoming/message.ts:173:46)
+    at async K (/home/runner/reelmemoryai/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:2946)
+    at async U.render (/home/runner/reelmemoryai/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:3827)
+    at async DevServer.runApi (/home/runner/reelmemoryai/node_modules/next/dist/server/next-server.js:556:9)
+    at async NextNodeServer.handleCatchallRenderRequest (/home/runner/reelmemoryai/node_modules/next/dist/server/next-server.js:268:37)
+    at async DevServer.handleRequestImpl (/home/runner/reelmemoryai/node_modules/next/dist/server/base-server.js:807:17)
+    at async /home/runner/reelmemoryai/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/home/runner/reelmemoryai/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/home/runner/reelmemoryai/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/home/runner/reelmemoryai/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/home/runner/reelmemoryai/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/home/runner/reelmemoryai/node_modules/next/dist/server/lib/router-server.js:366:13) {
+  response: {
+    candidates: [ [Object] ],
+    usageMetadata: { promptTokenCount: 1169, totalTokenCount: 1169 },
+    modelVersion: 'gemini-2.0-flash-exp',
+    text: [Function (anonymous)],
+    functionCall: [Function (anonymous)],
+    functionCalls: [Function (anonymous)]
+  }
+}
+[Message Service] Sending webhook message to user f131667u184732093: I'm sorry, I encountered an error processing your message. Please try again.
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+ ✓ Compiled in 522ms (516 modules)
+ ○ Compiling /api/incoming/message ...
+ ✓ Compiled /api/incoming/message in 612ms (552 modules)
+[Firebase] Successfully initialized Firebase app
+[Message Service] Initialized
+[Firestore Service] Successfully initialized
+[Embedding Service] Successfully initialized
+[Gemini Service] Successfully initialized
+[Pinecone] Initializing client...
+[Pinecone] Successfully initialized
+[Message Webhook] Request body: {
+  userNS: 'f131667u184732093',
+  InstaMsgTxt: 'Can you give me a recipe for lime juice?',
+  MediaType: 'Text',
+  InstaId: '17841470348429979',
+  username: 'kaden.t.bevan',
+  name: 'KadenBevan'
+}
+[Firestore Service] Storing message for user: f131667u184732093
+[Firestore Service] Message stored successfully: StdPx18adUeQKNrFRh37
+[Message Webhook] Message stored in Firestore: StdPx18adUeQKNrFRh37
+[Message Service] Sending webhook message to user f131667u184732093: I'm searching through your videos...
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Webhook] Sent search acknowledgment to user: f131667u184732093
+[Message Webhook] Starting query intent classification
+[Gemini Service] Generating structured response with schema
+[Message Webhook] Query intent: { intent: 'INFORMATION_QUERY' }
+[Message Webhook] Processing as information query
+[RAG Search] Processing query: Can you give me a recipe for lime juice? for user: f131667u184732093
+[Gemini Service] Generating structured response with schema
+[RAG Search] Enhanced query: {
+  "originalQuery": "Can you give me a recipe for lime juice?",
+  "searchText": "recipe for preparing lime juice, including methods and variations",
+  "searchTerms": [
+    "lime juice recipe",
+    "recipe using lime juice",
+    "lime juice preparation",
+    "how to make lime juice",
+    "lime beverage recipe"
+  ],
+  "visualElements": [
+    "lime",
+    "lime juice",
+    "citrus juicer",
+    "glass",
+    "knife",
+    "cutting board",
+    "squeezing limes",
+    "pouring lime juice"
+  ],
+  "temporalContext": {},
+  "topics": []
+}
+[Embedding Service] Starting embedding generation for text length: 65
+[Embedding Service] Checking token limit. Count: 17 Max: 8191
+[Embedding Service] Generating embedding, attempt 1
+[Embedding Service] Rate limit check - Current requests: 0 Time window: 14062
+[Embedding Service] Updated request count: 1
+[Embedding Service] Making API request to OpenAI
+[Embedding Service] Successfully generated embedding of length: 3072
+[RAG Search] Generated embedding of length: 3072
+[RAG Search] Built search context: {
+  "filters": {
+    "$or": [
+      {
+        "$or": [
+          {
+            "metadata.visualContent.keyElements": {
+              "$in": [
+                "lime",
+                "lime juice",
+                "citrus juicer",
+                "glass",
+                "knife",
+                "cutting board",
+                "squeezing limes",
+                "pouring lime juice"
+              ]
+            }
+          },
+          {
+            "metadata.searchableKeywords": {
+              "$in": [
+                "lime",
+                "lime juice",
+                "citrus juicer",
+                "glass",
+                "knife",
+                "cutting board",
+                "squeezing limes",
+                "pouring lime juice"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "metadata.searchableKeywords": {
+          "$in": [
+            "lime juice recipe",
+            "recipe using lime juice",
+            "lime juice preparation",
+            "how to make lime juice",
+            "lime beverage recipe"
+          ]
+        }
+      }
+    ]
   },
-  body: '{"status":"ok"}'
+  "weights": {
+    "titleMatch": 1.5,
+    "topicMatch": 1.2,
+    "visualMatch": 1,
+    "temporalMatch": 0.8
+  }
 }
-[Message Webhook] Successfully sent video found notification
-[Message Webhook] Attempting to send video (attempt 1/3): https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg
-[Message Service] Sending video: {
-  user_ns: 'f131667u184732093',
-  type: 'ANALYSIS_RESULT',
-  url: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=18087697165530043&signature=Abz3A6SomKRKkst-JX3r2OngIoNc7mXQy_hmWxYu5Qjl4AKGQnEl_0zy6-N_pi-34uWUuCpYhn3kcWeYbZusQXKmwmSusTYQPOX72Nc9R1ltHiTSbDEol9zci6ZEzSwKhVPlXTFGq-XzQeZIp0zHnbMZbfvNaHXs4h-zMyYl_dyyvVQZmzAl_HBe1oWagaXW2pAD1if9vh7OWLUz5Fgw9jP0MWMjnNg',
-  urlLength: 306
+[RAG Search] Querying namespace: f131667u184732093 with filters: {
+  "$or": [
+    {
+      "$or": [
+        {
+          "metadata.visualContent.keyElements": {
+            "$in": [
+              "lime",
+              "lime juice",
+              "citrus juicer",
+              "glass",
+              "knife",
+              "cutting board",
+              "squeezing limes",
+              "pouring lime juice"
+            ]
+          }
+        },
+        {
+          "metadata.searchableKeywords": {
+            "$in": [
+              "lime",
+              "lime juice",
+              "citrus juicer",
+              "glass",
+              "knife",
+              "cutting board",
+              "squeezing limes",
+              "pouring lime juice"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "metadata.searchableKeywords": {
+        "$in": [
+          "lime juice recipe",
+          "recipe using lime juice",
+          "lime juice preparation",
+          "how to make lime juice",
+          "lime beverage recipe"
+        ]
+      }
+    }
+  ]
 }
-[Message Service] Video webhook response: {
-  status: 200,
-  statusText: 'OK',
-  headers: {
-    'access-control-allow-origin': '*',
-    'alt-svc': 'h3=":443"; ma=86400',
-    'cache-control': 'no-cache, private',
-    'cf-cache-status': 'DYNAMIC',
-    'cf-ray': '8f9c0d953d564454-BOM',
-    connection: 'keep-alive',
-    'content-encoding': 'gzip',
-    'content-type': 'application/json',
-    date: 'Sun, 29 Dec 2024 19:03:57 GMT',
-    nel: '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}',
-    'report-to': '{"endpoints":[{"url":"https:\\/\\/a.nel.cloudflare.com\\/report\\/v4?s=m74yOEYf712CknZlYBd%2FjIOmrS3%2F483L2O%2FJi3hPu5C%2BGGUusL14gt9gEdXj6FyZRzBeu%2FJdEgitMMFAHM35bVh5OlW9pkg8lmiSwGBfXQ7O3wP1MeA%2B7E4B3Drysy5eIW%2BI"}],"group":"cf-nel","max_age":604800}',
-    server: 'cloudflare',
-    'server-timing': 'cfL4;desc="?proto=TCP&rtt=4898&min_rtt=1048&rtt_var=7805&sent=11&recv=11&lost=0&retrans=0&sent_bytes=2911&recv_bytes=2208&delivery_rate=3798561&cwnd=256&unsent_bytes=0&cid=99c4797202a28c99&ts=2619&x=0"',
-    'transfer-encoding': 'chunked',
-    vary: 'Accept-Encoding',
-    'x-content-type-options': 'nosniff',
-    'x-ratelimit-limit': '500',
-    'x-ratelimit-remaining': '487',
-    'x-xss-protection': '1; mode=block'
+[RAG Search] No matches found with filters, trying with metadata existence check
+[RAG Search] Found matches with metadata check: 4
+[RAG Search] Sample match metadata: {
+  audioContent: '{}',
+  contentType: 'topics',
+  instaId: '17841470348429979',
+  keywords: [
+    'lime juice',
+    'oleo citrate',
+    'citric acid',
+    'bottle',
+    'lime juice',
+    'man',
+    'lime juice',
+    'limes',
+    'container',
+    'lime',
+    'peeler',
+    'lime',
+    'peeler',
+    'lime peels',
+    'container',
+    'scale',
+    'malic acid',
+    'container',
+    'muddler',
+    'container',
+    'lime peels',
+    'lime',
+    'blender',
+    'blender',
+    'strainer',
+    'container',
+    'lime peels',
+    'container',
+    'lime juice',
+    'water',
+    'container',
+    'immersion blender',
+    'container',
+    'strainer',
+    'lime juice',
+    'bottle',
+    'lime juice',
+    'bottle',
+    'lime juice',
+    'bottle',
+    'man',
+    'man',
+    'lime juice',
+    'bottles',
+    'man',
+    'Oleo Citrate Lime Juice',
+    'Lime Juice Extraction',
+    'Acid Extraction of Oils'
+  ],
+  mediaType: 'unknown',
+  name: 'KadenBevan',
+  parentId: 'f131667u184732093_video_1735680804085',
+  processedAt: '2024-12-31T21:33:28.996Z',
+  searchableText: 'oleo citrate lime juice the process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes. lime juice extraction the steps involved in extracting lime juice and oils from limes. acid extraction of oils the use of citric and malic acids to extract oils from lime peels.',
+  sectionTitle: 'Topics Analysis',
+  sequenceNumber: 1,
+  summary: '',
+  timestamp: '2024-12-31T21:33:24.085Z',
+  title: 'How to Make Oleo Citrate Lime Juice',
+  topics: '[{"context":"The process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes.","name":"Oleo Citrate Lime Juice","relevance":0.9,"timestamp":"00:00"},{"context":"The steps involved in extracting lime juice and oils from limes.","name":"Lime Juice Extraction","relevance":0.8,"timestamp":"00:08"},{"context":"The use of citric and malic acids to extract oils from lime peels.","name":"Acid Extraction of Oils","relevance":0.7,"timestamp":"00:15"}]',
+  totalChunks: 1,
+  username: 'kaden.t.bevan',
+  videoId: 'f131667u184732093_video_1735680804085',
+  videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo',
+  visualContent: '[]'
+}
+[RAG Search] Retrieved results: 1
+[RAG Search] Top result: {
+  score: 0.649554849,
+  metadata: {
+    videoId: 'f131667u184732093_video_1735680804085',
+    videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo',
+    title: 'How to Make Oleo Citrate Lime Juice',
+    summary: '',
+    description: '',
+    visualContent: [
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object]
+    ],
+    audioContent: { speech: '', music: [], soundEffects: [], timestamps: [Array] },
+    topics: [ [Object], [Object], [Object] ],
+    technicalDetails: {},
+    searchableKeywords: [],
+    relevantChunks: [ [Object] ]
+  }
+}
+[RAG Search] Re-ranked results: 1
+[Message Webhook] Complete Prompt: You are an AI assistant helping users understand and learn from their videos. Your goal is to provide helpful, accurate, and natural responses to their questions using information from the videos they've shared.
+
+User's Question: "Can you give me a recipe for lime juice?"
+
+Here is the relevant information from your videos:
+
+                Video 1 (Relevance Score: 65.0%):
+                
+                Title: How to Make Oleo Citrate Lime Juice
+                Summary: 
+                Description: 
+                
+                Most Relevant Content:
+                
+                
+                Key Visual Elements:
+                
+                  - [00:00] Scene: A hand holds a bottle of yellow-green liquid with the text SUPER superimposed on the screen. The background is a kitchen.
+                    Elements: bottle, lime juice
+                
+
+                  - [00:01] Scene: A man with dark hair and a silver chain necklace is holding a bottle of yellow-green liquid and speaking to the camera. The background is a kitchen.
+                    Elements: man, lime juice
+                
+
+                  - [00:08] Scene: The man is holding a lime and there are 7 more limes on the counter. There is a clear container on the counter.
+                    Elements: limes, container
+                
+
+                  - [00:10] Scene: A close up of a hand peeling a lime with a peeler.
+                    Elements: lime, peeler
+                
+
+                  - [00:11] Scene: A close-up of a peeler scraping the pulp from a lime peel.
+                    Elements: lime, peeler
+                
+
+                  - [00:15] Scene: The man drops lime peels into a clear container and adds a white powder from a shaker.
+                    Elements: lime peels, container
+                
+
+                  - [00:19] Scene: A close up of a scale measuring out a spoonful of white powder.
+                    Elements: scale, malic acid
+                
+
+                  - [00:22] Scene: The man muddles the lime peels and white powder together in a clear container.
+                    Elements: container, muddler
+                
+
+                  - [00:27] Scene: The man shakes the clear container with lime peels and white powder inside.
+                    Elements: container, lime peels
+                
+
+                  - [00:30] Scene: The man puts peeled limes into a blender.
+                    Elements: lime, blender
+                
+
+                  - [00:34] Scene: The man pours the blended lime mixture through a strainer.
+                    Elements: blender, strainer
+                
+
+                  - [00:36] Scene: The lime peels are in the clear container.
+                    Elements: container, lime peels
+                
+
+                  - [00:38] Scene: The man pours lime juice into the container with the lime peels and white powder.
+                    Elements: container, lime juice
+                
+
+                  - [00:40] Scene: The man pours water into the container.
+                    Elements: water, container
+                
+
+                  - [00:41] Scene: The man blends the mixture with an immersion blender.
+                    Elements: immersion blender, container
+                
+
+                  - [00:45] Scene: The man strains the blended mixture.
+                    Elements: strainer, lime juice
+                
+
+                  - [00:46] Scene: The man pours the lime juice into glass bottles.
+                    Elements: bottle, lime juice
+                
+
+                  - [00:48] Scene: The man holds two bottles of lime juice.
+                    Elements: bottle, lime juice
+                
+
+                  - [00:55] Scene: The man opens a bottle and drinks the lime juice.
+                    Elements: bottle, man
+                
+
+                  - [01:02] Scene: The man holds a bottle of lime juice and speaks to the camera.
+                    Elements: man, lime juice
+                
+
+                  - [01:07] Scene: The man holds two bottles of lime juice and speaks to the camera.
+                    Elements: bottles, man
+                
+                
+                Audio Transcript:
+                No transcript available
+                
+                Relevant Topics:
+                
+                  - Oleo Citrate Lime Juice (Relevance: 90.0%)
+                    Context: The process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes.
+                    Timestamp: 00:00
+                
+
+                  - Lime Juice Extraction (Relevance: 80.0%)
+                    Context: The steps involved in extracting lime juice and oils from limes.
+                    Timestamp: 00:08
+                
+
+                  - Acid Extraction of Oils (Relevance: 70.0%)
+                    Context: The use of citric and malic acids to extract oils from lime peels.
+                    Timestamp: 00:15
+                
+              
+
+Guidelines for your response:
+1. Be conversational and friendly, like you're having a natural discussion
+2. Focus on structuring the answer in a way that best suits the user's question
+3. Do not include any information that is not relevant to the user's question
+
+Remember:
+- Stay focused on the user's question
+- Be precise with numbers, measurements, and technical details
+- Keep your tone helpful and engaging
+
+Your response should feel like a knowledgeable friend explaining something, while being accurate and grounded in the video content. 
+[Gemini Service] Generating response for prompt You are an AI assistant helping users understand and learn from their videos. Your goal is to provid...
+[Gemini Service] Generated response: Okay, so you're looking for a recipe for lime juice! The video I have shows how to make a special kind of lime juice called "Oleo Citrate Lime Juice" which gets more juice and flavor from the limes. Here's how it's done:
+
+First, you'll need some limes. The video shows about 8 limes being used. You'll start by peeling the limes with a peeler, and then scrape the pulp off of the lime peels.
+
+Next, put the lime peels into a container and add a white powder, which is either malic or citric acid. The video shows about a spoonful being added. Then, you muddle the peels and powder together. After that, you shake the container to mix it well.
+
+Now, take your peeled limes and blend them up. Then, strain the blended mixture to get the juice.
+
+Pour the lime juice you just strained into the container with the lime peels and acid. Add some water to the container as well.
+
+Use an immersion blender to mix everything together. Finally, strain the mixture one more time to remove the solids, and you've got your Oleo Citrate Lime Juice!
+
+The video shows the juice being poured into bottles for storage and later use.
+
+[Message Webhook] Gemini Response: Okay, so you're looking for a recipe for lime juice! The video I have shows how to make a special kind of lime juice called "Oleo Citrate Lime Juice" which gets more juice and flavor from the limes. Here's how it's done:
+
+First, you'll need some limes. The video shows about 8 limes being used. You'll start by peeling the limes with a peeler, and then scrape the pulp off of the lime peels.
+
+Next, put the lime peels into a container and add a white powder, which is either malic or citric acid. The video shows about a spoonful being added. Then, you muddle the peels and powder together. After that, you shake the container to mix it well.
+
+Now, take your peeled limes and blend them up. Then, strain the blended mixture to get the juice.
+
+Pour the lime juice you just strained into the container with the lime peels and acid. Add some water to the container as well.
+
+Use an immersion blender to mix everything together. Finally, strain the mixture one more time to remove the solids, and you've got your Oleo Citrate Lime Juice!
+
+The video shows the juice being poured into bottles for storage and later use.
+[Message Service] Sending webhook message to user f131667u184732093: Okay, so you're looking for a recipe for lime juice! The video I have shows how to make a special kind of lime juice called "Oleo Citrate Lime Juice" which gets more juice and flavor from the limes. Here's how it's done:
+
+First, you'll need some limes. The video shows about 8 limes being used. You'll start by peeling the limes with a peeler, and then scrape the pulp off of the lime peels.
+
+Next, put the lime peels into a container and add a white powder, which is either malic or citric acid. The video shows about a spoonful being added. Then, you muddle the peels and powder together. After that, you shake the container to mix it well.
+
+Now, take your peeled limes and blend them up. Then, strain the blended mixture to get the juice.
+
+Pour the lime juice you just strained into the container with the lime peels and acid. Add some water to the container as well.
+
+Use an immersion blender to mix everything together. Finally, strain the
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Service] Sending webhook message to user f131667u184732093: mixture one more time to remove the solids, and you've got your Oleo Citrate Lime Juice!
+
+The video shows the juice being poured into bottles for storage and later use.
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Webhook] Request body: {
+  userNS: 'f131667u184732093',
+  InstaMsgTxt: 'Can you give me a recipe for lime juice?',
+  MediaType: 'Text',
+  InstaId: '17841470348429979',
+  username: 'kaden.t.bevan',
+  name: 'KadenBevan'
+}
+[Firestore Service] Storing message for user: f131667u184732093
+[Firestore Service] Message stored successfully: NPbSoVNFRVVL2ZfP6BnW
+[Message Webhook] Message stored in Firestore: NPbSoVNFRVVL2ZfP6BnW
+[Message Service] Sending webhook message to user f131667u184732093: I'm searching through your videos...
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Webhook] Sent search acknowledgment to user: f131667u184732093
+[Message Webhook] Starting query intent classification
+[Gemini Service] Generating structured response with schema
+[Message Webhook] Query intent: { intent: 'INFORMATION_QUERY' }
+[Message Webhook] Processing as information query
+[RAG Search] Processing query: Can you give me a recipe for lime juice? for user: f131667u184732093
+[Gemini Service] Generating structured response with schema
+[RAG Search] Enhanced query: {
+  "originalQuery": "Can you give me a recipe for lime juice?",
+  "searchText": "recipe for lime juice, including methods to make lime juice and drinks using lime juice",
+  "searchTerms": [
+    "lime juice recipe",
+    "recipe for lime juice",
+    "lime drink recipe",
+    "how to make lime juice"
+  ],
+  "visualElements": [
+    "lime",
+    "lime juice",
+    "citrus juicer",
+    "glass",
+    "knife",
+    "cutting board",
+    "measuring cup",
+    "juicing limes"
+  ],
+  "temporalContext": {},
+  "topics": []
+}
+[Embedding Service] Starting embedding generation for text length: 87
+[Embedding Service] Checking token limit. Count: 22 Max: 8191
+[Embedding Service] Generating embedding, attempt 1
+[Embedding Service] Resetting rate limit counter
+[Embedding Service] Rate limit check - Current requests: 0 Time window: 452871
+[Embedding Service] Updated request count: 1
+[Embedding Service] Making API request to OpenAI
+[Embedding Service] Successfully generated embedding of length: 3072
+[RAG Search] Generated embedding of length: 3072
+[RAG Search] Built search context: {
+  "filters": {
+    "$or": [
+      {
+        "$or": [
+          {
+            "metadata.visualContent.keyElements": {
+              "$in": [
+                "lime",
+                "lime juice",
+                "citrus juicer",
+                "glass",
+                "knife",
+                "cutting board",
+                "measuring cup",
+                "juicing limes"
+              ]
+            }
+          },
+          {
+            "metadata.searchableKeywords": {
+              "$in": [
+                "lime",
+                "lime juice",
+                "citrus juicer",
+                "glass",
+                "knife",
+                "cutting board",
+                "measuring cup",
+                "juicing limes"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "metadata.searchableKeywords": {
+          "$in": [
+            "lime juice recipe",
+            "recipe for lime juice",
+            "lime drink recipe",
+            "how to make lime juice"
+          ]
+        }
+      }
+    ]
   },
-  body: '{"status":"ok"}'
+  "weights": {
+    "titleMatch": 1.5,
+    "topicMatch": 1.2,
+    "visualMatch": 1,
+    "temporalMatch": 0.8
+  }
 }
-[Message Webhook] Successfully sent video: { status: 'SENT', response: { status: 'ok' } }
- ✓ Compiled in 736ms (1009 modules)
- ✓ Compiled in 346ms (493 modules)
- ✓ Compiled in 287ms (493 modules)
- ✓ Compiled in 163ms (493 modules)
- ✓ Compiled in 798ms (995 modules)
+[RAG Search] Querying namespace: f131667u184732093 with filters: {
+  "$or": [
+    {
+      "$or": [
+        {
+          "metadata.visualContent.keyElements": {
+            "$in": [
+              "lime",
+              "lime juice",
+              "citrus juicer",
+              "glass",
+              "knife",
+              "cutting board",
+              "measuring cup",
+              "juicing limes"
+            ]
+          }
+        },
+        {
+          "metadata.searchableKeywords": {
+            "$in": [
+              "lime",
+              "lime juice",
+              "citrus juicer",
+              "glass",
+              "knife",
+              "cutting board",
+              "measuring cup",
+              "juicing limes"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "metadata.searchableKeywords": {
+        "$in": [
+          "lime juice recipe",
+          "recipe for lime juice",
+          "lime drink recipe",
+          "how to make lime juice"
+        ]
+      }
+    }
+  ]
+}
+[RAG Search] No matches found with filters, trying with metadata existence check
+[RAG Search] Found matches with metadata check: 4
+[RAG Search] Sample match metadata: {
+  audioContent: '{}',
+  contentType: 'topics',
+  instaId: '17841470348429979',
+  keywords: [
+    'lime juice',
+    'oleo citrate',
+    'citric acid',
+    'bottle',
+    'lime juice',
+    'man',
+    'lime juice',
+    'limes',
+    'container',
+    'lime',
+    'peeler',
+    'lime',
+    'peeler',
+    'lime peels',
+    'container',
+    'scale',
+    'malic acid',
+    'container',
+    'muddler',
+    'container',
+    'lime peels',
+    'lime',
+    'blender',
+    'blender',
+    'strainer',
+    'container',
+    'lime peels',
+    'container',
+    'lime juice',
+    'water',
+    'container',
+    'immersion blender',
+    'container',
+    'strainer',
+    'lime juice',
+    'bottle',
+    'lime juice',
+    'bottle',
+    'lime juice',
+    'bottle',
+    'man',
+    'man',
+    'lime juice',
+    'bottles',
+    'man',
+    'Oleo Citrate Lime Juice',
+    'Lime Juice Extraction',
+    'Acid Extraction of Oils'
+  ],
+  mediaType: 'unknown',
+  name: 'KadenBevan',
+  parentId: 'f131667u184732093_video_1735680804085',
+  processedAt: '2024-12-31T21:33:28.996Z',
+  searchableText: 'oleo citrate lime juice the process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes. lime juice extraction the steps involved in extracting lime juice and oils from limes. acid extraction of oils the use of citric and malic acids to extract oils from lime peels.',
+  sectionTitle: 'Topics Analysis',
+  sequenceNumber: 1,
+  summary: '',
+  timestamp: '2024-12-31T21:33:24.085Z',
+  title: 'How to Make Oleo Citrate Lime Juice',
+  topics: '[{"context":"The process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes.","name":"Oleo Citrate Lime Juice","relevance":0.9,"timestamp":"00:00"},{"context":"The steps involved in extracting lime juice and oils from limes.","name":"Lime Juice Extraction","relevance":0.8,"timestamp":"00:08"},{"context":"The use of citric and malic acids to extract oils from lime peels.","name":"Acid Extraction of Oils","relevance":0.7,"timestamp":"00:15"}]',
+  totalChunks: 1,
+  username: 'kaden.t.bevan',
+  videoId: 'f131667u184732093_video_1735680804085',
+  videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo',
+  visualContent: '[]'
+}
+[RAG Search] Retrieved results: 1
+[RAG Search] Top result: {
+  score: 0.622601628,
+  metadata: {
+    videoId: 'f131667u184732093_video_1735680804085',
+    videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo',
+    title: 'How to Make Oleo Citrate Lime Juice',
+    summary: '',
+    description: '',
+    visualContent: [
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object]
+    ],
+    audioContent: { speech: '', music: [], soundEffects: [], timestamps: [Array] },
+    topics: [ [Object], [Object], [Object] ],
+    technicalDetails: {},
+    searchableKeywords: [],
+    relevantChunks: [ [Object] ]
+  }
+}
+[RAG Search] Re-ranked results: 1
+[Message Webhook] Complete Prompt: You are an AI assistant helping users understand and learn from their videos. Your goal is to provide helpful, accurate, and natural responses to their questions using information from the videos they've shared.
+
+User's Question: "Can you give me a recipe for lime juice?"
+
+Here is the relevant information from your videos:
+
+                Video 1 (Relevance Score: 62.3%):
+                
+                Title: How to Make Oleo Citrate Lime Juice
+                Summary: 
+                Description: 
+                
+                Most Relevant Content:
+                
+                
+                Key Visual Elements:
+                
+                  - [00:00] Scene: A hand holds a bottle of yellow-green liquid with the text SUPER superimposed on the screen. The background is a kitchen.
+                    Elements: bottle, lime juice
+                
+
+                  - [00:01] Scene: A man with dark hair and a silver chain necklace is holding a bottle of yellow-green liquid and speaking to the camera. The background is a kitchen.
+                    Elements: man, lime juice
+                
+
+                  - [00:08] Scene: The man is holding a lime and there are 7 more limes on the counter. There is a clear container on the counter.
+                    Elements: limes, container
+                
+
+                  - [00:10] Scene: A close up of a hand peeling a lime with a peeler.
+                    Elements: lime, peeler
+                
+
+                  - [00:11] Scene: A close-up of a peeler scraping the pulp from a lime peel.
+                    Elements: lime, peeler
+                
+
+                  - [00:15] Scene: The man drops lime peels into a clear container and adds a white powder from a shaker.
+                    Elements: lime peels, container
+                
+
+                  - [00:19] Scene: A close up of a scale measuring out a spoonful of white powder.
+                    Elements: scale, malic acid
+                
+
+                  - [00:22] Scene: The man muddles the lime peels and white powder together in a clear container.
+                    Elements: container, muddler
+                
+
+                  - [00:27] Scene: The man shakes the clear container with lime peels and white powder inside.
+                    Elements: container, lime peels
+                
+
+                  - [00:30] Scene: The man puts peeled limes into a blender.
+                    Elements: lime, blender
+                
+
+                  - [00:34] Scene: The man pours the blended lime mixture through a strainer.
+                    Elements: blender, strainer
+                
+
+                  - [00:36] Scene: The lime peels are in the clear container.
+                    Elements: container, lime peels
+                
+
+                  - [00:38] Scene: The man pours lime juice into the container with the lime peels and white powder.
+                    Elements: container, lime juice
+                
+
+                  - [00:40] Scene: The man pours water into the container.
+                    Elements: water, container
+                
+
+                  - [00:41] Scene: The man blends the mixture with an immersion blender.
+                    Elements: immersion blender, container
+                
+
+                  - [00:45] Scene: The man strains the blended mixture.
+                    Elements: strainer, lime juice
+                
+
+                  - [00:46] Scene: The man pours the lime juice into glass bottles.
+                    Elements: bottle, lime juice
+                
+
+                  - [00:48] Scene: The man holds two bottles of lime juice.
+                    Elements: bottle, lime juice
+                
+
+                  - [00:55] Scene: The man opens a bottle and drinks the lime juice.
+                    Elements: bottle, man
+                
+
+                  - [01:02] Scene: The man holds a bottle of lime juice and speaks to the camera.
+                    Elements: man, lime juice
+                
+
+                  - [01:07] Scene: The man holds two bottles of lime juice and speaks to the camera.
+                    Elements: bottles, man
+                
+                
+                Audio Transcript:
+                No transcript available
+                
+                Relevant Topics:
+                
+                  - Oleo Citrate Lime Juice (Relevance: 90.0%)
+                    Context: The process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes.
+                    Timestamp: 00:00
+                
+
+                  - Lime Juice Extraction (Relevance: 80.0%)
+                    Context: The steps involved in extracting lime juice and oils from limes.
+                    Timestamp: 00:08
+                
+
+                  - Acid Extraction of Oils (Relevance: 70.0%)
+                    Context: The use of citric and malic acids to extract oils from lime peels.
+                    Timestamp: 00:15
+                
+              
+
+Guidelines for your response:
+1. Be conversational and friendly, like you're having a natural discussion
+2. Focus on structuring the answer in a way that best suits the user's question
+3. Do not include any information that is not relevant to the user's question
+4. format your response that best represents the users request. For example, (if the user asks for a recipe, format your response as a recipe. If the user asks for a list of ingredients, format your response as a list of ingredients. if the user asks for instructions, format your response as instructions.)
+
+Remember:
+- Stay focused on the user's question
+- Be precise with numbers, measurements, and technical details
+- Keep your tone helpful and engaging
+
+Your response should feel like a knowledgeable friend explaining something, while being accurate and grounded in the video content. 
+[Gemini Service] Generating response for prompt You are an AI assistant helping users understand and learn from their videos. Your goal is to provid...
+[Gemini Service] Generated response: Okay, I can help with that! It looks like you're interested in making lime juice, and the video I have shows how to make a special kind called Oleo Citrate Lime Juice. It's a bit more involved than just squeezing limes, but it's supposed to give you a more concentrated, longer-lasting juice.
+
+Here's how it's done, based on the video:
+
+**Oleo Citrate Lime Juice Recipe**
+
+**Ingredients:**
+
+*   Limes (about 8, according to the video)
+*   White powder (malic acid, though other acids like citric acid might work)
+*   Water
+
+**Instructions:**
+
+1.  **Peel the Limes:** Use a peeler to remove the zest from the limes, being careful to get the white pith.
+2.  **Scrape the Peels:** Use the peeler to scrape any remaining pulp from the peels.
+3.  **Combine Peels and Acid:** Place the lime peels in a container and add the white powder. The video shows a spoonful of the powder, but the exact amount isn't specified. It might be best to start with a small amount and adjust to taste.
+4.  **Muddle:** Muddle the peels and powder together to help release the oils.
+5.  **Shake:** Shake the container to ensure the powder is well distributed.
+6.  **Blend the Limes:** Peel the limes and put them in a blender. Blend until they are completely juiced.
+7.  **Strain the Juice:** Pour the blended lime mixture through a strainer to remove any pulp and solids.
+8.  **Combine Juice and Peels:** Pour the strained lime juice into the container with the lime peels and powder.
+9.  **Add Water:** Add water to the container. The video doesn't state how much water, but add enough to bring the mixture to your preferred strength.
+10. **Blend Again:** Use an immersion blender to blend the mixture.
+11. **Strain Again:** Strain the mixture to remove solids.
+12. **Bottle:** Pour the finished lime juice into glass bottles.
+
+This method is a bit more involved than traditional lime juice, but it's designed to maximize the flavor and keep it fresh for longer.
+
+Let me know if you have any other questions!
+
+[Message Webhook] Gemini Response: Okay, I can help with that! It looks like you're interested in making lime juice, and the video I have shows how to make a special kind called Oleo Citrate Lime Juice. It's a bit more involved than just squeezing limes, but it's supposed to give you a more concentrated, longer-lasting juice.
+
+Here's how it's done, based on the video:
+
+**Oleo Citrate Lime Juice Recipe**
+
+**Ingredients:**
+
+*   Limes (about 8, according to the video)
+*   White powder (malic acid, though other acids like citric acid might work)
+*   Water
+
+**Instructions:**
+
+1.  **Peel the Limes:** Use a peeler to remove the zest from the limes, being careful to get the white pith.
+2.  **Scrape the Peels:** Use the peeler to scrape any remaining pulp from the peels.
+3.  **Combine Peels and Acid:** Place the lime peels in a container and add the white powder. The video shows a spoonful of the powder, but the exact amount isn't specified. It might be best to start with a small amount and adjust to taste.
+4.  **Muddle:** Muddle the peels and powder together to help release the oils.
+5.  **Shake:** Shake the container to ensure the powder is well distributed.
+6.  **Blend the Limes:** Peel the limes and put them in a blender. Blend until they are completely juiced.
+7.  **Strain the Juice:** Pour the blended lime mixture through a strainer to remove any pulp and solids.
+8.  **Combine Juice and Peels:** Pour the strained lime juice into the container with the lime peels and powder.
+9.  **Add Water:** Add water to the container. The video doesn't state how much water, but add enough to bring the mixture to your preferred strength.
+10. **Blend Again:** Use an immersion blender to blend the mixture.
+11. **Strain Again:** Strain the mixture to remove solids.
+12. **Bottle:** Pour the finished lime juice into glass bottles.
+
+This method is a bit more involved than traditional lime juice, but it's designed to maximize the flavor and keep it fresh for longer.
+
+Let me know if you have any other questions!
+[Message Service] Sending webhook message to user f131667u184732093: Okay, I can help with that! It looks like you're interested in making lime juice, and the video I have shows how to make a special kind called Oleo Citrate Lime Juice. It's a bit more involved than just squeezing limes, but it's supposed to give you a more concentrated, longer-lasting juice.
+
+Here's how it's done, based on the video:
+
+**Oleo Citrate Lime Juice Recipe**
+
+**Ingredients:**
+
+*   Limes (about 8, according to the video)
+*   White powder (malic acid, though other acids like citric acid might work)
+*   Water
+
+**Instructions:**
+
+1.  **Peel the Limes:** Use a peeler to remove the zest from the limes, being careful to get the white pith.
+2.  **Scrape the Peels:** Use the peeler to scrape any remaining pulp from the peels.
+3.  **Combine Peels and Acid:** Place the lime peels in a container and add the white powder. The video shows a spoonful of the powder, but the exact amount isn't specified. It might be best to start with a small
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Service] Sending webhook message to user f131667u184732093: amount and adjust to taste.
+4.  **Muddle:** Muddle the peels and powder together to help release the oils.
+5.  **Shake:** Shake the container to ensure the powder is well distributed.
+6.  **Blend the Limes:** Peel the limes and put them in a blender. Blend until they are completely juiced.
+7.  **Strain the Juice:** Pour the blended lime mixture through a strainer to remove any pulp and solids.
+8.  **Combine Juice and Peels:** Pour the strained lime juice into the container with the lime peels and powder.
+9.  **Add Water:** Add water to the container. The video doesn't state how much water, but add enough to bring the mixture to your preferred strength.
+10. **Blend Again:** Use an immersion blender to blend the mixture.
+11. **Strain Again:** Strain the mixture to remove solids.
+12. **Bottle:** Pour the finished lime juice into glass bottles.
+
+This method is a bit more involved than traditional lime juice, but it's designed to maximize
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Service] Sending webhook message to user f131667u184732093: the flavor and keep it fresh for longer.
+
+Let me know if you have any other questions!
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Webhook] Request body: {
+  userNS: 'f131667u184732093',
+  InstaMsgTxt: 'Show me a video about lime juice',
+  MediaType: 'Text',
+  InstaId: '17841470348429979',
+  username: 'kaden.t.bevan',
+  name: 'KadenBevan'
+}
+[Firestore Service] Storing message for user: f131667u184732093
+[Firestore Service] Message stored successfully: 81ka9CZ5oOXusxtNV1Em
+[Message Webhook] Message stored in Firestore: 81ka9CZ5oOXusxtNV1Em
+[Message Service] Sending webhook message to user f131667u184732093: I'm searching through your videos...
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Webhook] Sent search acknowledgment to user: f131667u184732093
+[Message Webhook] Starting query intent classification
+[Gemini Service] Generating structured response with schema
+[Message Webhook] Query intent: { intent: 'RECALL_VIDEO' }
+[Message Webhook] Processing as video recall request
+[RAG Search] Processing query: Show me a video about lime juice for user: f131667u184732093
+[Gemini Service] Generating structured response with schema
+[RAG Search] Enhanced query: {
+  "originalQuery": "Show me a video about lime juice",
+  "searchText": "video about lime juice, including lime extract and citrus lime liquid",
+  "searchTerms": [
+    "lime juice",
+    "lime extract",
+    "lime liquid",
+    "citrus lime juice"
+  ],
+  "visualElements": [
+    "lime",
+    "lime juice",
+    "squeezing lime",
+    "glass of lime juice"
+  ],
+  "temporalContext": {},
+  "topics": []
+}
+[Embedding Service] Starting embedding generation for text length: 69
+[Embedding Service] Checking token limit. Count: 18 Max: 8191
+[Embedding Service] Generating embedding, attempt 1
+[Embedding Service] Rate limit check - Current requests: 1 Time window: 52045
+[Embedding Service] Updated request count: 2
+[Embedding Service] Making API request to OpenAI
+[Embedding Service] Successfully generated embedding of length: 3072
+[RAG Search] Generated embedding of length: 3072
+[RAG Search] Built search context: {
+  "filters": {
+    "$or": [
+      {
+        "$or": [
+          {
+            "metadata.visualContent.keyElements": {
+              "$in": [
+                "lime",
+                "lime juice",
+                "squeezing lime",
+                "glass of lime juice"
+              ]
+            }
+          },
+          {
+            "metadata.searchableKeywords": {
+              "$in": [
+                "lime",
+                "lime juice",
+                "squeezing lime",
+                "glass of lime juice"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "metadata.searchableKeywords": {
+          "$in": [
+            "lime juice",
+            "lime extract",
+            "lime liquid",
+            "citrus lime juice"
+          ]
+        }
+      }
+    ]
+  },
+  "weights": {
+    "titleMatch": 1.5,
+    "topicMatch": 1.2,
+    "visualMatch": 1,
+    "temporalMatch": 0.8
+  }
+}
+[RAG Search] Querying namespace: f131667u184732093 with filters: {
+  "$or": [
+    {
+      "$or": [
+        {
+          "metadata.visualContent.keyElements": {
+            "$in": [
+              "lime",
+              "lime juice",
+              "squeezing lime",
+              "glass of lime juice"
+            ]
+          }
+        },
+        {
+          "metadata.searchableKeywords": {
+            "$in": [
+              "lime",
+              "lime juice",
+              "squeezing lime",
+              "glass of lime juice"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "metadata.searchableKeywords": {
+        "$in": [
+          "lime juice",
+          "lime extract",
+          "lime liquid",
+          "citrus lime juice"
+        ]
+      }
+    }
+  ]
+}
+[RAG Search] No matches found with filters, trying with metadata existence check
+[RAG Search] Found matches with metadata check: 4
+[RAG Search] Sample match metadata: {
+  audioContent: '{}',
+  audioContentId: 'f131667u184732093_video_1735680804085_audio',
+  contentType: 'video_analysis',
+  instaId: '17841470348429979',
+  keywords: [
+    'lime juice',  'oleo citrate',
+    'citric acid', 'bottle',
+    'lime juice',  'man',
+    'lime juice',  'limes',
+    'container',   'lime'
+  ],
+  mediaType: 'unknown',
+  name: 'KadenBevan',
+  processedAt: '2024-12-31T21:33:26.308Z',
+  searchableText: 'how to make oleo citrate lime juice this video demonstrates how to make a concentrated lime juice, called oleo citrate, that lasts twice as long and yields four times as much juice from limes by extracting oils from the peels. the process involves peeling limes, muddling the peels with citric and malic acid, letting it sit, then blending the peeled limes to extract juice, adding water and the steeped peels, then blending and straining. the resulting lime juice retains the flavor of lime and lasts longer in the fridge.',
+  sectionTitle: 'Complete Analysis',
+  sequenceNumber: 1,
+  summary: 'This video demonstrates how to make a concentrated lime juice, called oleo citrate, that lasts twice as long and yields four times as much juice from limes by extracting oils from the peels. The process involves peeling limes, muddling the peels with citric and malic acid, letting it sit, then blending the peeled limes to extract juice, adding water and the steeped peels, then blending and straining. The resulting lime juice retains the flavor of lime and lasts longer in the fridge.',
+  timestamp: '2024-12-31T21:33:24.085Z',
+  title: 'How to Make Oleo Citrate Lime Juice',
+  topics: '[]',
+  topicsId: 'f131667u184732093_video_1735680804085_topics',
+  totalChunks: 1,
+  username: 'kaden.t.bevan',
+  videoId: 'f131667u184732093_video_1735680804085',
+  videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo',
+  visualContent: '[]',
+  visualContentId: 'f131667u184732093_video_1735680804085_visual'
+}
+[RAG Search] Retrieved results: 1
+[RAG Search] Top result: {
+  score: 0.664953709,
+  metadata: {
+    videoId: 'f131667u184732093_video_1735680804085',
+    videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo',
+    title: 'How to Make Oleo Citrate Lime Juice',
+    summary: 'This video demonstrates how to make a concentrated lime juice, called oleo citrate, that lasts twice as long and yields four times as much juice from limes by extracting oils from the peels. The process involves peeling limes, muddling the peels with citric and malic acid, letting it sit, then blending the peeled limes to extract juice, adding water and the steeped peels, then blending and straining. The resulting lime juice retains the flavor of lime and lasts longer in the fridge.',
+    description: '',
+    visualContent: [
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object]
+    ],
+    audioContent: { speech: '', music: [], soundEffects: [], timestamps: [Array] },
+    topics: [ [Object], [Object], [Object] ],
+    technicalDetails: {},
+    searchableKeywords: [],
+    relevantChunks: [ [Object] ]
+  }
+}
+[RAG Search] Re-ranked results: 1
+[Message Webhook] Preparing to send video: https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo
+[Message Service] Sending webhook message to user f131667u184732093: I found a relevant video! Sending it now...
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Service] Sending video to user f131667u184732093: https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo
+[Message Service] Video webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Webhook] Successfully sent video
+[Message Webhook] Request body: {
+  userNS: 'f131667u184732093',
+  InstaMsgTxt: 'Can you show me a video about making lime juice?',
+  MediaType: 'Text',
+  InstaId: '17841470348429979',
+  username: 'kaden.t.bevan',
+  name: 'KadenBevan'
+}
+[Firestore Service] Storing message for user: f131667u184732093
+[Firestore Service] Message stored successfully: rZZy4eYexe7EAOsEGMNQ
+[Message Webhook] Message stored in Firestore: rZZy4eYexe7EAOsEGMNQ
+[Message Service] Sending webhook message to user f131667u184732093: I'm searching through your videos...
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Webhook] Sent search acknowledgment to user: f131667u184732093
+[Message Webhook] Starting query intent classification
+[Gemini Service] Generating structured response with schema
+[Message Webhook] Query intent: { intent: 'RECALL_VIDEO' }
+[Message Webhook] Processing as video recall request
+[RAG Search] Processing query: Can you show me a video about making lime juice? for user: f131667u184732093
+[Gemini Service] Generating structured response with schema
+[RAG Search] Enhanced query: {
+  "originalQuery": "Can you show me a video about making lime juice?",
+  "searchText": "how to make lime juice, including preparation and recipe guidance",
+  "searchTerms": [
+    "lime juice preparation",
+    "making lime juice",
+    "lime juice recipe",
+    "how to juice limes"
+  ],
+  "visualElements": [
+    "limes",
+    "lime juice",
+    "citrus juicer",
+    "knife",
+    "cutting board",
+    "juicing limes",
+    "kitchen"
+  ],
+  "temporalContext": {},
+  "topics": []
+}
+[Embedding Service] Starting embedding generation for text length: 65
+[Embedding Service] Checking token limit. Count: 17 Max: 8191
+[Embedding Service] Generating embedding, attempt 1
+[Embedding Service] Resetting rate limit counter
+[Embedding Service] Rate limit check - Current requests: 0 Time window: 217427
+[Embedding Service] Updated request count: 1
+[Embedding Service] Making API request to OpenAI
+[Embedding Service] Successfully generated embedding of length: 3072
+[RAG Search] Generated embedding of length: 3072
+[RAG Search] Built search context: {
+  "filters": {
+    "$or": [
+      {
+        "$or": [
+          {
+            "metadata.visualContent.keyElements": {
+              "$in": [
+                "limes",
+                "lime juice",
+                "citrus juicer",
+                "knife",
+                "cutting board",
+                "juicing limes",
+                "kitchen"
+              ]
+            }
+          },
+          {
+            "metadata.searchableKeywords": {
+              "$in": [
+                "limes",
+                "lime juice",
+                "citrus juicer",
+                "knife",
+                "cutting board",
+                "juicing limes",
+                "kitchen"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "metadata.searchableKeywords": {
+          "$in": [
+            "lime juice preparation",
+            "making lime juice",
+            "lime juice recipe",
+            "how to juice limes"
+          ]
+        }
+      }
+    ]
+  },
+  "weights": {
+    "titleMatch": 1.5,
+    "topicMatch": 1.2,
+    "visualMatch": 1,
+    "temporalMatch": 0.8
+  }
+}
+[RAG Search] Querying namespace: f131667u184732093 with filters: {
+  "$or": [
+    {
+      "$or": [
+        {
+          "metadata.visualContent.keyElements": {
+            "$in": [
+              "limes",
+              "lime juice",
+              "citrus juicer",
+              "knife",
+              "cutting board",
+              "juicing limes",
+              "kitchen"
+            ]
+          }
+        },
+        {
+          "metadata.searchableKeywords": {
+            "$in": [
+              "limes",
+              "lime juice",
+              "citrus juicer",
+              "knife",
+              "cutting board",
+              "juicing limes",
+              "kitchen"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "metadata.searchableKeywords": {
+        "$in": [
+          "lime juice preparation",
+          "making lime juice",
+          "lime juice recipe",
+          "how to juice limes"
+        ]
+      }
+    }
+  ]
+}
+[RAG Search] No matches found with filters, trying with metadata existence check
+[RAG Search] Found matches with metadata check: 4
+[RAG Search] Sample match metadata: {
+  audioContent: '{}',
+  contentType: 'topics',
+  instaId: '17841470348429979',
+  keywords: [
+    'lime juice',
+    'oleo citrate',
+    'citric acid',
+    'bottle',
+    'lime juice',
+    'man',
+    'lime juice',
+    'limes',
+    'container',
+    'lime',
+    'peeler',
+    'lime',
+    'peeler',
+    'lime peels',
+    'container',
+    'scale',
+    'malic acid',
+    'container',
+    'muddler',
+    'container',
+    'lime peels',
+    'lime',
+    'blender',
+    'blender',
+    'strainer',
+    'container',
+    'lime peels',
+    'container',
+    'lime juice',
+    'water',
+    'container',
+    'immersion blender',
+    'container',
+    'strainer',
+    'lime juice',
+    'bottle',
+    'lime juice',
+    'bottle',
+    'lime juice',
+    'bottle',
+    'man',
+    'man',
+    'lime juice',
+    'bottles',
+    'man',
+    'Oleo Citrate Lime Juice',
+    'Lime Juice Extraction',
+    'Acid Extraction of Oils'
+  ],
+  mediaType: 'unknown',
+  name: 'KadenBevan',
+  parentId: 'f131667u184732093_video_1735680804085',
+  processedAt: '2024-12-31T21:33:28.996Z',
+  searchableText: 'oleo citrate lime juice the process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes. lime juice extraction the steps involved in extracting lime juice and oils from limes. acid extraction of oils the use of citric and malic acids to extract oils from lime peels.',
+  sectionTitle: 'Topics Analysis',
+  sequenceNumber: 1,
+  summary: '',
+  timestamp: '2024-12-31T21:33:24.085Z',
+  title: 'How to Make Oleo Citrate Lime Juice',
+  topics: '[{"context":"The process of making a concentrated lime juice that lasts longer and yields more juice from the same number of limes.","name":"Oleo Citrate Lime Juice","relevance":0.9,"timestamp":"00:00"},{"context":"The steps involved in extracting lime juice and oils from limes.","name":"Lime Juice Extraction","relevance":0.8,"timestamp":"00:08"},{"context":"The use of citric and malic acids to extract oils from lime peels.","name":"Acid Extraction of Oils","relevance":0.7,"timestamp":"00:15"}]',
+  totalChunks: 1,
+  username: 'kaden.t.bevan',
+  videoId: 'f131667u184732093_video_1735680804085',
+  videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo',
+  visualContent: '[]'
+}
+[RAG Search] Retrieved results: 1
+[RAG Search] Top result: {
+  score: 0.629770637,
+  metadata: {
+    videoId: 'f131667u184732093_video_1735680804085',
+    videoUrl: 'https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo',
+    title: 'How to Make Oleo Citrate Lime Juice',
+    summary: '',
+    description: '',
+    visualContent: [
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object],
+      [Object], [Object], [Object]
+    ],
+    audioContent: { speech: '', music: [], soundEffects: [], timestamps: [Array] },
+    topics: [ [Object], [Object], [Object] ],
+    technicalDetails: {},
+    searchableKeywords: [],
+    relevantChunks: [ [Object] ]
+  }
+}
+[RAG Search] Re-ranked results: 1
+[Message Webhook] Preparing to send video: https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo
+[Message Service] Sending webhook message to user f131667u184732093: I found a relevant video! Sending it now...
+[Message Service] Webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Service] Message stored in Firestore: f131667u184732093
+[Message Service] Sending video to user f131667u184732093: https://lookaside.fbsbx.com/ig_messaging_cdn/?asset_id=17936319512959556&signature=AbztVSQU3ctz1NKeT1vNcVVed73eMgBST7eBCeQqRf9XT6ZtPIkxqWCbvL5Ju8ddyEXGfVYEO3J0PW9APwqpKu2kpBqJ4cx68VuJcshrmBgB1cLgglW9OX-bQFG6XtLbH71DpY6hdNU31lVOjbB3SU73mgnM53fhYFUOJFEhZpzJuZa_zmhytUZxPzSahwH5tlPGcp-tXvMAVoRNdF-Q37EVDruvHMo
+[Message Service] Video webhook response: { status: 200, statusText: 'OK', body: '{"status":"ok"}' }
+[Message Webhook] Successfully sent video
+[Firebase] Successfully initialized Firebase app
+[AuthService] Initialized
+[LandingPage] Rendering the LandingPage component.
+[Step 1] Rendering with alignment: left
+[Step 2] Rendering with alignment: right
+[Step 3] Rendering with alignment: left
+[AuthModal] Rendering with active tab: signin
+[LandingPage] Rendering the LandingPage component.
+[Step 1] Rendering with alignment: left
+[Step 2] Rendering with alignment: right
+[Step 3] Rendering with alignment: left
+[AuthModal] Rendering with active tab: signin
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 608ms (1000 modules)

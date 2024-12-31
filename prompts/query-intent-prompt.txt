@@ -1,0 +1,28 @@
+Analyze the following user query and classify its intent. The query is from a user interacting with a video memory system that stores and recalls videos with their content analysis.
+
+Query: "${query}"
+
+Classify this query into one of these intents:
+1. RECALL_VIDEO - User is asking for a specific video.
+2. INFORMATION_QUERY - User is asking for information, instructions, or how-to guidance and not explicitly asking for a video.
+
+Return your response as a JSON object (without markdown formatting) with:
+- intent: The classified intent
+- confidence: Number between 0-1 indicating confidence in classification
+- explanation: Brief explanation of why this intent was chosen
+- extractedEntities: Relevant entities extracted from the query (optional)
+
+Example:
+{
+  "intent": "RECALL_VIDEO",
+  "confidence": 0.95,
+  "explanation": "User explicitly asks for a specific video they've seen before",
+  "extractedEntities": {
+    "topics": ["door repair", "hinge"],
+    "timeContext": "recent",
+    "specificAttributes": {
+      "videoType": "tutorial",
+      "subject": "door hinge"
+    }
+  }
+}

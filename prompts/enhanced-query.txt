@@ -1,0 +1,30 @@
+Improved Query Prompt
+Analyze the user's query for semantic search enhancement: "${query}". Extract and expand the analysis for the following fields while ensuring the enhanced output is strictly aligned with the original query's intent.
+
+Main Search Terms:
+Extract the central intent of the query, preserving its semantic core.
+Expand terms using direct synonyms, related keywords, and alternate phrasing tied specifically to the original request.
+Avoid generalizing beyond the scope of the user’s explicit query.
+Visual Elements:
+Identify tangible objects, scenes, or contextual imagery closely aligned with the original query's domain.
+For recipe-related queries, specify possible food, drink, ingredients, and preparation tools.
+Ensure listed elements are directly relevant to the original query.
+Temporal Context:
+Determine whether the query implies a specific time or season (e.g., seasonal recipes, traditional methods).
+State whether the context is modern, historical, or otherwise time-dependent.
+Relevant Topics or Themes:
+Expand on broader topics directly related to the query’s intent.
+Include only those subtopics that add meaningful depth to the original user intent without deviating into unrelated areas.
+
+Output Requirements
+Provide the response in JSON format, adhering to the following structure:
+{
+  "searchText": "Expanded and focused text covering only the semantic intent of the original query",
+  "searchTerms": ["term1", "term2", "..."],
+  "visualElements": ["element1", "element2", "..."],
+  "temporalContext": {
+    "timeframe": "Relevant timeframe if applicable to the query",
+    "recency": "Whether the query applies to current, past, or timeless contexts"
+  },
+  "topics": ["topic1", "topic2", "..."]
+}

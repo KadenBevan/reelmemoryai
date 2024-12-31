@@ -1,77 +1,91 @@
-Your task is to perform a meticulous transcription and comprehensive analysis of the video. Follow these detailed guidelines to produce a thorough, engaging, and information-rich response:
+Your task is to perform a detailed transcription and thorough analysis of the video provided. Your response must be complete, information-rich, and specifically structured in the JSON format outlined below. Each field should be as detailed and extensive as possible while remaining relevant to the video content. Follow these guidelines to ensure maximum thoroughness and clarity:
 
-1. Transcription
-Transcribe the spoken words from the video as accurately as possible, maintaining the original tone and context. Ensure that every dialogue, narration, and key phrase is captured.
-Include timestamps for major segments or changes in dialogue to aid reference and navigation.
-2. Title and Description
-Identify the title of the video.
-Write a detailed summary of the video’s content, covering its central theme, purpose, and scope. Highlight what viewers can expect to gain or learn from the video.
-3. Key Points and Themes
-Break down the core topics into distinct themes.
-Provide an in-depth explanation of each theme, discussing its relevance and significance.
-Analyze the central messages or objectives and connect them to broader societal, educational, or creative contexts.
-Cite any supporting evidence, examples, or anecdotes presented in the video.
-4. Scenes and Visuals
-Describe the most impactful scenes in vivid detail, focusing on their composition, setting, and emotional tone.
-Discuss elements like lighting, color palette, cinematography, and visual storytelling techniques and how they enhance the viewer’s experience or deepen the video’s message.
-5. Audio and Dialogue
-Analyze the audio elements of the video, including background music, sound effects, and the use of silence.
-Highlight and interpret significant pieces of dialogue or narration, considering their emotional weight, delivery, and contribution to the video’s themes.
-Comment on the overall tone, pacing, and delivery of audio components and their alignment with the visuals.
-6. Characters and Personalities
-Identify and describe the main individuals or characters featured in the video.
-Discuss their roles, motivations, and contributions to the video’s narrative or message.
-Reflect on how these characters are portrayed visually and emotionally, and their potential connection to the audience.
-7. Technical Elements
-Provide an analysis of the video’s technical aspects, such as camera angles, shot transitions, editing choices, and special effects.
-Evaluate the production quality and its influence on viewer engagement.
-Discuss any innovative techniques, such as time-lapse, slow motion, or experimental framing, and their impact on storytelling.
-8. Context and Background Information
-Research and include relevant background details about the video’s creator(s), production team, and intended audience.
-Discuss the cultural, historical, or social context influencing the video.
-Analyze the video’s purpose or intended impact, exploring why it was made and its relevance.
-9. Personal Insights and Critical Analysis
-Offer a thoughtful critique of the video, identifying strengths and areas for improvement.
-Provide constructive suggestions for enhancing its effectiveness.
-Reflect on how the video resonates with its audience—whether it’s inspiring, thought-provoking, or impactful.
-10. Summary and Conclusion
-Summarize the video’s content, key takeaways, and most impactful aspects.
-Conclude with your final thoughts on the video’s overall significance and value.
-Ensure your response is thorough, detailed, and structured according to these sections. Avoid including extraneous information or deviating from this format.
+Instructions for Analysis:
+Title
 
-`Analyze this video comprehensively and provide a structured response.
-Focus on capturing all key visual and audio elements, main topics, and technical aspects.
-Be specific and detailed in your observations.
-Ensure timestamps are provided where relevant.
-Include searchable keywords that would help users find this content later.
+Identify the title of the video and provide a clear, concise title that encapsulates the essence of the video.
+Summary
 
-Your response must be valid JSON matching this structure:
+Write an extensive overview of the video’s content.
+Include the central theme, purpose, scope, and any relevant contextual details.
+Highlight key takeaways and what viewers can expect to gain or learn.
+Visual Content
+
+Break down the video into its significant scenes, using timestamps for reference (e.g., MM:SS).
+For each scene, provide:
+A vivid description of the visuals, including settings, lighting, color palette, and composition.
+Exact transcripts of any text or instructions displayed on the screen.
+Key elements or objects featured in the scene, described thoroughly and in detail.
+Audio Content
+
+Transcribe all spoken words verbatim with corresponding timestamps.
+Describe the background music, sound effects, and periods of silence in detail.
+Include transcripts of any auditory instructions provided.
+Highlight how audio elements contribute to the overall tone, pacing, and themes of the video.
+Topics
+
+Identify the main topics addressed in the video, listing them with descriptive names.
+For each topic:
+Explain its relevance and connection to the video.
+Provide context about how it is presented or discussed in the video.
+Assign a relevance score (on a scale of 0 to 1) based on its importance in the video.
+Technical Details
+
+Analyze the technical aspects of the video:
+Quality: Describe the video resolution, clarity, and overall production quality.
+Effects: List any special effects used (e.g., time-lapse, transitions) and describe their implementation.
+Editing: Explain the editing style and how it supports the video’s narrative or themes.
+Searchable Keywords
+
+Generate a comprehensive list of keywords that reflect the video’s content.
+Include synonyms, related terms, and alternate phrasings to enhance search discoverability.
+Output the Response in the Following JSON Format:
+
 {
   "title": "Brief title of the video",
-  "summary": "Concise overview of the content",
+  "summary": "Comprehensive and detailed overview of the content, themes, and purpose of the video.",
   "visualContent": [
     {
       "timestamp": "MM:SS",
-      "scene": "Description of the scene",
-      "keyElements": ["element1", "element2"]
+      "scene": "Detailed description of the scene, including settings, lighting, colors, and key visuals.",
+      "text": "Exact transcription of text displayed on screen, formatted as it appears.",
+      "instructions": "Exact transcription of on-screen instructions, if present.",
+      "keyElements": ["Detailed description of element1", "Detailed description of element2", "..."]
     }
   ],
   "audioContent": {
-    "speech": "Description of spoken content",
-    "music": "Description of background music",
-    "soundEffects": ["effect1", "effect2"]
+    "timestamps": ["MM:SS", "MM:SS"],
+    "speech": "Exact transcription of all spoken content, formatted and detailed.",
+    "music": "Detailed description of background music, including mood, instruments, and significance.",
+    "instructions": "Exact transcription of verbal instructions provided in the video.",
+    "soundEffects": ["Detailed description of sound effect1", "Detailed description of sound effect2", "..."]
   },
   "topics": [
     {
-      "name": "Topic name",
+      "name": "Detailed topic name",
       "relevance": 0.9,
-      "context": "How this topic appears in the video"
+      "context": "In-depth explanation of how this topic appears, is discussed, or is represented in the video."
+    },
+    {
+      "name": "Another topic name",
+      "relevance": 0.8,
+      "context": "Further explanation of how this topic is presented and its relevance."
     }
   ],
   "technicalDetails": {
-    "quality": "Video quality description",
-    "effects": ["effect1", "effect2"],
-    "editing": "Description of editing style"
+    "quality": "Comprehensive description of video quality, resolution, and overall production value.",
+    "effects": ["Detailed description of effect1", "Detailed description of effect2", "..."],
+    "editing": "Thorough analysis of the editing style, transitions, pacing, and overall visual flow."
   },
-  "searchableKeywords": ["keyword1", "keyword2"]
-}`
+  "searchableKeywords": [
+    "keyword1 with description",
+    "keyword2 with description",
+    "keyword3 with description",
+    "..."
+  ]
+}
+Key Requirements for AI Response:
+Ensure completeness: Each field in the JSON must be filled out thoroughly with verbose and specific information.
+Accuracy is critical: The transcription and analysis must capture the exact words, visuals, and elements from the video without omitting details.
+Stay on topic: Avoid irrelevant information or subjective opinions—focus entirely on describing and analyzing the video’s content.
+Use vivid language: Make descriptions engaging, precise, and detailed to enhance clarity and usability.

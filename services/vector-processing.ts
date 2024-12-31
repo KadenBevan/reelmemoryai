@@ -1,4 +1,5 @@
 import { upsertUserData } from '@/lib/pinecone';
+import { TopicInfo } from '@/lib/pinecone';
 import { encode } from '@/lib/encoder';
 import { EmbeddingService } from './embeddings';
 import { VideoAnalysis } from './gemini';
@@ -53,6 +54,12 @@ interface ChunkMetadata {
     /** When the video was processed */
     processedAt: string;
   };
+  analysisData?: {
+    title?: string;
+    summary?: string;
+    visualContent?: any[];
+    audioContent?: Record<string, any>;
+  };
 }
 
 /**
@@ -66,7 +73,31 @@ interface ProcessedChunk {
   /** Vector representation of the chunk */
   vector: number[];
   /** Associated metadata */
-  metadata: ChunkMetadata;
+  metadata: {
+    videoId: string;
+    videoUrl: string;
+    timestamp: string;
+    sequenceNumber: number;
+    totalChunks: number;
+    contentType: string;
+    sectionTitle: string;
+    topics: TopicInfo[];
+    keywords: string[];
+    videoMetadata: {
+      mediaType: string;
+      instaId: string;
+      username: string;
+      name: string;
+      processedAt: string;
+      title: string;
+      summary: string;
+      visualContent: any[];
+      audioContent: any;
+      topics: TopicInfo[];
+      technicalDetails: any;
+      searchableKeywords: string[];
+    };
+  };
 }
 
 /**
@@ -92,21 +123,61 @@ interface VideoProcessingRequest {
   };
 }
 
+interface VisualContentItem {
+  timestamp: string;
+  scene: string;
+  text?: string;
+  keyElements?: string[];
+}
+
 /**
  * Service for processing text into vectors and managing storage
  */
 export class VectorProcessingService {
+  private static instance: VectorProcessingService;
+  private static instancePromise: Promise<VectorProcessingService> | null = null;
   private config: VectorProcessingConfig;
-  private embeddingService: EmbeddingService;
+  private embeddingService!: EmbeddingService;
 
-  constructor(config?: Partial<VectorProcessingConfig>) {
+  private constructor(config?: Partial<VectorProcessingConfig>) {
     this.config = {
       maxChunkTokens: 512,
       minChunkTokens: 128,
       overlapTokens: 64,
       ...config
     };
-    this.embeddingService = new EmbeddingService();
+  }
+
+  /**
+   * Get singleton instance
+   */
+  public static async getInstance(config?: Partial<VectorProcessingConfig>): Promise<VectorProcessingService> {
+    if (!VectorProcessingService.instancePromise) {
+      VectorProcessingService.instancePromise = (async () => {
+        if (!VectorProcessingService.instance) {
+          const instance = new VectorProcessingService(config);
+          // Initialize dependencies asynchronously
+          instance.embeddingService = await EmbeddingService.getInstance();
+          VectorProcessingService.instance = instance;
+        } else if (config) {
+          // Update existing instance's config if provided
+          await VectorProcessingService.instance.updateConfig(config);
+        }
+        return VectorProcessingService.instance;
+      })();
+    }
+    return VectorProcessingService.instancePromise;
+  }
+
+  /**
+   * Updates the service configuration
+   */
+  private async updateConfig(config: Partial<VectorProcessingConfig>): Promise<void> {
+    this.config = {
+      ...this.config,
+      ...config
+    };
+    console.log('[Vector Processing] Updated configuration:', this.config);
   }
 
   /**
@@ -121,133 +192,96 @@ export class VectorProcessingService {
     try {
       console.log('[Vector Processing] Processing video analysis for user:', userId);
       
-      // Create semantic chunks from analysis data
-      const chunks: Array<Omit<ProcessedChunk, 'vector'>> = [];
       const processedAt = new Date().toISOString();
-      const baseMetadata = {
-        videoId: `${userId}_video_${Date.now()}`,
-        videoUrl,
-        timestamp: processedAt,
-        videoMetadata: {
-          ...metadata,
-          processedAt
-        },
-        processedAt
-      };
+      const videoId = `${userId}_video_${Date.now()}`;
 
-      // Add title and summary as a high-level overview chunk
-      const overviewChunk = {
-        id: `${baseMetadata.videoId}_overview`,
-        content: `Title: ${analysisData.title}\nSummary: ${analysisData.summary}`,
-        metadata: {
-          ...baseMetadata,
-          contentType: 'video_analysis',
-          sectionTitle: 'Overview',
-          sequenceNumber: chunks.length + 1,
-          totalChunks: 0, // Will be updated after all chunks are created
-          topics: analysisData.topics || [],
-          keywords: analysisData.searchableKeywords || []
-        }
-      };
-      chunks.push(overviewChunk);
+      // Create a single comprehensive content string
+      const contentSections = [
+        // Overview Section
+        `Title: ${analysisData.title || ''}`,
+        `Summary: ${analysisData.summary || ''}`,
 
-      // Process visual content with temporal context
-      if (analysisData.visualContent?.length) {
-        for (let i = 0; i < analysisData.visualContent.length; i++) {
-          const scene = analysisData.visualContent[i];
-          const prevScene = i > 0 ? analysisData.visualContent[i - 1] : null;
-          const nextScene = i < analysisData.visualContent.length - 1 ? analysisData.visualContent[i + 1] : null;
+        // Visual Content Section
+        analysisData.visualContent?.length ? [
+          '\nVisual Content Analysis:',
+          ...analysisData.visualContent.map((scene, index) => [
+            `\nScene ${index + 1} (${scene.timestamp}):`,
+            `Description: ${scene.scene}`,
+            `Key Elements: ${scene.keyElements?.join(', ')}`
+          ].join('\n'))
+        ].join('\n') : '',
 
-          // Create content with temporal context
-          const content = [
-            prevScene ? `Previous (${prevScene.timestamp}): ${prevScene.scene}` : '',
-            `Current (${scene.timestamp}): ${scene.scene}`,
-            nextScene ? `Next (${nextScene.timestamp}): ${nextScene.scene}` : '',
-            `Key Elements: ${scene.keyElements?.join(', ')}`,
-          ].filter(Boolean).join('\n');
+        // Audio Content Section
+        analysisData.audioContent ? [
+          '\nAudio Analysis:',
+          `Speech: ${analysisData.audioContent.speech || 'None'}`,
+          `Music: ${analysisData.audioContent.music || 'None'}`,
+          `Sound Effects: ${analysisData.audioContent.soundEffects?.join(', ') || 'None'}`
+        ].join('\n') : '',
 
-          chunks.push({
-            id: `${baseMetadata.videoId}_scene_${i + 1}`,
-            content,
-            metadata: {
-              ...baseMetadata,
-              contentType: 'video_analysis',
-              sectionTitle: 'Visual Content',
-              sequenceNumber: chunks.length + 1,
-              totalChunks: 0, // Will be updated after all chunks are created
-              topics: analysisData.topics || [],
-              keywords: [...(analysisData.searchableKeywords || []), ...(scene.keyElements || [])]
-            }
-          });
-        }
-      }
-
-      // Process audio content
-      if (analysisData.audioContent) {
-        const audioChunk = {
-          id: `${baseMetadata.videoId}_audio`,
-          content: [
-            `Speech: ${analysisData.audioContent.speech || 'None'}`,
-            `Music: ${analysisData.audioContent.music || 'None'}`,
-            `Sound Effects: ${analysisData.audioContent.soundEffects?.join(', ') || 'None'}`
-          ].join('\n'),
-          metadata: {
-            ...baseMetadata,
-            contentType: 'video_analysis',
-            sectionTitle: 'Audio Content',
-            sequenceNumber: chunks.length + 1,
-            totalChunks: 0, // Will be updated after all chunks are created
-            topics: analysisData.topics || [],
-            keywords: analysisData.searchableKeywords || []
-          }
-        };
-        chunks.push(audioChunk);
-      }
-
-      // Process topics with context
-      if (analysisData.topics?.length) {
-        const topicsChunk = {
-          id: `${baseMetadata.videoId}_topics`,
-          content: analysisData.topics.map(topic => 
+        // Topics Section
+        analysisData.topics?.length ? [
+          '\nTopics Analysis:',
+          ...analysisData.topics.map(topic => 
             `${topic.name} (Relevance: ${topic.relevance}): ${topic.context}`
-          ).join('\n'),
-          metadata: {
-            ...baseMetadata,
-            contentType: 'video_analysis',
-            sectionTitle: 'Topics',
-            sequenceNumber: chunks.length + 1,
-            totalChunks: 0, // Will be updated after all chunks are created
-            topics: analysisData.topics,
-            keywords: [
-              ...(analysisData.searchableKeywords || []),
-              ...analysisData.topics.map(t => t.name)
-            ]
-          }
-        };
-        chunks.push(topicsChunk);
-      }
+          )
+        ].join('\n') : '',
 
-      // Update totalChunks in all chunks
-      const chunksWithTotalCount = chunks.map(chunk => ({
-        ...chunk,
+        // Technical Details Section
+        analysisData.technicalDetails ? [
+          '\nTechnical Analysis:',
+          `Quality: ${analysisData.technicalDetails.quality}`,
+          `Effects: ${analysisData.technicalDetails.effects?.join(', ') || 'None'}`,
+          `Editing: ${analysisData.technicalDetails.editing}`
+        ].join('\n') : ''
+      ].filter(Boolean).join('\n\n');
+
+      // Collect all keywords
+      const allKeywords = [
+        ...(analysisData.searchableKeywords || []),
+        ...(analysisData.visualContent?.flatMap(scene => scene.keyElements || []) || []),
+        ...(analysisData.topics?.map(t => t.name) || []),
+        ...(analysisData.technicalDetails?.effects || [])
+      ];
+
+      // Create a single chunk with all information
+      const comprehensiveChunk = {
+        id: videoId,
+        content: contentSections,
         metadata: {
-          ...chunk.metadata,
-          totalChunks: chunks.length
+          videoId,
+          videoUrl,
+          timestamp: processedAt,
+          sequenceNumber: 1,
+          totalChunks: 1,
+          contentType: 'video_analysis',
+          sectionTitle: 'Complete Analysis',
+          topics: analysisData.topics || [],
+          keywords: allKeywords,
+          videoMetadata: {
+            ...metadata,
+            processedAt,
+            title: analysisData.title || '',
+            summary: analysisData.summary || '',
+            visualContent: analysisData.visualContent || [],
+            audioContent: analysisData.audioContent || {},
+            topics: analysisData.topics || [],
+            technicalDetails: analysisData.technicalDetails || {},
+            searchableKeywords: allKeywords
+          }
         }
-      }));
+      };
 
-      // Generate vectors for each chunk
-      console.log(`[Vector Processing] Generating vectors for ${chunksWithTotalCount.length} chunks`);
-      const processedChunks = await Promise.all(
-        chunksWithTotalCount.map(async chunk => ({
-          ...chunk,
-          vector: await this.generateVector(chunk.content)
-        }))
-      );
+      // Generate vector once
+      console.log('[Vector Processing] Generating vector for comprehensive analysis');
+      const processedChunk = {
+        ...comprehensiveChunk,
+        vector: await this.generateVector(comprehensiveChunk.content)
+      };
 
-      // Store vectors in Pinecone
-      await this.storeVectors(userId, processedChunks);
-      console.log('[Vector Processing] Successfully processed and stored structured video analysis');
+      // Store the single vector
+      await this.storeVectors(userId, [processedChunk]);
+      console.log('[Vector Processing] Successfully processed and stored video analysis');
     } catch (error) {
       console.error('[Vector Processing] Error processing video analysis:', error);
       throw error;
@@ -275,33 +309,192 @@ export class VectorProcessingService {
   private async storeVectors(userId: string, chunks: ProcessedChunk[]): Promise<void> {
     console.log(`[Vector Processing] Preparing to store ${chunks.length} vectors for user:`, userId);
     
-    const items = chunks.map(chunk => ({
-      id: chunk.id,
-      description: chunk.content,
-      url: chunk.metadata.videoUrl,
-      vector: chunk.vector,
-      metadata: {
-        videoId: chunk.metadata.videoId,
-        videoUrl: chunk.metadata.videoUrl,
-        timestamp: chunk.metadata.timestamp,
-        sequenceNumber: chunk.metadata.sequenceNumber,
-        totalChunks: chunk.metadata.totalChunks,
-        contentType: chunk.metadata.contentType,
-        sectionTitle: chunk.metadata.sectionTitle,
-        topicsJson: JSON.stringify(chunk.metadata.topics),
-        keywords: chunk.metadata.keywords,
-        mediaType: chunk.metadata.videoMetadata.mediaType,
-        instaId: chunk.metadata.videoMetadata.instaId,
-        username: chunk.metadata.videoMetadata.username,
-        name: chunk.metadata.videoMetadata.name,
-        processedAt: chunk.metadata.videoMetadata.processedAt
-      }
-    }));
-
-    console.log(`[Vector Processing] Upserting ${items.length} items to Pinecone for user:`, userId);
-    console.log('[Vector Processing] Sample metadata:', items[0].metadata);
+    const allVectors = [];
     
-    await upsertUserData(userId, items);
-    console.log('[Vector Processing] Successfully stored vectors in Pinecone');
+    for (const chunk of chunks) {
+      const baseId = chunk.id;
+      const visualContent = chunk.metadata.videoMetadata.visualContent || [];
+      const audioContent = chunk.metadata.videoMetadata.audioContent || {};
+      const topics = chunk.metadata.videoMetadata.topics || [];
+      const keywords = chunk.metadata.videoMetadata.searchableKeywords || [];
+
+      // Main content vector with minimal metadata
+      const mainVector = {
+        id: baseId,
+        vector: chunk.vector,
+        description: chunk.content,
+        url: chunk.metadata.videoUrl,
+        metadata: {
+          videoId: chunk.metadata.videoId,
+          videoUrl: chunk.metadata.videoUrl.trim(),
+          timestamp: chunk.metadata.timestamp,
+          sequenceNumber: chunk.metadata.sequenceNumber,
+          totalChunks: chunk.metadata.totalChunks,
+          contentType: chunk.metadata.contentType,
+          sectionTitle: chunk.metadata.sectionTitle,
+          title: chunk.metadata.videoMetadata.title,
+          summary: chunk.metadata.videoMetadata.summary,
+          mediaType: chunk.metadata.videoMetadata.mediaType,
+          instaId: chunk.metadata.videoMetadata.instaId,
+          username: chunk.metadata.videoMetadata.username,
+          name: chunk.metadata.videoMetadata.name,
+          processedAt: new Date().toISOString(),
+          // Reference IDs for related content
+          visualContentId: `${baseId}_visual`,
+          audioContentId: `${baseId}_audio`,
+          topicsId: `${baseId}_topics`,
+          // Essential metadata fields
+          visualContent: '[]',
+          audioContent: '{}',
+          topics: '[]',
+          keywords: keywords.slice(0, 10), // Limit keywords for main vector
+          searchableText: [
+            chunk.metadata.videoMetadata.title,
+            chunk.metadata.videoMetadata.summary
+          ].filter(Boolean).join(' ').toLowerCase()
+        }
+      };
+
+      // Store full visual content in chunks to stay within size limits
+      const visualChunks: any[] = [];
+      let currentChunk: any[] = [];
+      let currentSize = 0;
+
+      for (const scene of visualContent) {
+        const sceneJson = JSON.stringify(scene);
+        if (currentSize + sceneJson.length > 35000) { // Leave buffer for other metadata
+          if (currentChunk.length > 0) {
+            visualChunks.push([...currentChunk]);
+          }
+          currentChunk = [scene];
+          currentSize = sceneJson.length;
+        } else {
+          currentChunk.push(scene);
+          currentSize += sceneJson.length;
+        }
+      }
+      if (currentChunk.length > 0) {
+        visualChunks.push(currentChunk);
+      }
+
+      // Create vectors for visual content chunks
+      for (let i = 0; i < visualChunks.length; i++) {
+        const chunk = visualChunks[i];
+        const chunkText = chunk.map((v: VisualContentItem) => 
+          `${v.timestamp} ${v.scene} ${v.text || ''} ${(v.keyElements || []).join(' ')}`
+        ).join(' ');
+        
+        const visualVector = await this.generateVector(chunkText);
+        allVectors.push({
+          id: `${baseId}_visual_${i}`,
+          vector: visualVector,
+          description: chunkText,
+          url: chunk.metadata?.videoUrl || mainVector.url,
+          metadata: {
+            videoId: chunk.metadata?.videoId || mainVector.metadata.videoId,
+            videoUrl: (chunk.metadata?.videoUrl || mainVector.url).trim(),
+            timestamp: chunk.metadata?.timestamp || mainVector.metadata.timestamp,
+            sequenceNumber: i + 1,
+            totalChunks: visualChunks.length,
+            contentType: 'visual_content',
+            sectionTitle: `Visual Analysis Part ${i + 1}`,
+            title: chunk.metadata?.videoMetadata?.title || mainVector.metadata.title,
+            summary: '',
+            visualContent: JSON.stringify(chunk),
+            audioContent: '{}',
+            topics: '[]',
+            keywords: [],
+            mediaType: chunk.metadata?.videoMetadata?.mediaType || mainVector.metadata.mediaType,
+            instaId: chunk.metadata?.videoMetadata?.instaId || mainVector.metadata.instaId,
+            username: chunk.metadata?.videoMetadata?.username || mainVector.metadata.username,
+            name: chunk.metadata?.videoMetadata?.name || mainVector.metadata.name,
+            processedAt: new Date().toISOString(),
+            parentId: baseId,
+            searchableText: chunkText.toLowerCase()
+          }
+        });
+      }
+
+      // Audio content vector
+      const audioText = `${audioContent.speech || ''} ${audioContent.instructions || ''} ${(audioContent.soundEffects || []).join(' ')}`;
+      const audioVector = await this.generateVector(audioText);
+      allVectors.push({
+        id: `${baseId}_audio`,
+        vector: audioVector,
+        description: audioText,
+        url: mainVector.url,
+        metadata: {
+          videoId: mainVector.metadata.videoId,
+          videoUrl: mainVector.metadata.videoUrl,
+          timestamp: mainVector.metadata.timestamp,
+          sequenceNumber: 1,
+          totalChunks: 1,
+          contentType: 'audio_content',
+          sectionTitle: 'Audio Analysis',
+          title: mainVector.metadata.title,
+          summary: '',
+          visualContent: '[]',
+          audioContent: JSON.stringify(audioContent),
+          topics: '[]',
+          keywords: [],
+          mediaType: mainVector.metadata.mediaType,
+          instaId: mainVector.metadata.instaId,
+          username: mainVector.metadata.username,
+          name: mainVector.metadata.name,
+          processedAt: new Date().toISOString(),
+          parentId: baseId,
+          searchableText: audioText.toLowerCase()
+        }
+      });
+
+      // Topics vector
+      const topicsText = topics.map(t => `${t.name} ${t.context}`).join(' ');
+      const topicsVector = await this.generateVector(topicsText);
+      allVectors.push({
+        id: `${baseId}_topics`,
+        vector: topicsVector,
+        description: topicsText,
+        url: mainVector.url,
+        metadata: {
+          videoId: mainVector.metadata.videoId,
+          videoUrl: mainVector.metadata.videoUrl,
+          timestamp: mainVector.metadata.timestamp,
+          sequenceNumber: 1,
+          totalChunks: 1,
+          contentType: 'topics',
+          sectionTitle: 'Topics Analysis',
+          title: mainVector.metadata.title,
+          summary: '',
+          visualContent: '[]',
+          audioContent: '{}',
+          topics: JSON.stringify(topics),
+          keywords: keywords,
+          mediaType: mainVector.metadata.mediaType,
+          instaId: mainVector.metadata.instaId,
+          username: mainVector.metadata.username,
+          name: mainVector.metadata.name,
+          processedAt: new Date().toISOString(),
+          parentId: baseId,
+          searchableText: topicsText.toLowerCase()
+        }
+      });
+
+      allVectors.push(mainVector);
+    }
+
+    try {
+      // Store vectors in batches
+      const BATCH_SIZE = 100;
+      for (let i = 0; i < allVectors.length; i += BATCH_SIZE) {
+        const batch = allVectors.slice(i, i + BATCH_SIZE);
+        await upsertUserData(userId, batch);
+        console.log(`[Vector Processing] Stored batch ${i / BATCH_SIZE + 1} of ${Math.ceil(allVectors.length / BATCH_SIZE)}`);
+      }
+      
+      console.log(`[Vector Processing] Successfully stored ${allVectors.length} vectors for user:`, userId);
+    } catch (error) {
+      console.error('[Vector Processing] Error storing vectors:', error);
+      throw error;
+    }
   }
 } 

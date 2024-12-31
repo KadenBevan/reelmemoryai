@@ -51,8 +51,16 @@ export interface VectorMetadata extends RecordMetadata {
   contentType: string;
   /** Section title */
   sectionTitle: string;
-  /** Topics discussed (JSON string) */
-  topicsJson: string;
+  /** Video title */
+  title: string;
+  /** Video summary */
+  summary: string;
+  /** Visual content analysis */
+  visualContent: string;
+  /** Audio content analysis */
+  audioContent: string;
+  /** Topics discussed */
+  topics: string;
   /** Search keywords */
   keywords: string[];
   /** Instagram media type */
@@ -65,6 +73,8 @@ export interface VectorMetadata extends RecordMetadata {
   name: string;
   /** When video was processed */
   processedAt: string;
+  /** Combined searchable text */
+  searchableText: string;
 }
 
 /**
@@ -211,9 +221,6 @@ export async function queryUserData(
 
 /**
  * Checks if a video has already been processed for a user
- * @param userId - User namespace
- * @param videoUrl - URL of the video to check
- * @returns Promise resolving to true if video exists, false otherwise
  */
 export async function isVideoAlreadyProcessed(userId: string, videoUrl: string): Promise<boolean> {
   console.log(`[Pinecone] Checking if video already processed for user: ${userId}, URL: ${videoUrl}`);
@@ -223,12 +230,16 @@ export async function isVideoAlreadyProcessed(userId: string, videoUrl: string):
   const namespaceIndex = index.namespace(userId);
   
   try {
+    // Clean the URL by trimming whitespace
+    const cleanUrl = videoUrl.trim();
+    
+    // Query by exact URL match using metadata filter only
     const response = await namespaceIndex.query({
-      vector: new Array(VECTOR_DIMENSION).fill(0), // Zero vector for metadata-only query
+      vector: new Array(VECTOR_DIMENSION).fill(0), // Dummy vector since we're only using filter
       topK: 1,
       includeMetadata: true,
       filter: {
-        videoUrl: { $eq: videoUrl }
+        videoUrl: cleanUrl
       }
     });
 
@@ -236,12 +247,16 @@ export async function isVideoAlreadyProcessed(userId: string, videoUrl: string):
     
     console.log(`[Pinecone] Video ${exists ? 'found' : 'not found'} in user's namespace`);
     if (exists) {
-      console.log('[Pinecone] Existing video metadata:', response.matches[0].metadata);
+      console.log('[Pinecone] Existing video metadata:', {
+        videoId: response.matches[0].metadata?.videoId,
+        timestamp: response.matches[0].metadata?.timestamp
+      });
     }
     
     return exists;
   } catch (error) {
     console.error('[Pinecone] Error checking for duplicate video:', error);
+    // On error, assume not processed to ensure video gets processed
     return false;
   }
 }

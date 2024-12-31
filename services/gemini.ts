@@ -1,189 +1,331 @@
-import { GoogleGenerativeAI, GenerativeModel } from '@google/generative-ai';
-import { GoogleAIFileManager } from '@google/generative-ai/server';
-import * as fs from 'node:fs/promises';
-
-export enum AnalysisMode {
-  STRUCTURED = 'STRUCTURED'
-}
-
-const MODEL_NAME = "gemini-2.0-flash-exp";
-
-const GENERATION_CONFIG = {
-  temperature: 0.7,
-  topP: 0.8,
-  topK: 40,
-  maxOutputTokens: 8192,
-};
-
-export interface VideoAnalysis {
-  title: string;
-  summary: string;
-  visualContent: Array<{
-    timestamp: string;
-    scene: string;
-    keyElements: string[];
-  }>;
-  audioContent: {
-    speech: string;
-    music: string;
-    soundEffects: string[];
-  };
-  topics: Array<{
-    name: string;
-    relevance: number;
-    context: string;
-  }>;
-  technicalDetails: {
-    quality: string;
-    effects: string[];
-    editing: string;
-  };
-  searchableKeywords: string[];
-}
-
-// Analysis prompt for structured output
-const STRUCTURED_ANALYSIS_PROMPT = await fs.readFile('./prompts/paragraph-prompt.txt', 'utf8');
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import fs from 'fs/promises';
 
 export class GeminiService {
-  private genAI: GoogleGenerativeAI;
-  private model: GenerativeModel;
-  private fileManager: GoogleAIFileManager;
-  private apiKey: string;
-  private readonly MAX_FILE_SIZE = 2 * 1024 * 1024 * 1024; // 2GB in bytes (Gemini File API limit)
+  private static instance: GeminiService;
+  private static instancePromise: Promise<GeminiService> | null = null;
+  private model: any;
+  private gemini: GoogleGenerativeAI;
 
-  constructor() {
-    this.apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY || '';
-    if (!this.apiKey) {
-      throw new Error('GEMINI_API_KEY (or GOOGLE_AI_API_KEY) is not set in environment variables');
+  private constructor() {
+    if (!process.env.GOOGLE_AI_API_KEY) {
+      throw new Error('GEMINI_API_KEY environment variable is not set');
     }
-
-    this.genAI = new GoogleGenerativeAI(this.apiKey);
-    this.fileManager = new GoogleAIFileManager(this.apiKey);
-    this.model = this.genAI.getGenerativeModel({
-      model: MODEL_NAME,
-      generationConfig: GENERATION_CONFIG,
+    this.gemini = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY);
+    this.model = this.gemini.getGenerativeModel({ 
+      model: 'gemini-2.0-flash-exp',
+      generationConfig: {
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 8191
+      }
     });
   }
 
-  /**
-   * Analyzes a video using structured output
-   */
-  public async analyzeVideoWithStructuredOutput(localFilePath: string, mimeType: string): Promise<VideoAnalysis> {
-    try {
-      console.log('[Gemini Service] Starting structured video analysis');
-
-      // Check file size
-      const stats = await fs.stat(localFilePath);
-      if (stats.size > this.MAX_FILE_SIZE) {
-        throw new Error(`File size (${stats.size} bytes) exceeds maximum allowed size (${this.MAX_FILE_SIZE} bytes)`);
-      }
-
-      // Upload file to Gemini
-      console.log('[Gemini Service] Uploading file to Gemini');
-      const uploadedFile = await this.uploadToGemini(localFilePath, mimeType);
-      await this.waitForFilesActive([uploadedFile]);
-      console.log('[Gemini Service] File uploaded and active');
-
-      // Start chat session with the uploaded file
-      const chatSession = this.model.startChat({
-        history: [
-          {
-            role: "user",
-            parts: [
-              {
-                fileData: {
-                  mimeType: uploadedFile.mimeType,
-                  fileUri: uploadedFile.uri,
-                },
-              },
-            ],
-          },
-        ],
-      });
-
-      // Send analysis prompt
-      console.log('[Gemini Service] Sending analysis prompt');
-      const result = await chatSession.sendMessage(STRUCTURED_ANALYSIS_PROMPT);
-      const response = await result.response;
-      
-      try {
-        // Extract JSON from markdown code block if present
-        const text = response.text();
-        const jsonMatch = text.match(/```json\s*(\{[\s\S]*\})\s*```/) || text.match(/\{[\s\S]*\}/);
-        
-        if (!jsonMatch) {
-          console.error('[Gemini Service] No JSON found in response:', text);
-          throw new Error('No JSON found in Gemini response');
+  public static async getInstance(): Promise<GeminiService> {
+    if (!GeminiService.instancePromise) {
+      GeminiService.instancePromise = (async () => {
+        if (!GeminiService.instance) {
+          const instance = new GeminiService();
+          await instance.initialize();
+          GeminiService.instance = instance;
         }
+        return GeminiService.instance;
+      })();
+    }
+    return GeminiService.instancePromise;
+  }
 
-        const jsonStr = jsonMatch[1] || jsonMatch[0];
-        const structuredResponse = JSON.parse(jsonStr) as VideoAnalysis;
-        console.log('[Gemini Service] Analysis output:', JSON.stringify(structuredResponse, null, 2));
-        console.log('[Gemini Service] Successfully generated structured analysis');
-        return structuredResponse;
-      } catch (error) {
-        console.error('[Gemini Service] Error parsing JSON response:', error);
-        throw new Error('Failed to parse structured response from Gemini');
+  private async initialize(): Promise<void> {
+    try {
+      // Test the model to ensure it's working
+      const testPrompt = 'Test initialization';
+      const result = await this.model.generateContent(testPrompt);
+      if (!result) {
+        throw new Error('Failed to initialize Gemini model');
       }
-    } catch (error: any) {
-      console.error('[Gemini Service] Error in video analysis:', error);
-      throw new Error(`Gemini API error: ${error.message}`);
+      console.log('[Gemini Service] Successfully initialized');
+    } catch (error) {
+      console.error('[Gemini Service] Initialization error:', error);
+      throw error;
     }
   }
 
-  /**
-   * Uploads a file to Gemini and returns the file object
-   */
-  private async uploadToGemini(path: string, mimeType: string) {
-    const uploadResult = await this.fileManager.uploadFile(path, {
-      mimeType,
-      displayName: path,
-    });
-    const file = uploadResult.file;
-    console.log(`[Gemini Service] Uploaded file ${file.displayName} as: ${file.name}`);
-    return file;
-  }
-
-  /**
-   * Waits for all files to become active
-   */
-  private async waitForFilesActive(files: any[]) {
-    console.log("[Gemini Service] Waiting for file processing...");
-    for (const name of files.map((file) => file.name)) {
-      let file = await this.fileManager.getFile(name);
-      let attempts = 0;
-      const maxAttempts = 30;
-
-      while (file.state === "PROCESSING" && attempts < maxAttempts) {
-        process.stdout.write(".");
-        await new Promise((resolve) => setTimeout(resolve, 10_000));
-        file = await this.fileManager.getFile(name);
-        attempts++;
-      }
-
-      if (file.state !== "ACTIVE") {
-        throw Error(`File ${file.name} failed to process (state=${file.state})`);
-      }
-    }
-    console.log("[Gemini Service] All files ready");
-  }
-
-  /**
-   * Generates a text response using the Gemini model
-   */
   public async generateResponse(prompt: string): Promise<string> {
     try {
-      console.log('[Gemini Service] Generating response for prompt length:', prompt.length);
+      console.log('[Gemini Service] Generating response for prompt', prompt.substring(0, 100) + '...');
+      
+      const result = await this.model.generateContent({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 8191,
+        }
+      });
 
-      const result = await this.model.generateContent(prompt);
+      const response = await result.response;
+      if (!response) {
+        throw new Error('Empty response from Gemini');
+      }
+
+      const text = response.text();
+      if (!text) {
+        throw new Error('Empty response text from Gemini');
+      }
+
+      console.log('[Gemini Service] Generated response:', text);
+      return text.trim();
+    } catch (error) {
+      console.error('[Gemini Service] Error generating response:', error);
+      throw error;
+    }
+  }
+
+  public async analyzeVideoWithStructuredOutput(videoPath: string): Promise<any> {
+    try {
+      console.log('[Gemini Service] Starting structured video analysis');
+      
+      // Read video file as base64
+      const videoData = await fs.readFile(videoPath);
+      const base64Data = videoData.toString('base64');
+      const mimeType = 'video/mp4';
+
+      // Read the analysis prompt
+      const prompt = await fs.readFile('prompts/video-analysis-prompt.txt', 'utf-8');
+
+      // Define the response schema
+      const responseSchema = {
+        type: "object",
+        properties: {
+          title: { type: "string" },
+          summary: { type: "string" },
+          visualContent: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                timestamp: { type: "string" },
+                scene: { type: "string" },
+                text: { type: "string" },
+                instructions: { type: "string" },
+                keyElements: { 
+                  type: "array",
+                  items: { type: "string" },
+                  minItems: 1
+                }
+              },
+              required: ["timestamp", "scene", "text", "instructions", "keyElements"]
+            }
+          },
+          audioContent: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                timestamp: { type: "string" },
+                speech: { type: "string" },
+                music: { type: "string" },
+                soundEffects: {
+                  type: "array",
+                  items: { type: "string" }
+                },
+                instructions: { type: "string" }
+              },
+              required: ["timestamp", "speech", "music", "soundEffects", "instructions"]
+            }
+          },
+          topics: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                timestamp: { type: "string" },
+                name: { type: "string" },
+                relevance: { type: "number" },
+                context: { type: "string" }
+              },
+              required: ["timestamp", "name", "relevance", "context"]
+            }
+          },
+          technicalDetails: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                timestamp: { type: "string" },
+                quality: { type: "string" },
+                effects: {
+                  type: "array",
+                  items: { type: "string" }
+                },
+                editing: { type: "string" }
+              },
+              required: ["timestamp", "quality", "effects", "editing"]
+            }
+          },
+          searchableKeywords: {
+            type: "array",
+            items: { type: "string" },
+            minItems: 3
+          }
+        },
+        required: ["title", "summary", "visualContent", "audioContent", "topics", "technicalDetails", "searchableKeywords"]
+      };
+
+      // Create the request for Gemini with structured output configuration
+      const request = {
+        contents: [{
+          parts: [
+            { text: prompt },
+            {
+              inline_data: {
+                mime_type: mimeType,
+                data: base64Data
+              }
+            }
+          ]
+        }],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 8191,
+          responseSchema: responseSchema,
+          responseMimeType: "application/json"
+        }
+      };
+
+      // Generate content with structured output
+      const result = await this.model.generateContent(request);
+      const response = await result.response;
+      const text = response.text();
+      
+      console.log('[Gemini Service] Complete raw response:', text);
+      console.log('[Gemini Service] Response object:', JSON.stringify(response, null, 2));
+      console.log('[Gemini Service] Result object:', JSON.stringify(result, null, 2));
+      
+      try {
+        // Clean any potential markdown formatting
+        const cleanedText = text.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+        const parsed = JSON.parse(cleanedText);
+        
+        console.log('[Gemini Service] Successfully parsed response structure:', {
+          hasTitle: !!parsed.title,
+          hasSummary: !!parsed.summary,
+          visualContentCount: parsed.visualContent?.length,
+          audioContentCount: parsed.audioContent?.length,
+          topicsCount: parsed.topics?.length,
+          technicalDetailsCount: parsed.technicalDetails?.length,
+          keywordsCount: parsed.searchableKeywords?.length
+        });
+        return parsed;
+      } catch (parseError) {
+        console.error('[Gemini Service] Error parsing structured output:', parseError);
+        throw new Error('Failed to parse Gemini response as JSON');
+      }
+    } catch (error) {
+      console.error('[Gemini Service] Error analyzing video:', error);
+      throw error;
+    }
+  }
+
+  public async classifyQueryIntent(query: string): Promise<{ intent: 'RECALL_VIDEO' | 'INFORMATION_QUERY' }> {
+    try {
+      // Read the query intent prompt
+      const prompt = await fs.readFile('prompts/query-intent-prompt.txt', 'utf-8');
+      
+      // Define the response schema with more specific structure
+      const responseSchema = {
+        type: "object",
+        properties: {
+          intent: { 
+            type: "string",
+            enum: ["RECALL_VIDEO", "INFORMATION_QUERY"]
+          },
+          confidence: { 
+            type: "number",
+            minimum: 0,
+            maximum: 1
+          },
+          explanation: { type: "string" },
+          entities: {
+            type: "object",
+            properties: {
+              topics: { 
+                type: "array",
+                items: { type: "string" }
+              },
+              timeContext: { 
+                type: "object",
+                properties: {
+                  period: { type: "string" },
+                  specific: { type: "string" }
+                }
+              },
+              attributes: { 
+                type: "object",
+                properties: {
+                  action: { type: "string" },
+                  subject: { type: "string" },
+                  context: { type: "string" }
+                }
+              }
+            },
+            required: ["topics"]
+          }
+        },
+        required: ["intent", "confidence", "explanation", "entities"]
+      };
+
+      // Generate structured response
+      const parsed = await this.generateStructuredResponse(
+        prompt.replace('${query}', query),
+        responseSchema
+      );
+      
+      return { intent: parsed.intent as 'RECALL_VIDEO' | 'INFORMATION_QUERY' };
+    } catch (error) {
+      console.error('[Gemini Service] Error classifying query intent:', error);
+      return { intent: 'INFORMATION_QUERY' }; // Default to information query on error
+    }
+  }
+
+  public async generateStructuredResponse(prompt: string, responseSchema: any): Promise<any> {
+    try {
+      console.log('[Gemini Service] Generating structured response with schema');
+      
+      const request = {
+        contents: [{
+          parts: [{ text: prompt }]
+        }],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 8191,
+          responseSchema: responseSchema,
+          responseMimeType: "application/json"
+        }
+      };
+
+      const result = await this.model.generateContent(request);
       const response = await result.response;
       const text = response.text();
 
-      console.log('[Gemini Service] Successfully generated response of length:', text.length);
-      return text;
-    } catch (error: any) {
-      console.error('[Gemini Service] Error generating response:', error);
-      throw new Error(`Gemini API error: ${error.message}`);
+      try {
+        // Clean any potential markdown formatting
+        const cleanedText = text.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+        return JSON.parse(cleanedText);
+      } catch (parseError) {
+        console.error('[Gemini Service] Error parsing structured response:', parseError);
+        throw new Error('Failed to parse structured response');
+      }
+    } catch (error) {
+      console.error('[Gemini Service] Error generating structured response:', error);
+      throw error;
     }
   }
 } 
